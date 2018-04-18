@@ -5,50 +5,77 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Page Title</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" media="screen" href="css/reset.css" />
-  <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
-  <script src="main.js"></script>
+  <link rel="stylesheet" type="text/css" media="screen" href="css/utils.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />    
 </head>
 <body>
-  <header>
-    <div class="logo">      
-      <h1 class="heading">Book A Meal</h1>
+  <div class="container">    
+    <div class="header">
+      <div class="wrapper">
+        <a href="#default" class="logo">Book-A-Meal</a>
+        <div class="header-right" id="myTopnav">        
+          <button class="button header_button"><a href="./signin.html">Signin</a></button>
+          <button class="button header_button"><a href="./signup.html">Signup</a></button>
+          <a href="javascript:void(0);" class="icon" onclick="myFunction()">&#9776;</a>
+        </div>
+      </div>    
     </div>
-    <div>
-      <button>Signin</button>
-      <button>Signup</button>
+
+    <div class="container">
+      <div class="leading">
+          <p class="leading-bigtext">Hello</p>
+          <p class="leading-text">
+            Book-A-Meal is an application that allows customers to make food orders and helps the food
+            vendor know what the customers want to eat.
+          </p>
+      </div>
     </div>
-  </header>
-  <main>
-    <section class="leading">
-      <p class="leading-bigtext">Hello</p>
-      <p class="leading-text">
-          Book-A-Meal is an application that allows customers to make food orders and helps the food
-          vendor know what the customers want to eat.
-      </p>
-    </section>
-    <section class="cards">
-      <article>
-        <img class="article-img" src="img/chicken.jpg" alt=" " />
-        <h1 class="article-title">
-          Title of article
-        </h1>
-      </article>
-      <article>
-        <img class="article-img" src="img/fried-rice.jpg" alt=" " />
-        <h1 class="article-title">
-          Title of article
-        </h1>
-      </article>
-      <article>
-        <img class="article-img" src="img/spagheti.jpg" alt=" " />
-        <h1 class="article-title">
-          Title of article
-        </h1>
-      </article>      
-    </section>
-   
-  </main>
+
+    <div class="wrapper">
+      <h3 class="text-center">How Book-A-Meal Order works</h3>
+      <p class="text-center">Ordering food online has never been this easy</p>
+      <div class="row">        
+        <div class="c-medium-4">
+          <div class="article">
+            <img class="article-img" src="img/chicken.jpg" alt=" " /><br>
+            <span class="article-title">
+              <strong>Explore restaurants </strong> that deliver to your doorstep
+            </span>
+          </div>
+        </div>
+        <div class="c-medium-4">
+          <div class="article">
+            <img class="article-img" src="img/fried-rice.jpg" alt=" " /><br>
+            <span class="article-title">
+              Browse menus and <strong>your order</strong> in seconds
+            </span>
+          </div>
+        </div>
+        <div class="c-medium-4">
+          <div class="article">
+            <img class="article-img" src="img/spagheti.jpg" alt=" " /><br>
+            <span class="article-title">
+              Follow the status of your order with <strong>real-time alerts</strong>
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="footer">
+        <p>Footer</p>
+      </div>
+  </div>
+  <script>
+  /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
+    function myFunction() {
+      var x = document.getElementById("myTopnav");
+      if (x.className === "header") {
+          x.className += " responsive";
+      } else {
+          x.className = "header";
+      }
+    }
+  </script>
 </body>
 </html>
