@@ -1,8 +1,12 @@
 /* Style the header with a grey background and some padding */
+html,body{
+  padding: 0;
+  margin: 0;
+}
 .header {
   overflow: hidden;
   padding: 10px 10px;  
-  background-color: #333;
+  background-color: #333;  
 }
 
 /* Style the header links */
@@ -160,10 +164,15 @@
   width: 70%;
 }
 
+#long-button {
+  width: 50%;
+}
+
 
  input[type="text"],
  input[type="password"],
- input[type="email"] {
+ input[type="email"],
+ input[type="file"] {
   max-width: 400px;
 	width: 100%;
   line-height:3em;
@@ -178,12 +187,85 @@
   
  input[type="text"],
  input[type="password"],
- input[type="email"] { 
+ input[type="email"],
+ input[type="file"],
+ input[type="date"] { 
    max-width: 250px;
    margin-left: 12px;
   }
-  
+    
  .login {
     margin-top: 20px;
   }
+
+}
+
+/* Caterer pages *************************************************** */
+
+.order-table {
+  margin-top: 20px; 
+}
+
+.amount {
+  text-align: right;
+}
+ 
+
+ /* select option */
+
+ select, input[type="date"] {
+  max-width: 400px;
+	width: 100%;  
+  margin:1em 2em;
+  border-radius: 3px;
+  border: 1px solid #f2f2f2;
+  /* outline:none; */
+  padding-left:5px;
+  padding: 5px;
+  font-size: 14px;
+ }
+
+
+ @media only screen and (min-width : 150px) and (max-width : 530px){
+  
+select { 
+    max-width: 100%;
+   }
+  }
+
+  .form {
+    text-align: center;
+  }
+
+
+  /* Top Menu for caterer */
+
+  /* Add a black background color to the top navigation */
+.topnav {
+  background-color: #333;
+  overflow: hidden;
+  margin: 5px 0 10px 0;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  margin: 0 0 0 20px; 
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
 }
