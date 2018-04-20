@@ -7,7 +7,12 @@ html,body{
   overflow: hidden;
   padding: 10px 10px;  
   background-color: white;
+<<<<<<< HEAD
   
+=======
+  margin-top: 7px;
+  border-bottom: 1px solid #888888;
+>>>>>>> 708efa5de509904382c980941d06c89529243ea6
 }
 
 /* Style the header links */
@@ -273,7 +278,10 @@ h3.text-center {
  
 .search {
   background-color: #f2f2f2;
+<<<<<<< HEAD
   margin-left: 0!important;
+=======
+>>>>>>> 708efa5de509904382c980941d06c89529243ea6
 }
 
  /* select option */
@@ -309,10 +317,15 @@ select {
 .topnav {
   background-color: #f2f2f2;
   overflow: hidden;
+<<<<<<< HEAD
   margin: 0;
   height: 50px; 
   box-shadow: 0 0 1px #000;
   
+=======
+  margin: 5px 0 10px 0;
+  height: 50px; 
+>>>>>>> 708efa5de509904382c980941d06c89529243ea6
 }
 
 /* Style the links inside the navigation bar */
