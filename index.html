@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" media="screen" href="css/utils.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />    
+</head>
+<body>
+  <div class="container">    
+    <div class="header">
+      <div class="wrapper">
+          <a href="index.html"><img src="img/bookameal-logo.png" alt="" srcset=""></a>
+        <!-- <a href="#default" class="logo">Book-A-Meal</a> -->
+        <div class="header-right" id="myTopnav">        
+          <a class="logo" href="./signin.html">SIGN IN</a>
+          <button class="button header_button"><a href="./signup.html">CREATE ACCOUNT</a></button>
+          <a href="javascript:void(0);" class="icon" onclick="myFunction()">&#9776;</a>
+        </div>
+      </div>    
+    </div>
+
+    <div class="container">
+      <div class="leading">
+          <!-- <p class="leading-bigtext">Hello</p> -->
+          <div class="wrapper">
+            <h2 class="leading-text">
+              Book A Meal is an online store for<br> ordering your favourite meals
+            </h2>
+            <button class="button warning visit">Visit Store</button>
+          </div>
+          
+      </div>
+    </div>
+    
+    <div class="wrapper">
+      <h3 class="text-center">How Book-A-Meal<br> Order works</h3>
+      <div class="row">        
+        <div class="c-medium-4">          
+          <div class="box">
+            <img class="article-img" class="article-img" src="img/Meal-menu.png" alt=" " style="width:100%" />
+            <div class="box-body">
+              <p class="text">Browse menus and <strong>your order</strong> in seconds without any delay</p>
+            </div>
+          </div>
+        </div>
+        <div class="c-medium-4">          
+          <div class="box">
+            <img class="article-img" src="img/fast-delivery.png" alt=" " style="width:100%; " />
+            <div class="box-body">
+              <p class="text"><strong>Explore restaurants </strong> that deliver to your doorstep</p>
+            </div>
+          </div>
+        </div>
+        <div class="c-medium-4">
+          <div class="box">
+            <img src="img/24-hrs.png" alt=" " style="width:100%;" />
+            <div class="box-body">
+              <p class="text">Follow the status of your order with <strong>real-time alerts</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="horizon">
+    </div>
+   
+  </div>
+  <script>
+  /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
+    function myFunction() {
+      var x = document.getElementById("myTopnav");
+      if (x.className === "header") {
+          x.className += " responsive";
+      } else {
+          x.className = "header";
+      }
+    }
+  </script>
+</body>
+</html>
