@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="css/utils.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
+    <link rel="icon" href="img/favicon.png" sizes="16x16" type="image/png">
     <script src="main.js"></script>
 </head>
 <body>
@@ -14,10 +15,11 @@
 
     <div class="header">
       <div class="wrapper">
-        <a href="index.html" class="logo">Book-A-Meal</a>
+          <a href="index.html"><img src="img/bookameal-logo.png" alt="" srcset=""></a>
+        <!-- <a href="#default" class="logo">Book-A-Meal</a> -->
         <div class="header-right" id="myTopnav">        
-          <button class="button header_button"><a href="./signin.html">Signin</a></button>
-          <button class="button header_button"><a href="./signup.html">Signup</a></button>
+          <a class="logo" href="./signin.html">SIGN IN</a>
+          <button class="button header_button"><a href="./signup.html">CREATE ACCOUNT</a></button>
           <a href="javascript:void(0);" class="icon" onclick="myFunction()">&#9776;</a>
         </div>
       </div>    
@@ -30,7 +32,7 @@
           <form>
             <input type="text" placeholder="Username" required/><br>
             <input type="password" placeholder="Password" required/><br>
-            <button class="button warning">Login</button>
+            <button class="button warning"><a href="user-menus.html">Login</a></button>
             <p>Forgot <a href="#">Password?</a></p>
         </form>
         </div>
