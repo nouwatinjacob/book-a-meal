@@ -2,11 +2,15 @@
   "name": "book-a-meal",
   "version": "1.0.0",
   "description": "Andela bootcamp project",
-  "main": "index.js",
+  "main": "server.js",
   "repository": "https://github.com/nouwatinjacob/book-a-meal",
   "author": "Nouwatin Jacob <jaysansa@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "dev": "nodemon server.js --exec babel-node"
+  },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
@@ -15,6 +19,11 @@
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.11.0",
-    "mocha": "^5.1.1"
+    "mocha": "^5.1.1",
+    "nodemon": "^1.17.3"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3"
   }
 }
