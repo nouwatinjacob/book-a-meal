@@ -276,9 +276,12 @@ h3.text-center {
   }
 }
  
-.search {
+.search {  
+  text-align: center; 
+}
+
+.search input {
   background-color: #f2f2f2;
-  margin-left: 0!important; 
 }
 
  /* select option */
@@ -352,7 +355,7 @@ td input[type="number"] {
 
 .pagination a {
   color: black;
-  float: left;
+  /* float: left; */
   padding: 8px 16px;
   text-decoration: none;
   transition: background-color .3s;
