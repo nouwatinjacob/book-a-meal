@@ -1,0 +1,14 @@
+{
+  "name": "book-a-meal",
+  "version": "1.0.0",
+  "description": "Andela bootcamp project",
+  "main": "index.js",
+  "repository": "https://github.com/nouwatinjacob/book-a-meal",
+  "author": "Nouwatin Jacob <jaysansa@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.11.0"
+  }
+}
