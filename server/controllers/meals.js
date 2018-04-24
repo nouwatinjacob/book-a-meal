@@ -1,6 +1,8 @@
+import meals from '../models/meals';
+
 class MealsController {
   constructor(router) {
-    this.meals = [];
+    this.meals = meals;
     this.router = router;
     this.registerRoutes();
   }
