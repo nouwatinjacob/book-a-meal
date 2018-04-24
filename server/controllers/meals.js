@@ -11,6 +11,7 @@ class MealsController {
     this.router.get('/meals/', this.getMeals.bind(this));
     this.router.post('/meals/', this.addMeal.bind(this));
     this.router.put('/meals/:id', this.modifyMeal.bind(this));
+    this.router.delete('/meals/:id', this.removeMeal.bind(this));
   }
 
   getMeals(req, res) {
@@ -69,6 +70,21 @@ class MealsController {
     return res.status(201).json({
       Message: 'Meal successfully updated',
       existingMeal,
+    });
+  }
+
+  removeMeal(req, res) {
+    const id = parseInt(req.params.id, 10);
+    const existingMeal = this.meals.filter(meal => meal.id === id)[0];
+    if (!existingMeal) {
+      return res.status(404).json({
+        Message: 'Meal does not exist',
+      });
+    }
+    const newMeal = this.meals.filter(meal => meal.id !== id);
+    return res.status(200).json({
+      Message: 'Meal deleted successfully',
+      newMeal,
     });
   }
 }
