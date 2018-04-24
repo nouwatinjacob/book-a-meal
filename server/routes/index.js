@@ -9,6 +9,7 @@ const routes = (router) => {
     }));
 
   router.route('/meals').get(mealCtrl.getMeals);
+  router.route('/meals').post(mealCtrl.addMeal);
 };
 
 export default routes;
