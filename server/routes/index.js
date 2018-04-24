@@ -11,6 +11,7 @@ const routes = (router) => {
   router.route('/meals').get(mealCtrl.getMeals);
   router.route('/meals').post(mealCtrl.addMeal);
   router.route('/meals/:id').put(mealCtrl.modifyMeal);
+  router.route('/meals/:id').delete(mealCtrl.removeMeal);
 };
 
 export default routes;
