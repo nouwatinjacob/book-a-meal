@@ -1,15 +1,17 @@
 import meals from '../models/meals';
+import menus from '../models/menus';
 
 class MenusController {
   constructor(router) {
     this.meals = meals;
-    this.menus = [];
+    this.menus = menus;
     this.router = router;
     this.registerRoutes();
   }
 
   registerRoutes() {
     this.router.post('/menu/', this.setMenu.bind(this));
+    this.router.get('/menu/', this.getMenu.bind(this));
   }
 
   setMenu(req, res) {
@@ -23,6 +25,15 @@ class MenusController {
       });
     }
     return res.status(400).json({ message: 'You can only set menu from already created meal' });
+  }
+
+  getMenu(req, res) {
+    const menuDate = '11-04-2018';
+    const dateMenus = this.menus.filter(menu => menu.menuDate === menuDate);
+    if (!dateMenus) {
+      return res.status(404).json({ message: 'You have not set menu for this date' });
+    }
+    return res.status(200).json(dateMenus);
   }
 }
 
