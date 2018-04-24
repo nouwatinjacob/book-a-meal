@@ -1,5 +1,5 @@
 import express from 'express';
-// import logger from 'morgan';
+import logger from 'morgan';
 import parser from 'body-parser';
 import routes from './server/routes/index';
 
@@ -11,7 +11,7 @@ routes(router);
 
 app.set('port', port);
 
-// app.use(logger('dev'));
+app.use(logger('dev'));
 app.use(parser.json());
 app.use(parser.urlencoded({ extended: false }));
 
