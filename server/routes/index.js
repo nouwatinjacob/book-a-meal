@@ -16,6 +16,7 @@ const routes = (router) => {
 
   /* Menus Routes */
   router.route('/menu').post(menuCtrl.setMenu);
+  router.route('/menu').get(menuCtrl.getMenu);
 };
 
 export default routes;
