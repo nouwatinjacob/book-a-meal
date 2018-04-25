@@ -28,12 +28,12 @@ class MenusController {
   }
 
   getMenu(req, res) {
-    const menuDate = '11-04-2018';
+    const menuDate = '12-04-2018';
     const dateMenus = this.menus.filter(menu => menu.menuDate === menuDate);
     if (!dateMenus) {
       return res.status(404).json({ message: 'You have not set menu for this date' });
     }
-    return res.status(200).json(dateMenus);
+    return res.status(200).json({ menus: dateMenus });
   }
 }
 
