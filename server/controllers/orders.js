@@ -11,6 +11,7 @@ class OrdersController {
 
   registerRouters() {
     this.router.post('/orders', this.makeOrder.bind(this));
+    this.router.get('/orders', this.getAllOrders.bind(this));
   }
 
   makeOrder(req, res) {
@@ -29,6 +30,15 @@ class OrdersController {
       });
     }
     return res.status(400).json({ message: 'You can only select a meal in the menu option' });
+  }
+
+  getAllOrders(req, res) {
+    if (this.orders.length < 1) {
+      return res.status(404).json({
+        message: 'No orders found',
+      });
+    }
+    return res.status(200).json(this.orders);
   }
 }
 
