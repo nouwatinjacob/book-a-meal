@@ -12,6 +12,7 @@ class OrdersController {
   registerRouters() {
     this.router.post('/orders', this.makeOrder.bind(this));
     this.router.get('/orders', this.getAllOrders.bind(this));
+    this.router.put('/orders/:id', this.modifyOrder.bind(this));
   }
 
   makeOrder(req, res) {
@@ -39,6 +40,23 @@ class OrdersController {
       });
     }
     return res.status(200).json(this.orders);
+  }
+
+  modifyOrder(req, res) {
+    const { mealId, quantity } = req.body;
+    const orderedItem = this.orders.find(order => order.id === parseInt(req.params.id, 10));
+    const newOrder = this.menus.find(meal => meal.menu.id === parseInt(mealId, 10));
+    if (!orderedItem) {
+      return res.status(404).json({
+        Message: 'Order does not exist',
+      });
+    }
+    orderedItem.menu = newOrder;
+    orderedItem.quantity = quantity;
+    return res.status(201).json({
+      Message: 'Order successfully modified',
+      orderedItem,
+    });
   }
 }
 
