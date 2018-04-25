@@ -23,6 +23,7 @@ const routes = (router) => {
   /* Orders Routes */
   router.route('/orders').post(orderCtrl.makeOrder);
   router.route('/orders').get(orderCtrl.getAllOrders);
+  router.route('/orders/:id').put(orderCtrl.modifyOrder);
 };
 
 export default routes;
