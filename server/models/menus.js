@@ -18,10 +18,10 @@ const menus = [{
 },
 {
   menu: {
-    id: 3,
-    name: 'Ofada Rice with assorted Stew',
-    price: 2500,
-    image: 'ofadarice.jpeg',
+    id: 1,
+    name: 'Yam and Egg',
+    price: 3000,
+    image: 'yam.jpeg',
   },
   menuDate: '12-04-2018'
 },
