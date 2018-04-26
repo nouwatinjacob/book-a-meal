@@ -16,8 +16,8 @@ class MealsController {
 
   getMeals(req, res) {
     if (this.meals.length < 1) {
-      return res.status(404).json({
-        message: 'No meals found',
+      return res.status(200).json({
+        message: 'Meals not available now',
       });
     }
     return res.status(200).json(this.meals);
@@ -67,7 +67,7 @@ class MealsController {
     existingMeal.name = name;
     existingMeal.price = price;
     existingMeal.image = image;
-    return res.status(201).json({
+    return res.status(200).json({
       Message: 'Meal successfully updated',
       existingMeal,
     });
@@ -77,7 +77,7 @@ class MealsController {
     const id = parseInt(req.params.id, 10);
     const existingMeal = this.meals.filter(meal => meal.id === id)[0];
     if (!existingMeal) {
-      return res.status(404).json({
+      return res.status(400).json({
         Message: 'Meal does not exist',
       });
     }

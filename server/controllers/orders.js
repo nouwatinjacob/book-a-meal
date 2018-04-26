@@ -30,7 +30,7 @@ class OrdersController {
         orders,
       });
     }
-    return res.status(400).json({ message: 'You can only select a meal in the menu option' });
+    return res.status(400).json({ Message: 'You can only select a meal that is in the menu option' });
   }
 
   getAllOrders(req, res) {
@@ -47,13 +47,17 @@ class OrdersController {
     const orderedItem = this.orders.find(order => order.id === parseInt(req.params.id, 10));
     const newOrder = this.menus.find(meal => meal.menu.id === parseInt(mealId, 10));
     if (!orderedItem) {
-      return res.status(404).json({
-        Message: 'Order does not exist',
+      return res.status(400).json({
+        Message: 'This Order has not been made',
+      });
+    } else if (!newOrder) {
+      return res.status(400).json({
+        Message: 'Meal selected does not exist',
       });
     }
     orderedItem.menu = newOrder;
     orderedItem.quantity = quantity;
-    return res.status(201).json({
+    return res.status(200).json({
       Message: 'Order successfully modified',
       orderedItem,
     });
