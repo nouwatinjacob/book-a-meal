@@ -7,7 +7,9 @@
   "author": "Nouwatin Jacob <jaysansa@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon server.js --exec babel-node"
+    "dev": "nodemon server.js --exec babel-node",
+    "test": "mocha --compilers js:babel-core/register server/test/",
+    "cover": "istanbul cover _mocha --compilers js:babel-core/register server/test/"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -16,11 +18,14 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-2": "^6.24.1",
     "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.11.0",
+    "istanbul": "^0.4.5",
     "mocha": "^5.1.1",
-    "nodemon": "^1.17.3"
+    "nodemon": "^1.17.3",
+    "supertest": "^3.0.0"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
