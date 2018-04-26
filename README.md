@@ -1,5 +1,9 @@
 # Book-A-Meal
 
+[![Build Status](https://travis-ci.org/nouwatinjacob/book-a-meal.svg?branch=challenge-2)](https://travis-ci.org/nouwatinjacob/book-a-meal)
+[![Coverage Status](https://coveralls.io/repos/github/nouwatinjacob/book-a-meal/badge.svg?branch=challenge-2)](https://coveralls.io/github/nouwatinjacob/book-a-meal?branch=challenge-2)
+[![Maintainability](https://api.codeclimate.com/v1/badges/71169e218528ed943a7a/maintainability)](https://codeclimate.com/github/nouwatinjacob/book-a-meal/maintainability)
+
 ## Application Features
 
 Book-A-Meal is an application that allows customers to make food orders and helps the food
