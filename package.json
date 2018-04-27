@@ -14,7 +14,9 @@
     ]
   },
   "scripts": {
-    "dev": "nodemon server.js --exec babel-node",
+    "dev": "nodemon server/server.js --exec babel-node",
+    "start": "node ./dist/server.js",
+    "build": "npx babel server/ --out-dir dist/ --ignore server/test",
     "test:endpoint": "nyc --reporter=html mocha --require babel-core/register server/test/*.test.js --exit",
     "test": "yarn test:endpoint && nyc report",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
@@ -23,6 +25,8 @@
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-2": "^6.24.1",
     "chai": "^4.1.2",

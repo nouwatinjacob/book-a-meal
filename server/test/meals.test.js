@@ -2,7 +2,7 @@
 import request from 'supertest';
 import chai, { expect, assert } from 'chai';
 import chaiHttp from 'chai-http';
-import app from '../../server';
+import app from '../server';
 import mealsData from './helper/meals';
 
 chai.use(chaiHttp);
