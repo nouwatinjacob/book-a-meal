@@ -2,7 +2,7 @@
   "name": "book-a-meal",
   "version": "1.0.0",
   "description": "Andela bootcamp project",
-  "main": "server.js",
+  "main": "server/server.js",
   "repository": "https://github.com/nouwatinjacob/book-a-meal",
   "author": "Nouwatin Jacob <jaysansa@gmail.com>",
   "license": "MIT",
@@ -17,7 +17,7 @@
     ]
   },
   "scripts": {
-    "dev": "nodemon server.js --exec babel-node",
+    "dev": "nodemon server/server.js --exec babel-node",
     "start": "node ./dist/server.js",
     "build": "npx babel server/ --out-dir dist/ --ignore server/test",
     "test:endpoint": "nyc --reporter=html mocha --require babel-core/register server/test/*.test.js --exit",
