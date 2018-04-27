@@ -6,6 +6,9 @@
   "repository": "https://github.com/nouwatinjacob/book-a-meal",
   "author": "Nouwatin Jacob <jaysansa@gmail.com>",
   "license": "MIT",
+  "engines": {
+    "node": "8.11.1"
+  },
   "nyc": {
     "include": [
       "server/controllers/*.js",
@@ -14,7 +17,7 @@
     ]
   },
   "scripts": {
-    "dev": "nodemon server/server.js --exec babel-node",
+    "dev": "nodemon server.js --exec babel-node",
     "start": "node ./dist/server.js",
     "build": "npx babel server/ --out-dir dist/ --ignore server/test",
     "test:endpoint": "nyc --reporter=html mocha --require babel-core/register server/test/*.test.js --exit",
