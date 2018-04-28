@@ -4,8 +4,8 @@ node_js:
 
 branches:
   only:
-    - bugFix/challenge-2
     - challenge-2
+    - develop
     
 before_script:
 
