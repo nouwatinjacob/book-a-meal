@@ -11,10 +11,10 @@ const meals = [{
   image: 'ebaandegusi.png',
 },
 {
-  id: 3,
-  name: 'Ofada Rice with assorted Stew',
-  price: 2500,
-  image: 'ofadarice.jpeg',
+  id: 4,
+  name: 'Spagetti',
+  price: 200,
+  image: 'spag.jpeg',
 },
 ];
 

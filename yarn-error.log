@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js start
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js test
 
 PATH: 
-  C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin\;C:\Users\MO\AppData\Local\Microsoft\WindowsApps;;C:\Program Files\Microsoft VS Code\bin;C:\Users\MO\AppData\Roaming\npm;C:\Users\MO\AppData\Local\Yarn\bin
+  C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin\;C:\Users\MO\AppData\Local\Microsoft\WindowsApps;;C:\Program Files\Microsoft VS Code\bin;C:\Users\MO\AppData\Roaming\npm;C:\Users\MO\AppData\Local\Yarn\bin;C:\Program Files\heroku\bin
 
 Yarn version: 
   1.5.1
@@ -18,10 +18,13 @@ npm manifest:
     "name": "book-a-meal",
     "version": "1.0.0",
     "description": "Andela bootcamp project",
-    "main": "server.js",
+    "main": "server/server.js",
     "repository": "https://github.com/nouwatinjacob/book-a-meal",
     "author": "Nouwatin Jacob <jaysansa@gmail.com>",
     "license": "MIT",
+    "engines": {
+      "node": "8.11.1"
+    },
     "nyc": {
       "include": [
         "server/controllers/*.js",
@@ -31,8 +34,8 @@ npm manifest:
     },
     "scripts": {
       "dev": "nodemon server/server.js --exec babel-node",
-      "start": "npm ./dist/server.js",
-      "build": "npx babel server --out-dir dist --ignore server/test",
+      "start": "node ./dist/server.js",
+      "heroku-postbuild": "npx babel server/ --out-dir dist/ --ignore server/test",
       "test:endpoint": "nyc --reporter=html mocha --require babel-core/register server/test/*.test.js --exit",
       "test": "yarn test:endpoint && nyc report",
       "coverage": "nyc report --reporter=text-lcov | coveralls"
@@ -4431,7 +4434,7 @@ Trace:
   Error: Command failed.
   Exit code: 1
   Command: C:\WINDOWS\system32\cmd.exe
-  Arguments: /d /s /c npm ./dist/server.js
+  Arguments: /d /s /c yarn test:endpoint && nyc report
   Directory: C:\Users\MO\Documents\book-a-meal
   Output:
   
