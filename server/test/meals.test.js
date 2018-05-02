@@ -6,7 +6,7 @@ import app from '../server';
 import mealsData from './helper/meals';
 
 chai.use(chaiHttp);
-const invalidId = 5;
+const invalidId = 10;
 
 describe('Test cases for all meals actions', () => {
   it('Should return status code 200 and the body length to be 3', (done) => {
@@ -15,7 +15,7 @@ describe('Test cases for all meals actions', () => {
       .send(mealsData)
       .end((err, res) => {
         expect(res.statusCode).to.equal(200);
-        expect(res.body.length).to.eql(3);
+        expect(res.body.Meals.length).to.eql(3);
         done();
       });
   });
@@ -25,7 +25,7 @@ describe('Test cases for all meals actions', () => {
         .post('/api/v1/meals')
         .set('Content-Type', 'application/json')
         .send({
-          id: 4,
+          id: 5,
           name: 'Eba and gbegiri',
           price: 2567,
           image: 'gbegiri.jpeg'
@@ -34,7 +34,6 @@ describe('Test cases for all meals actions', () => {
         .end((err, res) => {
           if (err) return done(err);
           assert.equal(res.body.Message, 'Meal successfully created');
-          assert.equal(res.body.meals.length, 4);
           done();
         });
     });
@@ -101,7 +100,7 @@ describe('Test cases for all meals actions', () => {
           price: '4000',
           image: 'gbegiri.jpeg'
         })
-        .expect(404)
+        .expect(400)
         .end((err, res) => {
           if (err) return done(err);
           assert.equal(res.body.Message, 'Meal does not exist');
@@ -111,7 +110,7 @@ describe('Test cases for all meals actions', () => {
 
     it('Should return status code 200 when meal information is successfully updated', (done) => {
       request(app)
-        .put('/api/v1/meals/3')
+        .put('/api/v1/meals/1')
         .set('Content-Type', 'application/json')
         .send({
           name: 'Eba and gbegiri',
@@ -135,14 +134,14 @@ describe('Test cases for all meals actions', () => {
         .expect(400)
         .end((err, res) => {
           if (err) return done(err);
-          assert.equal(res.body.Message, 'Meal does not exist');
+          assert.equal(res.body.Message, 'Meal not available');
           done();
         });
     });
 
     it('Should return status code 200 when meal information is successfully updated', (done) => {
       request(app)
-        .delete('/api/v1/meals/3')
+        .delete('/api/v1/meals/1')
         .set('Content-Type', 'application/json')
         .expect(200)
         .end((err, res) => {

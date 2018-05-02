@@ -1,3 +1,4 @@
+import validator from 'validator';
 import menus from '../models/menus';
 import orders from '../models/orders';
 
@@ -10,16 +11,38 @@ class OrdersController {
   }
 
   registerRouters() {
-    this.router.post('/orders', this.makeOrder.bind(this));
-    this.router.get('/orders', this.getAllOrders.bind(this));
-    this.router.put('/orders/:id', this.modifyOrder.bind(this));
+    this.makeOrder = this.makeOrder.bind(this);
+    this.makeOrder = this.makeOrder.bind(this);
+    this.modifyOrder = this.modifyOrder.bind(this);
   }
 
   makeOrder(req, res) {
     const { mealId, quantity } = req.body;
+    if (!validator.isNumeric(mealId)) {
+      return res.status(400).json({
+        Message: 'Enter a valid '
+      });
+    } else if (!validator.isNumeric(quantity)) {
+      return res.status(400).json({
+        Message: 'Enter positive integer'
+      });
+    } else if (!quantity) {
+      return res.status(400).json({
+        Message: 'Specify the quatity of your order'
+      });
+    } else if (!mealId) {
+      return res.status(400).json({
+        Message: 'Enter valid meal id'
+      });
+    }
     const orderId = (this.orders[this.orders.length - 1].id) + 1;
-    const orderedMeal = this.menus.find(meal => meal.menu.id === parseInt(mealId, 10));
-    if (orderedMeal) {
+    const orderedMeal = this.menus.find(meal => parseInt(meal.mealId, 10) === parseInt(mealId, 10));
+    const mealExists = this.orders.find(meal => parseInt(meal.orderedMeal.mealId, 10) === parseInt(mealId, 10));
+    if (mealExists) {
+      return res.status(409).json({
+        Message: 'You have this meal orderd already'
+      });
+    } else if (orderedMeal) {
       this.orders.push({
         id: orderId,
         orderedMeal,
@@ -27,10 +50,12 @@ class OrdersController {
       });
       return res.status(200).json({
         Message: 'Meal added to your order',
-        orders,
+        orderId,
+        orderedMeal,
+        quantity
       });
     }
-    return res.status(400).json({ Message: 'You can only select a meal that is in the menu option' });
+    return res.status(400).json({ Message: 'Meal not available' });
   }
 
   getAllOrders(req, res) {
@@ -39,29 +64,30 @@ class OrdersController {
         message: 'No orders found',
       });
     }
-    return res.status(200).json(this.orders);
+    return res.status(200).json({ orders: this.orders });
   }
 
   modifyOrder(req, res) {
-    const { mealId, quantity } = req.body;
     const orderedItem = this.orders.find(order => order.id === parseInt(req.params.id, 10));
-    const newOrder = this.menus.find(meal => meal.menu.id === parseInt(mealId, 10));
+    console.log(orderedItem, '=======');
+    // const mealId = req.body.mealId;
+    const mealId = req.body.mealId ? req.body.mealId : orderedItem.orderedMeal.id;
+    console.log(mealId, '<<<<<<');
+    const quantity = req.body.quantity ? req.body.quantity : orderedItem.orderedMeal.quantity;
+    const newOrder = this.menus.find(meal => meal.mealId === parseInt(mealId, 10));
+    console.log(newOrder);
     if (!orderedItem) {
       return res.status(400).json({
-        Message: 'This Order has not been made',
-      });
-    } else if (!newOrder) {
-      return res.status(400).json({
-        Message: 'Meal selected does not exist',
+        Message: 'This Order does not exist',
       });
     }
-    orderedItem.menu = newOrder;
+    orderedItem.orderedMeal = newOrder;
     orderedItem.quantity = quantity;
     return res.status(200).json({
       Message: 'Order successfully modified',
-      orderedItem,
+      orderedItem
     });
   }
 }
 
-export default OrdersController;
+export default new OrdersController();

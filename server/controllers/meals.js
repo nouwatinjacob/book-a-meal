@@ -1,3 +1,4 @@
+import validator from 'validator';
 import meals from '../models/meals';
 
 class MealsController {
@@ -8,10 +9,10 @@ class MealsController {
   }
 
   registerRoutes() {
-    this.router.get('/meals/', this.getMeals.bind(this));
-    this.router.post('/meals/', this.addMeal.bind(this));
-    this.router.put('/meals/:id', this.modifyMeal.bind(this));
-    this.router.delete('/meals/:id', this.removeMeal.bind(this));
+    this.getMeals = this.getMeals.bind(this);
+    this.addMeal = this.addMeal.bind(this);
+    this.modifyMeal = this.modifyMeal.bind(this);
+    this.removeMeal = this.removeMeal.bind(this);
   }
 
   getMeals(req, res) {
@@ -20,15 +21,18 @@ class MealsController {
         message: 'Meals not available now',
       });
     }
-    return res.status(200).json(this.meals);
+    return res.status(200).json({
+      Message: 'All meals',
+      Meals: this.meals
+    });
   }
 
   addMeal(req, res) {
     const id = (this.meals[this.meals.length - 1].id) + 1;
     const price = parseInt(req.body.price, 10);
-    const name = req.body.name.trim();
-    const image = req.body.image.trim();
-    if (!req.body.name) {
+    const name = req.body.name ? req.body.name.trim() : req.body.name;
+    const image = req.body.image ? req.body.image.trim() : req.body.name;
+    if (!name) {
       return res.status(400).json({
         Message: 'Name Field should not be Empty',
       });
@@ -36,9 +40,23 @@ class MealsController {
       return res.status(400).json({
         Message: 'Price Field should not be Empty',
       });
+    } else if (!req.body.image) {
+      return res.status(400).json({
+        Message: 'Image Field should not be Empty',
+      });
     } else if (Number.isNaN(price)) {
       return res.status(400).json({
         Message: 'Enter a Valid Value for Price',
+      });
+    } else if (validator.isNumeric(name)) {
+      return res.status(400).json({
+        Message: 'Name field can only be alphabetical',
+      });
+    }
+    const mealExist = this.meals.find(meal => meal.name === name);
+    if (mealExist) {
+      return res.status(400).json({
+        Message: 'This meal already exist'
       });
     }
     meals.push({
@@ -49,19 +67,29 @@ class MealsController {
     });
     return res.status(201).json({
       Message: 'Meal successfully created',
-      meals,
+      addedMeal: {
+        id, name, price, image
+      }
     });
   }
 
   modifyMeal(req, res) {
     const id = parseInt(req.params.id, 10);
-    const price = parseInt(req.body.price, 10);
-    const name = req.body.name.trim();
-    const image = req.body.image.trim();
-    const existingMeal = this.meals.filter(meal => meal.id === id)[0];
+    const existingMeal = this.meals.find(meal => meal.id === id);
+    const price = !req.body.price ? existingMeal.price : parseInt(req.body.price, 10);
+    const name = !req.body.name ? existingMeal.name : req.body.name.trim();
+    const image = !req.body.image ? existingMeal.image : req.body.image.trim();
     if (!existingMeal) {
-      return res.status(404).json({
+      return res.status(400).json({
         Message: 'Meal does not exist',
+      });
+    } else if (Number.isNaN(price)) {
+      return res.status(400).json({
+        Message: 'Enter a Valid Value for Price',
+      });
+    } else if (validator.isNumeric(name)) {
+      return res.status(400).json({
+        Message: 'Name field can only be alphabetical',
       });
     }
     existingMeal.name = name;
@@ -69,24 +97,24 @@ class MealsController {
     existingMeal.image = image;
     return res.status(200).json({
       Message: 'Meal successfully updated',
-      existingMeal,
+      updatedMeal: existingMeal,
     });
   }
 
   removeMeal(req, res) {
     const id = parseInt(req.params.id, 10);
-    const existingMeal = this.meals.filter(meal => meal.id === id)[0];
+    const existingMeal = this.meals.find(meal => meal.id === id);
     if (!existingMeal) {
       return res.status(400).json({
-        Message: 'Meal does not exist',
+        Message: 'Meal not available',
       });
     }
-    const newMeal = this.meals.filter(meal => meal.id !== id);
+    const remainingMeals = this.meals.filter(meal => meal.id !== id);
     return res.status(200).json({
       Message: 'Meal deleted successfully',
-      newMeal,
+      meals: remainingMeals,
     });
   }
 }
 
-export default MealsController;
+export default new MealsController();

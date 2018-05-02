@@ -3,27 +3,24 @@ import MenusController from '../controllers/menus';
 import OrdersController from '../controllers/orders';
 
 const routes = (router) => {
-  const mealCtrl = new MealsController(router);
-  const menuCtrl = new MenusController(router);
-  const orderCtrl = new OrdersController(router);
   router.route('/')
     .get((req, res) => res.status(200).json({
-      message: 'Welcome to the More Book-A-Meal API!',
+      message: 'Welcome to the Book-A-Meal API!',
     }));
   /* Meals Routes */
-  router.route('/meals').get(mealCtrl.getMeals);
-  router.route('/meals').post(mealCtrl.addMeal);
-  router.route('/meals/:id').put(mealCtrl.modifyMeal);
-  router.route('/meals/:id').delete(mealCtrl.removeMeal);
+  router.route('/meals').get(MealsController.getMeals);
+  router.route('/meals').post(MealsController.addMeal);
+  router.route('/meals/:id').put(MealsController.modifyMeal);
+  router.route('/meals/:id').delete(MealsController.removeMeal);
 
   /* Menus Routes */
-  router.route('/menu').post(menuCtrl.setMenu);
-  router.route('/menu').get(menuCtrl.getMenu);
+  router.route('/menu').post(MenusController.setMenu);
+  router.route('/menu').get(MenusController.getMenu);
 
   /* Orders Routes */
-  router.route('/orders').post(orderCtrl.makeOrder);
-  router.route('/orders').get(orderCtrl.getAllOrders);
-  router.route('/orders/:id').put(orderCtrl.modifyOrder);
+  router.route('/orders').post(OrdersController.makeOrder);
+  router.route('/orders').get(OrdersController.getAllOrders);
+  router.route('/orders/:id').put(OrdersController.modifyOrder);
 };
 
 export default routes;

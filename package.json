@@ -19,7 +19,7 @@
   "scripts": {
     "dev": "nodemon server/server.js --exec babel-node",
     "start": "node ./dist/server.js",
-    "build": "npx babel server/ --out-dir dist/ --ignore server/test",
+    "heroku-postbuild": "npx babel server/ --out-dir dist/ --ignore server/test",
     "test:endpoint": "nyc --reporter=html mocha --require babel-core/register server/test/*.test.js --exit",
     "test": "yarn test:endpoint && nyc report",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
@@ -48,6 +48,8 @@
     "body-parser": "^1.18.2",
     "express": "^4.16.3",
     "moment": "^2.22.1",
-    "morgan": "^1.9.0"
+    "morgan": "^1.9.0",
+    "validator": "^9.4.1",
+    "validatorjs": "^3.14.2"
   }
 }

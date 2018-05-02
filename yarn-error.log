@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js start
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js test
 
 PATH: 
-  C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin\;C:\Users\MO\AppData\Local\Microsoft\WindowsApps;;C:\Program Files\Microsoft VS Code\bin;C:\Users\MO\AppData\Roaming\npm;C:\Users\MO\AppData\Local\Yarn\bin
+  C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin\;C:\Users\MO\AppData\Local\Microsoft\WindowsApps;;C:\Program Files\Microsoft VS Code\bin;C:\Users\MO\AppData\Roaming\npm;C:\Users\MO\AppData\Local\Yarn\bin;C:\Program Files\heroku\bin
 
 Yarn version: 
   1.5.1
@@ -18,10 +18,13 @@ npm manifest:
     "name": "book-a-meal",
     "version": "1.0.0",
     "description": "Andela bootcamp project",
-    "main": "server.js",
+    "main": "server/server.js",
     "repository": "https://github.com/nouwatinjacob/book-a-meal",
     "author": "Nouwatin Jacob <jaysansa@gmail.com>",
     "license": "MIT",
+    "engines": {
+      "node": "8.11.1"
+    },
     "nyc": {
       "include": [
         "server/controllers/*.js",
@@ -31,8 +34,8 @@ npm manifest:
     },
     "scripts": {
       "dev": "nodemon server/server.js --exec babel-node",
-      "start": "npm ./dist/server.js",
-      "build": "npx babel server --out-dir dist --ignore server/test",
+      "start": "node ./dist/server.js",
+      "heroku-postbuild": "npx babel server/ --out-dir dist/ --ignore server/test",
       "test:endpoint": "nyc --reporter=html mocha --require babel-core/register server/test/*.test.js --exit",
       "test": "yarn test:endpoint && nyc report",
       "coverage": "nyc report --reporter=text-lcov | coveralls"
@@ -61,7 +64,9 @@ npm manifest:
       "body-parser": "^1.18.2",
       "express": "^4.16.3",
       "moment": "^2.22.1",
-      "morgan": "^1.9.0"
+      "morgan": "^1.9.0",
+      "validator": "^9.4.1",
+      "validatorjs": "^3.14.2"
     }
   }
 
@@ -4290,6 +4295,14 @@ Lockfile:
       spdx-correct "^3.0.0"
       spdx-expression-parse "^3.0.0"
   
+  validator@^9.4.1:
+    version "9.4.1"
+    resolved "https://registry.yarnpkg.com/validator/-/validator-9.4.1.tgz#abf466d398b561cd243050112c6ff1de6cc12663"
+  
+  validatorjs@^3.14.2:
+    version "3.14.2"
+    resolved "https://registry.yarnpkg.com/validatorjs/-/validatorjs-3.14.2.tgz#b5407743fac0196528277c7ab0bd18e0fabcc3fb"
+  
   vary@~1.1.2:
     version "1.1.2"
     resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
@@ -4431,7 +4444,7 @@ Trace:
   Error: Command failed.
   Exit code: 1
   Command: C:\WINDOWS\system32\cmd.exe
-  Arguments: /d /s /c npm ./dist/server.js
+  Arguments: /d /s /c yarn test:endpoint && nyc report
   Directory: C:\Users\MO\Documents\book-a-meal
   Output:
   
