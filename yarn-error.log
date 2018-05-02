@@ -64,7 +64,9 @@ npm manifest:
       "body-parser": "^1.18.2",
       "express": "^4.16.3",
       "moment": "^2.22.1",
-      "morgan": "^1.9.0"
+      "morgan": "^1.9.0",
+      "validator": "^9.4.1",
+      "validatorjs": "^3.14.2"
     }
   }
 
@@ -4292,6 +4294,14 @@ Lockfile:
     dependencies:
       spdx-correct "^3.0.0"
       spdx-expression-parse "^3.0.0"
+  
+  validator@^9.4.1:
+    version "9.4.1"
+    resolved "https://registry.yarnpkg.com/validator/-/validator-9.4.1.tgz#abf466d398b561cd243050112c6ff1de6cc12663"
+  
+  validatorjs@^3.14.2:
+    version "3.14.2"
+    resolved "https://registry.yarnpkg.com/validatorjs/-/validatorjs-3.14.2.tgz#b5407743fac0196528277c7ab0bd18e0fabcc3fb"
   
   vary@~1.1.2:
     version "1.1.2"

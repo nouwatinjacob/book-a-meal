@@ -25,7 +25,7 @@ describe('GET: /api/v1', () => {
       .end((err, res) => {
         expect(res.statusCode).to.equal(200);
         expect(res.body).to.eql({
-          message: 'Welcome to the More Book-A-Meal API!'
+          message: 'Welcome to the Book-A-Meal API!'
         });
         done();
       });
