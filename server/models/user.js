@@ -33,6 +33,10 @@ const userModel = (sequelize, DataTypes) => {
       foreignKey: 'userId',
       as: 'customer'
     });
+    User.hasMany(models.Order, {
+      foreignKey: 'userId',
+      as: 'orders'
+    });
   };
 
   /**

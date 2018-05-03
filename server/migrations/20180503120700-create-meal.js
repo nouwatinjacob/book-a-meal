@@ -1,25 +1,25 @@
+
 export function up(queryInterface, Sequelize) {
-  queryInterface.createTable('Users', {
+  queryInterface.createTable('Meals', {
     id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: Sequelize.INTEGER
     },
-    email: {
-      type: Sequelize.STRING,
-      allowNull: false,
-      unique: true
-    },
-    password: {
+    name: {
       type: Sequelize.STRING,
       allowNull: false
     },
-    type: {
+    price: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    },
+    image: {
       type: Sequelize.STRING,
       allowNull: false
     },
-    typeId: {
+    userId: {
       type: Sequelize.INTEGER,
       allowNull: false
     },
@@ -33,4 +33,4 @@ export function up(queryInterface, Sequelize) {
     }
   });
 }
-export function down(queryInterface) { queryInterface.dropTable('Users'); }
+export function down(queryInterface) { queryInterface.dropTable('Meals'); }

@@ -1,19 +1,17 @@
 
 export function up(queryInterface, Sequelize) {
-  queryInterface.createTable('Customers', {
+  queryInterface.createTable('Menus', {
     id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: Sequelize.INTEGER
     },
-    firstName: {
-      type: Sequelize.STRING,
-      allowNull: false
+    mealId: {
+      type: Sequelize.INTEGER
     },
-    lastName: {
-      type: Sequelize.STRING,
-      allowNull: false
+    menuDate: {
+      type: Sequelize.STRING
     },
     createdAt: {
       allowNull: false,
@@ -25,4 +23,4 @@ export function up(queryInterface, Sequelize) {
     }
   });
 }
-export function down(queryInterface) { queryInterface.dropTable('Customers'); }
+export function down(queryInterface) { queryInterface.dropTable('Menus'); }

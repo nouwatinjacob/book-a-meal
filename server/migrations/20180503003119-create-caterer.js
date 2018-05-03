@@ -8,13 +8,16 @@ export function up(queryInterface, Sequelize) {
       type: Sequelize.INTEGER
     },
     businessName: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      allowNull: false
     },
     ownerName: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      allowNull: false
     },
     businessAddress: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      allowNull: false
     },
     createdAt: {
       allowNull: false,
