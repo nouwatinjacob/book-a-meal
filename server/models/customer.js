@@ -1,6 +1,6 @@
 
 const customerModel = (sequelize, DataTypes) => {
-  const Customer = sequelize.define('Caterer', {
+  const Customer = sequelize.define('Customer', {
     firstName: {
       type: DataTypes.STRING,
       allowNull: false
@@ -11,13 +11,13 @@ const customerModel = (sequelize, DataTypes) => {
     },
   });
 
-  Customer.associate = (models) => {
-    Customer.belongsTo(models.User, {
-      foreignKey: 'typeId',
-      onDelete: 'CASCADE'
-    });
-  };
-
+  Customer.customerValidation = () => ({
+    email: 'required|email',
+    password: 'required|min:6|confirmed',
+    password_confirmation: 'required',
+    firstName: 'required|min:3|string',
+    lastName: 'required|min:3|string'
+  });
 
   return Customer;
 };
