@@ -7,13 +7,14 @@ const app = express();
 const router = express.Router();
 const port = parseInt(process.env.PORT, 10) || 8000;
 
-routes(router);
 
 app.set('port', port);
 
 app.use(logger('dev'));
 app.use(parser.json());
 app.use(parser.urlencoded({ extended: false }));
+
+routes(router);
 
 app.use('/api/v1/', router);
 

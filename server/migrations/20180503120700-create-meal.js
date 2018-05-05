@@ -1,6 +1,6 @@
 
-export function up(queryInterface, Sequelize) {
-  queryInterface.createTable('Meals', {
+module.exports = {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('Meals', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -31,6 +31,6 @@ export function up(queryInterface, Sequelize) {
       allowNull: false,
       type: Sequelize.DATE
     }
-  });
-}
-export function down(queryInterface) { queryInterface.dropTable('Meals'); }
+  }),
+  down: queryInterface => queryInterface.dropTable('Meals'),
+};

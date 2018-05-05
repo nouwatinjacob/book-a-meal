@@ -1,4 +1,3 @@
-
 const mealModel = (sequelize, DataTypes) => {
   const Meal = sequelize.define('Meal', {
     name: {
@@ -19,12 +18,11 @@ const mealModel = (sequelize, DataTypes) => {
     },
   });
 
-  Meal.associate = (models) => {
-    Meal.belongTo(models.User, {
-      foreignKey: 'userId',
-      as: 'caterer'
-    });
-  };
+  Meal.mealRules = () => ({
+    name: 'required|min:4|alpha',
+    price: 'required|numeric',
+    image: 'required'
+  });
 
   return Meal;
 };
