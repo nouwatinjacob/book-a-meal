@@ -14,26 +14,15 @@ const userModel = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    type: {
+    userType: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    typeId: {
+    userTypeId: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
   });
-
-  User.associate = (models) => {
-    User.hasMany(models.Caterer, {
-      foreignKey: 'userId',
-      as: 'caterer'
-    });
-    User.hasMany(models.Customer, {
-      foreignKey: 'userId',
-      as: 'customer'
-    });
-  };
 
   /**
    * Method for comparing passwords

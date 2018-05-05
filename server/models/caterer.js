@@ -15,13 +15,14 @@ const catererModel = (sequelize, DataTypes) => {
     },
   });
 
-  Caterer.associate = (models) => {
-    Caterer.belongsTo(models.User, {
-      foreignKey: 'typeId',
-      onDelete: 'CASCADE'
-    });
-  };
-
+  Caterer.catererValidation = () => ({
+    email: 'required|email',
+    password: 'required|min:6|confirmed',
+    password_confirmation: 'required',
+    businessName: 'required|string',
+    ownerName: 'required|string|min:6',
+    businessAddress: 'required'
+  });
 
   return Caterer;
 };
