@@ -113,4 +113,26 @@ export default class MealsController {
       });
     }
   }
+
+  static async deleteMeal(req, res) {
+    try {
+      const meal = await Meal.findById(req.params.id);
+      if (meal) {
+        if (req.decoded.id !== meal.userId) {
+          return res.status(404).json({
+            message: 'You have no access to edit this meal'
+          });
+        }
+        await meal.destroy();
+        return res.status(200).json({
+          message: 'Meal successfully deleted'
+        });
+      }
+      return res.status(404).json({ message: 'Meal not found' });
+    } catch (error) {
+      return res.status(400).json({
+        message: 'Error processing request', error
+      });
+    }
+  }
 }
