@@ -18,9 +18,16 @@ const mealModel = (sequelize, DataTypes) => {
     },
   });
 
+  Meal.associate = (models) => {
+    Meal.belongsTo(models.User, {
+      foreignKey: 'userId',
+      as: 'meals'
+    });
+  };
+
   Meal.mealRules = () => ({
     name: 'required|min:4|alpha',
-    price: 'required|numeric',
+    price: 'required|numeric|integer',
     image: 'required'
   });
 

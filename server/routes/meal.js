@@ -1,10 +1,12 @@
-// import MealsController from '../controllers/meals';
+import MealsController from '../controllers/meals';
+import authMiddleware from '../middleware/authentication';
 
 const mealRoutes = (router) => {
-  router.route('/menu')
-    .get((req, res) => res.status(200).json({
-      message: 'Welcome menu!',
-    }));
+  router.route('/meals')
+    .post(
+      authMiddleware.verifyToken, authMiddleware.isCaterer,
+      MealsController.addMeal
+    );
 };
 
 export default mealRoutes;

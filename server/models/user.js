@@ -24,6 +24,13 @@ const userModel = (sequelize, DataTypes) => {
     },
   });
 
+  User.associate = (models) => {
+    User.hasMany(models.Meal, {
+      foreignKey: 'userId',
+      onDelete: 'CASCADE'
+    });
+  };
+
   /**
    * Method for comparing passwords
    * @param { object } user
@@ -42,6 +49,10 @@ const userModel = (sequelize, DataTypes) => {
     user.password = hash;
   });
 
+  /**
+   * auth validation rules for user login
+   * @returns { object } object
+   */
   User.siginRules = () => ({
     email: 'required|email',
     password: 'required'

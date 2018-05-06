@@ -10,12 +10,16 @@ const secret = process.env.SECRET_TOKEN;
 
 const { User, Caterer, Customer } = db;
 
+/**
+ * Class implementation for /api/v1/auth routes
+ * @class UserController
+ */
 export default class UserController {
   /**
    * @description - Create Users auth and validate request
    *
-   * @param  {obj} req - email parameter
-   * @param  {} res
+   * @param  { object } req
+   * @param  { object } res
    *
    * @returns { object } object
    */
@@ -71,7 +75,7 @@ export default class UserController {
               ...userDetails,
               userTypeId: newCaterer.id
             });
-            const user = lodash.pick(newUser, ['id', 'email']);
+            const user = lodash.pick(newUser, ['id', 'email', 'userType', 'userTypeId']);
             const token = jwt.sign(user, secret, { expiresIn: 86400 });
             return res.status(201).json({
               message: 'Registration Successful',
@@ -112,7 +116,7 @@ export default class UserController {
           if (!verifyPassword) {
             return res.status(400).json({ message: 'Invalid login credentials' });
           }
-          const user = lodash.pick(userExist, ['id', 'email']);
+          const user = lodash.pick(userExist, ['id', 'email', 'userType', 'userTypeId']);
           const token = jwt.sign(user, secret);
           return res.status(200).json({
             message: 'Log in successful',
