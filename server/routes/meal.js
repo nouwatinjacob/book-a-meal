@@ -16,6 +16,10 @@ const mealRoutes = (router) => {
     .put(
       authMiddleware.verifyToken, authMiddleware.isCaterer,
       MealsController.modifyMeal
+    )
+    .delete(
+      authMiddleware.verifyToken, authMiddleware.isCaterer,
+      MealsController.deleteMeal
     );
 };
 
