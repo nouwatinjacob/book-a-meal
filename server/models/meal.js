@@ -26,7 +26,7 @@ const mealModel = (sequelize, DataTypes) => {
   };
 
   Meal.mealRules = () => ({
-    name: 'required|min:4|alpha',
+    name: 'required|min:4',
     price: 'required|numeric|integer',
     image: 'required'
   });

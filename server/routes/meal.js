@@ -7,6 +7,12 @@ const mealRoutes = (router) => {
       authMiddleware.verifyToken, authMiddleware.isCaterer,
       MealsController.addMeal
     );
+
+  router.route('/meals/:id')
+    .put(
+      authMiddleware.verifyToken, authMiddleware.isCaterer,
+      MealsController.modifyMeal
+    );
 };
 
 export default mealRoutes;
