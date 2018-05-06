@@ -47,6 +47,15 @@ export default class MealsController {
     }
   }
 
+  /**
+   * @description - Modify Meal
+   *
+   * @param  { object } req
+   * @param  { object } res
+   *
+   *
+   * @results  { object } object
+   */
   static async modifyMeal(req, res) {
     try {
       const validation = new Validator(req.body, Meal.mealRules());
@@ -72,6 +81,32 @@ export default class MealsController {
         return res.status(404).send({ message: 'Meal Not Found' });
       }
       return res.status(400).json({ message: validation.errors.all() });
+    } catch (error) {
+      return res.status(400).json({
+        message: 'Error processing request', error
+      });
+    }
+  }
+
+  /**
+   * @description - Get all meals belonging to A Caterer
+   *
+   * @param  { object } req
+   * @param  { object } res
+   *
+   *
+   * @results  { object } object
+   */
+  static async getMeals(req, res) {
+    try {
+      const meals = await Meal.findAll({ where: { userId: req.decoded.id } });
+      if (meals) {
+        return res.status(200).json({
+          message: 'All meals displayed',
+          meals
+        });
+      }
+      return res.status(404).json({ message: 'No meal found' });
     } catch (error) {
       return res.status(400).json({
         message: 'Error processing request', error

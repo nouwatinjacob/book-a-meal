@@ -6,6 +6,10 @@ const mealRoutes = (router) => {
     .post(
       authMiddleware.verifyToken, authMiddleware.isCaterer,
       MealsController.addMeal
+    )
+    .get(
+      authMiddleware.verifyToken, authMiddleware.isCaterer,
+      MealsController.getMeals
     );
 
   router.route('/meals/:id')
