@@ -92,4 +92,39 @@ export default class UserController {
       });
     }
   }
+
+  /**
+   * @description - Log in user and validate user request
+   *
+   * @param { object } req
+   * @param { object } res
+   *
+   * @returns { object } object
+   */
+  static async userSignin(req, res) {
+    try {
+      const { email, password } = req.body;
+      const validation = new Validator(req.body, User.siginRules());
+      if (validation.passes()) {
+        const userExist = await User.findOne({ where: { email } });
+        if (userExist) {
+          const verifyPassword = userExist.comparePassword(userExist, password);
+          if (!verifyPassword) {
+            return res.status(400).json({ message: 'Invalid login credentials' });
+          }
+          const user = lodash.pick(userExist, ['id', 'email']);
+          const token = jwt.sign(user, secret);
+          return res.status(200).json({
+            message: 'Log in successful',
+            token,
+            user
+          });
+        }
+        return res.status(404).json({ message: 'Invalid credentials' });
+      }
+      return res.status(400).json({ message: validation.errors.all() });
+    } catch (error) {
+      return res.status(400).json({ message: 'Error processing request', error });
+    }
+  }
 }

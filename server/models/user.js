@@ -42,6 +42,11 @@ const userModel = (sequelize, DataTypes) => {
     user.password = hash;
   });
 
+  User.siginRules = () => ({
+    email: 'required|email',
+    password: 'required'
+  });
+
   return User;
 };
 
