@@ -1,4 +1,4 @@
-import mealRoute from './meal';
+import mealRoutes from './meal';
 import userRoutes from './user';
 
 const routes = (router) => {
@@ -11,19 +11,11 @@ const routes = (router) => {
   userRoutes(router);
 
   /* Meals Routes */
-  // router.route('/meals').get(MealsController.getMeals);
-  mealRoute(router);
-  // router.route('/meals/:id').put(MealsController.modifyMeal);
-  // router.route('/meals/:id').delete(MealsController.removeMeal);
+  mealRoutes(router);
 
-  // /* Menus Routes */
-  // router.route('/menu').post(MenusController.setMenu);
-  // router.route('/menu').get(MenusController.getMenu);
+  /* Menus Routes */
 
-  // /* Orders Routes */
-  // router.route('/orders').post(OrdersController.makeOrder);
-  // router.route('/orders').get(OrdersController.getAllOrders);
-  // router.route('/orders/:id').put(OrdersController.modifyOrder);
+  /* Orders Routes */
 };
 
 export default routes;
