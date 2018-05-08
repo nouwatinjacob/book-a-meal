@@ -11,9 +11,10 @@ const menuModel = (sequelize, DataTypes) => {
     }
   });
 
-  Menu.associate = (models) => {
-
-  };
+  Menu.menuRules = () => ({
+    mealId: 'required|integer',
+    menuDate: 'required'
+  });
 
   return Menu;
 };

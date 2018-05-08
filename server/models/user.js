@@ -27,7 +27,7 @@ const userModel = (sequelize, DataTypes) => {
   User.associate = (models) => {
     User.hasMany(models.Meal, {
       foreignKey: 'userId',
-      onDelete: 'CASCADE'
+      as: 'meal'
     });
   };
 

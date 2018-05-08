@@ -42,7 +42,7 @@ export default class MealsController {
       return res.status(400).json({ message: validation.errors.all() });
     } catch (error) {
       return res.status(400).json({
-        message: 'Error processing request', error
+        message: 'Error processing request', error: error.toString()
       });
     }
   }
@@ -83,7 +83,7 @@ export default class MealsController {
       return res.status(400).json({ message: validation.errors.all() });
     } catch (error) {
       return res.status(400).json({
-        message: 'Error processing request', error
+        message: 'Error processing request', error: error.toString()
       });
     }
   }
@@ -100,26 +100,35 @@ export default class MealsController {
   static async getMeals(req, res) {
     try {
       const meals = await Meal.findAll({ where: { userId: req.decoded.id } });
-      if (meals) {
-        return res.status(200).json({
-          message: 'All meals displayed',
-          meals
-        });
+      if (meals.length < 1) {
+        return res.status(400).json({ message: 'No meal found' });
       }
-      return res.status(404).json({ message: 'No meal found' });
+      return res.status(200).json({
+        message: 'All meals displayed',
+        meals
+      });
     } catch (error) {
       return res.status(400).json({
-        message: 'Error processing request', error
+        message: 'Error processing request', error: error.toString()
       });
     }
   }
 
+  /**
+   * @description - Delete a meal
+   *
+   * @param  { object } req
+   * @param  { object } res
+   *
+   *
+   * @results  {  }
+   */
   static async deleteMeal(req, res) {
     try {
       const meal = await Meal.findById(req.params.id);
       if (meal) {
         if (req.decoded.id !== meal.userId) {
-          return res.status(404).json({
+          return res.status(400).json({
             message: 'You have no access to edit this meal'
           });
         }
@@ -128,10 +137,10 @@ export default class MealsController {
           message: 'Meal successfully deleted'
         });
       }
-      return res.status(404).json({ message: 'Meal not found' });
+      return res.status(400).json({ message: 'Meal not found' });
     } catch (error) {
       return res.status(400).json({
-        message: 'Error processing request', error
+        message: 'Error processing request', error: error.toString()
       });
     }
   }
