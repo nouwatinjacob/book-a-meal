@@ -10,16 +10,12 @@ const secret = process.env.SECRET_TOKEN;
 
 const { User, Caterer, Customer } = db;
 
-/**
- * Class implementation for /api/v1/auth routes
- * @class UserController
- */
 export default class UserController {
   /**
    * @description - Create Users auth and validate request
    *
-   * @param  { object } req
-   * @param  { object } res
+   * @param  {obj} req - email parameter
+   * @param  {} res
    *
    * @returns { object } object
    */
@@ -92,7 +88,7 @@ export default class UserController {
       return res.status(400).json({ message: 'Request type must be customer or caterer' });
     } catch (error) {
       return res.status(400).json({
-        message: 'Error processing request', error
+        message: 'Error processing request', error: error.toString()
       });
     }
   }
@@ -128,7 +124,7 @@ export default class UserController {
       }
       return res.status(400).json({ message: validation.errors.all() });
     } catch (error) {
-      return res.status(400).json({ message: 'Error processing request', error });
+      return res.status(400).json({ message: 'Error processing request', error: error.toString() });
     }
   }
 }

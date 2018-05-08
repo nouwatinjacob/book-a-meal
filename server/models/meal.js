@@ -21,7 +21,7 @@ const mealModel = (sequelize, DataTypes) => {
   Meal.associate = (models) => {
     Meal.belongsTo(models.User, {
       foreignKey: 'userId',
-      as: 'meals'
+      onDelete: 'CASCADE'
     });
   };
 
