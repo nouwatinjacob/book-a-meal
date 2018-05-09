@@ -3,12 +3,13 @@ import jwt from 'jsonwebtoken';
 import lodash from 'lodash';
 import Validator from 'validatorjs';
 import db from '../models';
+import validations from '../middleware/validations';
 
 dotenv.config();
 
 const secret = process.env.SECRET_TOKEN;
 
-const { User, Caterer, Customer } = db;
+const { User } = db;
 
 export default class UserController {
   /**
@@ -34,18 +35,17 @@ export default class UserController {
       if (userType === 'customer') {
         const customerValidation = new Validator(
           { ...customerDetails, ...userDetails, password_confirmation },
-          Customer.customerValidation()
+          validations().customerValidation
         );
         if (customerValidation.passes()) {
           const foundUser = await User.findOne({ where: { email } });
           if (!foundUser) {
-            const newCustomer = await Customer.create(customerDetails);
             const newUser = await User.create({
               ...userDetails,
-              userTypeId: newCustomer.id
+              ...customerDetails
             });
 
-            const user = lodash.pick(newUser, ['id', 'email']);
+            const user = lodash.pick(newUser, ['id', 'email', 'userType']);
             const token = jwt.sign(user, secret, { expiresIn: 86400 });
             return res.status(201).json({
               message: 'Registration Successful',
@@ -61,17 +61,16 @@ export default class UserController {
       } else if (userType === 'caterer') {
         const catererValidation = new Validator(
           { ...catererDetails, ...userDetails, password_confirmation },
-          Caterer.catererValidation()
+          validations().catererValidation
         );
         if (catererValidation.passes()) {
           const foundUser = await User.findOne({ where: { email } });
           if (!foundUser) {
-            const newCaterer = await Caterer.create(catererDetails);
             const newUser = await User.create({
               ...userDetails,
-              userTypeId: newCaterer.id
+              ...catererDetails
             });
-            const user = lodash.pick(newUser, ['id', 'email', 'userType', 'userTypeId']);
+            const user = lodash.pick(newUser, ['id', 'email', 'userType']);
             const token = jwt.sign(user, secret, { expiresIn: 86400 });
             return res.status(201).json({
               message: 'Registration Successful',
@@ -104,7 +103,7 @@ export default class UserController {
   static async userSignin(req, res) {
     try {
       const { email, password } = req.body;
-      const validation = new Validator(req.body, User.siginRules());
+      const validation = new Validator(req.body, validations().signinRules);
       if (validation.passes()) {
         const userExist = await User.findOne({ where: { email } });
         if (userExist) {
@@ -112,7 +111,7 @@ export default class UserController {
           if (!verifyPassword) {
             return res.status(400).json({ message: 'Invalid login credentials' });
           }
-          const user = lodash.pick(userExist, ['id', 'email', 'userType', 'userTypeId']);
+          const user = lodash.pick(userExist, ['id', 'email', 'userType']);
           const token = jwt.sign(user, secret);
           return res.status(200).json({
             message: 'Log in successful',
