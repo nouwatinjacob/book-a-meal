@@ -7,9 +7,6 @@ module.exports = {
       primaryKey: true,
       type: Sequelize.INTEGER
     },
-    mealId: {
-      type: Sequelize.INTEGER
-    },
     menuDate: {
       type: Sequelize.STRING
     },
