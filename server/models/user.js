@@ -14,12 +14,24 @@ const userModel = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    userType: {
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    businessName: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    ownerName: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    userTypeId: {
-      type: DataTypes.INTEGER,
+    businessAddress: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    userType: {
+      type: DataTypes.STRING,
       allowNull: false
     },
   });
@@ -47,15 +59,6 @@ const userModel = (sequelize, DataTypes) => {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(user.password, salt);
     user.password = hash;
-  });
-
-  /**
-   * auth validation rules for user login
-   * @returns { object } object
-   */
-  User.siginRules = () => ({
-    email: 'required|email',
-    password: 'required'
   });
 
   return User;
