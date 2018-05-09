@@ -14,6 +14,10 @@ const userModel = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
     lastName: {
       type: DataTypes.STRING,
       allowNull: true
@@ -24,11 +28,11 @@ const userModel = (sequelize, DataTypes) => {
     },
     ownerName: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
     businessAddress: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
     userType: {
       type: DataTypes.STRING,
