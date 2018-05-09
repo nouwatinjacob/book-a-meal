@@ -23,6 +23,11 @@ const mealModel = (sequelize, DataTypes) => {
       foreignKey: 'userId',
       onDelete: 'CASCADE'
     });
+
+    Meal.belongsToMany(models.Menu, {
+      through: 'MenuMeals',
+      foreignKey: 'mealId'
+    });
   };
 
   Meal.mealRules = () => ({

@@ -42,7 +42,7 @@ export default class MealsController {
       return res.status(400).json({ message: validation.errors.all() });
     } catch (error) {
       return res.status(400).json({
-        message: 'Error processing request', error: error.toString()
+        message: 'Error processing request', error
       });
     }
   }
