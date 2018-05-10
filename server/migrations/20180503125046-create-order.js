@@ -10,10 +10,10 @@ module.exports = {
     mealId: {
       type: Sequelize.INTEGER
     },
-    orderDate: {
-      type: Sequelize.STRING
-    },
     userId: {
+      type: Sequelize.INTEGER
+    },
+    quantity: {
       type: Sequelize.INTEGER
     },
     createdAt: {

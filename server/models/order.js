@@ -5,14 +5,14 @@ const orderModel = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    orderDate: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false
-    }
+    },
+    quantity: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
   });
 
   Order.associate = (models) => {

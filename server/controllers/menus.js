@@ -62,6 +62,14 @@ export default class MenusController {
     }
   }
 
+  /**
+   * @description - Get menu for a day
+   *
+   * @param { object } req
+   * @param { object } res
+   *
+   * @returns { object } object
+   */
   static async getMenu(req, res) {
     try {
       const menuDate = req.query.date;

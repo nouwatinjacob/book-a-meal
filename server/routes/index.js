@@ -1,6 +1,7 @@
 import menuRoutes from './menu';
 import mealRoutes from './meal';
 import userRoutes from './user';
+import orderRoutes from './order';
 
 const routes = (router) => {
   router.route('/')
@@ -18,6 +19,7 @@ const routes = (router) => {
   menuRoutes(router);
 
   /* Orders Routes */
+  orderRoutes(router);
 };
 
 export default routes;
