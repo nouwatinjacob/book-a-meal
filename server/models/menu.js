@@ -4,20 +4,19 @@ const menuModel = (sequelize, DataTypes) => {
     menuDate: {
       type: DataTypes.STRING,
       allowNull: false
-    }
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
   });
 
   Menu.associate = (models) => {
     Menu.belongsToMany(models.Meal, {
       through: 'MenuMeals',
-      foreignKey: 'menuId'
+      foreignKey: 'menuId',
     });
   };
-
-  Menu.menuRules = () => ({
-    // mealId: 'required|integer',
-    menuDate: 'required'
-  });
 
   return Menu;
 };

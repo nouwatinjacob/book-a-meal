@@ -8,7 +8,15 @@ module.exports = {
       type: Sequelize.INTEGER
     },
     menuDate: {
-      type: Sequelize.STRING
+      type: Sequelize.DATE
+    },
+    userId: {
+      allowNull: true,
+      type: Sequelize.INTEGER,
+      references: {
+        model: 'Users',
+        key: 'id'
+      },
     },
     createdAt: {
       allowNull: false,

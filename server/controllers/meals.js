@@ -1,5 +1,6 @@
 import Validator from 'validatorjs';
 import db from '../models';
+import validations from '../middleware/validations';
 
 const { Meal, User } = db;
 
@@ -22,7 +23,7 @@ export default class MealsController {
       const price = parseInt(req.body.price, 10);
       const name = req.body.name ? req.body.name.trim() : req.body.name;
       const image = req.body.image ? req.body.image.trim() : req.body.image;
-      const validation = new Validator(req.body, Meal.mealRules());
+      const validation = new Validator(req.body, validations().mealRules);
       if (validation.passes()) {
         const user = await User.findById(req.decoded.id);
         if (user) {
@@ -58,7 +59,7 @@ export default class MealsController {
    */
   static async modifyMeal(req, res) {
     try {
-      const validation = new Validator(req.body, Meal.mealRules());
+      const validation = new Validator(req.body, validations().mealRules);
       if (validation.passes()) {
         const mealExist = await Meal.findById(req.params.id);
         if (mealExist) {
