@@ -18,7 +18,20 @@ const validations = () => ({
   signinRules: {
     email: 'required|email',
     password: 'required'
+  },
+  orderRules: {
+    mealId: 'required|integer',
+    quantity: 'required|integer'
+  },
+  menuRules: {
+    menuDate: 'required'
+  },
+  mealRules: {
+    name: 'required|min:4',
+    price: 'required|numeric|integer',
+    image: 'required'
   }
+
 });
 
 export default validations;
