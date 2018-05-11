@@ -21,7 +21,13 @@ const validations = () => ({
   },
   orderRules: {
     mealId: 'required|integer',
-    quantity: 'required|numeric'
+    menuId: 'required|integer',
+    quantity: 'required|integer'
+  },
+  updateOrderRules: {
+    mealId: 'integer',
+    menuId: 'integer',
+    quantity: 'integer'
   },
   menuRules: {
     menuDate: 'required'

@@ -1,8 +1,9 @@
 import Validator from 'validatorjs';
 import db from '../models/index';
+import checkTimeToOrder from '../util/helpers';
 import validations from '../middleware/validations';
 
-const { Order, Meal, Menu } = db;
+const { Order, Meal, Menu, MenuMeal } = db;
 
 export default class OrdersContoller {
   /**
@@ -15,30 +16,37 @@ export default class OrdersContoller {
    */
   static async makeOrder(req, res) {
     try {
-      const { mealId, quantity } = req.body;
+      const { mealId, quantity, menuId } = req.body;
       console.log(req.body);
       const validation = new Validator(req.body, validations().orderRules);
       if (validation.passes()) {
         const userId = req.decoded.id;
-        const meal = await Meal.findOne({
-          where: { id: mealId },
+        const menuMeal = await MenuMeal.findOne({
+          where: {
+            menuId,
+            mealId
+          },
           include: [
             {
-              model: Menu,
-              through: { attributes: [] }
+              model: Meal
             },
           ]
         });
-        if (meal) {
+        
+        if (menuMeal) {
+          if (!checkTimeToOrder(menuMeal.createdAt)) {
+            return res.status(400).json({ message: 'Time to order elapse' });
+          }
           const order = await Order.create({
             mealId,
             userId,
+            menuId,
             quantity
           });
+          order.dataValues.meal = menuMeal.Meal;
           return res.status(201).json({
             message: 'Order placed successfully',
             order,
-            meal
           });
         }
         return res.status(400).json({ message: 'This meal is not on this menu' });
@@ -53,35 +61,44 @@ export default class OrdersContoller {
 
   static async modifyOrder(req, res) {
     try {
-      const { mealId, quantity } = req.body;
       const orderExist = await Order.findOne({ where: { id: req.params.id } });
-      const validation = new Validator(req.body, validations().orderRules);
-      if (!validation.passes()) {
-        return res.status(400).json({ message: validation.errors.all() });
-      }
+
       if (orderExist) {
         if (orderExist.userId !== req.decoded.id) {
           return res.status(400).json({ message: 'This Order does not belong to this user' });
         }
-        const meal = await Meal.findOne({
-          where: { id: mealId },
+
+        console.log(orderExist.dataValues);
+        const { mealId = orderExist.dataValues.mealId, quantity = orderExist.dataValues.quantity, menuId = orderExist.dataValues.menuId } = req.body;
+        const validation = new Validator({ mealId, quantity, menuId }, validations().orderRules);
+        if (!validation.passes()) {
+          return res.status(400).json({ message: validation.errors.all() });
+        }
+
+        const menuMeal = await MenuMeal.findOne({
+          where: {
+            menuId,
+            mealId
+          },
           include: [
             {
-              model: Menu,
-              through: { attributes: [] }
+              model: Meal
             },
           ]
         });
-        if (meal) {
+        if (menuMeal) {
+          if (!checkTimeToOrder(menuMeal.createdAt)) {
+            return res.status(400).json({ message: 'Time to update order elapse' });
+          }
           const modifiedOrder = await orderExist.update({
-            mealId: mealId || orderExist.mealId,
-            quantity: quantity || orderExist.quantity,
-            userId: orderExist.userId
+            mealId,
+            menuId,
+            quantity
           });
+          modifiedOrder.dataValues.meal = menuMeal.Meal;
           return res.status(201).json({
             message: 'Order modified successfully',
             modifiedOrder,
-            meal
           });
         }
         return res.status(400).json({ message: 'This meal is not on this menu' });
@@ -96,7 +113,13 @@ export default class OrdersContoller {
 
   static async getOrder(req, res) {
     try {
-      const orders = await Order.findAll();
+      const orders = await Order.findAll({
+        include: [
+          {
+            model: Meal
+          },
+        ]
+      });
       return res.status(200).json({
         message: 'All Orders',
         orders
