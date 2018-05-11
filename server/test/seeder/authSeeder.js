@@ -4,7 +4,7 @@ const { User } = db;
 
 const seeder = {
   emptyUserTable(done) {
-    User.destroy({ truncate: true })
+    User.destroy({ truncate: true, cascade: true, restartIdentity: true })
       .then(() => done())
       .catch(err => done(err));
   },

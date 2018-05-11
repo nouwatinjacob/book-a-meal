@@ -1,10 +1,6 @@
 import Validator from 'validatorjs';
-import moment from 'moment';
-import Sequelize from 'sequelize';
 import db from '../models/index';
 import validations from '../middleware/validations';
-
-const { Op } = Sequelize;
 
 const { Order, Meal, Menu } = db;
 
@@ -12,14 +8,14 @@ export default class OrdersContoller {
   /**
    * @description - Make order
    *
-   * @param { object } req
-   * @param { object } res
+   * @param { object } request
+   * @param { object } response
    *
    * @returns { object } object
    */
   static async makeOrder(req, res) {
     try {
-      const { mealId, quantity, menuId } = req.body;
+      const { mealId, quantity } = req.body;
       console.log(req.body);
       const validation = new Validator(req.body, validations().orderRules);
       if (validation.passes()) {
@@ -29,8 +25,7 @@ export default class OrdersContoller {
           include: [
             {
               model: Menu,
-              through: { attributes: [] },
-              where: { menuId }
+              through: { attributes: [] }
             },
           ]
         });
@@ -58,10 +53,10 @@ export default class OrdersContoller {
 
   static async modifyOrder(req, res) {
     try {
-      const { mealId, quantity, menuId } = req.body;
+      const { mealId, quantity } = req.body;
       const orderExist = await Order.findOne({ where: { id: req.params.id } });
       const validation = new Validator(req.body, validations().orderRules);
-      if (!validation) {
+      if (!validation.passes()) {
         return res.status(400).json({ message: validation.errors.all() });
       }
       if (orderExist) {
@@ -73,12 +68,10 @@ export default class OrdersContoller {
           include: [
             {
               model: Menu,
-              through: { attributes: [] },
-              where: { id: menuId }
+              through: { attributes: [] }
             },
           ]
         });
-        console.log(meal);
         if (meal) {
           const modifiedOrder = await orderExist.update({
             mealId: mealId || orderExist.mealId,
@@ -94,6 +87,20 @@ export default class OrdersContoller {
         return res.status(400).json({ message: 'This meal is not on this menu' });
       }
       return res.status(400).json({ message: 'Order does not exist' });
+    } catch (error) {
+      return res.status(400).json({
+        message: 'Error processing request', error: error.toString()
+      });
+    }
+  }
+
+  static async getOrder(req, res) {
+    try {
+      const orders = await Order.findAll();
+      return res.status(200).json({
+        message: 'All Orders',
+        orders
+      });
     } catch (error) {
       return res.status(400).json({
         message: 'Error processing request', error: error.toString()

@@ -43,13 +43,19 @@ export default class MenusController {
           });
           const acceptedIds = [];
           meals.map(meal => acceptedIds.push(meal.id));
+          console.log(acceptedIds);
 
-          const menu = await Menu.create({ menuDate, userId });
-          const menuMeal = await menu.addMeals([...acceptedIds]);
+          if (acceptedIds.length > 0) {
+            const menu = await Menu.create({ menuDate, userId });
+            const menuMeal = await menu.addMeals([...acceptedIds]);
 
-          return res.status(201).json({
-            message: 'Meal added to Menu',
-            meals
+            return res.status(201).json({
+              message: 'Meal added to Menu',
+              meals
+            });
+          }
+          return res.status(400).json({
+            message: 'None of the meals belong to caterer'
           });
         }
         return res.status(400).json({ message: 'The Date must be of format YYYY-MM-DD' });

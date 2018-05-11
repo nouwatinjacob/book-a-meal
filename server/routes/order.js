@@ -6,6 +6,10 @@ const orderRoutes = (router) => {
     .post(
       authMiddleware.verifyToken, authMiddleware.isCustomer,
       OrdersController.makeOrder
+    )
+    .get(
+      authMiddleware.verifyToken, authMiddleware.isCaterer,
+      OrdersController.getOrder
     );
   router.route('/orders/:id').put(
     authMiddleware.verifyToken, authMiddleware.isCustomer,

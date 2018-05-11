@@ -1,4 +1,3 @@
-import jwtDecode from 'jwt-decode';
 import request from 'supertest';
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
@@ -15,28 +14,22 @@ describe('POST api/v1/users/signup', () => {
   before(seeder.addCatererToDb);// Add caterer to DB
 
   describe('test for All inputs', () => {
-    it('should return status code 422 and a message when fullname' +
+    it('should return status code 400 and a message when firstname' +
       ' is not given', (done) => {
       request(app)
         .post('/api/v1/auth/signup')
         .send(seeder.setCustomerData(
-          'zachangdawuda@gmail.com', 'password', 'password', '',
+          'jaysansa@gmail.com', 'password', 'password', '',
           'Kunle', 'customer'
         ))
         .end((err, res) => {
-          expect(res.statusCode).to.equal(422);
-          expect(res.body).to.deep.equal({
-            message: {
-              firstName: [
-                'The firstName field is required.'
-              ]
-            }
-          });
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.message.firstName[0]).to.deep.equal('The firstName field is required.');
           done();
         });
     });
-    it('should return status code 422 and a message when fullname' +
-      ' is not given', (done) => {
+    it('should return status code 400 and a message when firstname' +
+      ' less than 3 character', (done) => {
       request(app)
         .post('/api/v1/auth/signup')
         .send(seeder.setCustomerData(
@@ -44,38 +37,27 @@ describe('POST api/v1/users/signup', () => {
           'Kunle', 'customer'
         ))
         .end((err, res) => {
-          expect(res.statusCode).to.equal(422);
-          expect(res.body).to.deep.equal({
-            message: {
-              firstName: [
-                'The firstName must be at least 3 characters.'
-              ]
-            }
-          });
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.message.firstName[0])
+            .to.deep.equal('The firstName must be at least 3 characters.');
           done();
         });
     });
-    it('should return status code 422 and a message when lastname' +
+    it('should return status code 400 and a message when lastname' +
       ' is not given', (done) => {
       request(app)
         .post('/api/v1/auth/signup')
         .send(seeder.setCustomerData(
-          'zachangdawuda@gmail.com', 'password', 'password', 'Kolawole',
+          'jaysansa@gmail.com', 'password', 'password', 'Kolawole',
           '', 'customer'
         ))
         .end((err, res) => {
-          expect(res.statusCode).to.equal(422);
-          expect(res.body).to.deep.equal({
-            message: {
-              lastName: [
-                'The lastName field is required.'
-              ]
-            }
-          });
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.message.lastName[0]).to.deep.equal('The lastName field is required.');
           done();
         });
     });
-    it('should return status code 422 and a message when email' +
+    it('should return status code 400 and a message when email' +
       ' is not given', (done) => {
       request(app)
         .post('/api/v1/auth/signup')
@@ -84,36 +66,41 @@ describe('POST api/v1/users/signup', () => {
           'Olawale', 'customer'
         ))
         .end((err, res) => {
-          expect(res.statusCode).to.equal(422);
-          expect(res.body).to.deep.equal({
-            message: {
-              email: [
-                'The email field is required.'
-              ]
-            }
-          });
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.message.email[0]).to.deep.equal('The email field is required.');
           done();
         });
     });
-    it('should return status code 422 and a message when password' +
+    it('should return status code 400 and a message when password' +
       ' is not given', (done) => {
       request(app)
         .post('/api/v1/auth/signup')
         .send(seeder.setCustomerData(
-          'jay@gmail.com', '', 'password', 'Kolawole',
+          'jaysansa@gmail.com', '', 'password', 'Kolawole',
           'Olawale', 'customer'
         ))
         .end((err, res) => {
-          expect(res.statusCode).to.equal(422);
-          expect(res.body).to.deep.equal({
-            message: {
-              password: [
-                'The password field is required.'
-              ]
-            }
-          });
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.message.password[0]).to.deep.equal('The password field is required.');
           done();
         });
     });
+    it.only(
+      'should return status code 201 and a message when user registered successfully',
+      (done) => {
+        request(app)
+          .post('/api/v1/auth/signup')
+          .send(seeder.setCustomerData(
+            'jaysansa@gmail.com', 'password', 'password', 'Kolawole',
+            'Olawale', 'customer'
+          ))
+          .end((err, res) => {
+            expect(res.statusCode).to.equal(201);
+            expect(res.body.message).to.deep.equal('Registration Successful');
+            expect(res.body.user.email).to.deep.equal('jaysansa@gmail.com');
+            done();
+          });
+      }
+    );
   });
 });
