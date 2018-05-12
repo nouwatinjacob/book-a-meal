@@ -3,7 +3,7 @@ import db from '../models/index';
 import checkTimeToOrder from '../util/helpers';
 import validations from '../middleware/validations';
 
-const { Order, Meal, Menu, MenuMeal } = db;
+const { Order, Meal, MenuMeal } = db;
 
 export default class OrdersContoller {
   /**
@@ -32,7 +32,7 @@ export default class OrdersContoller {
             },
           ]
         });
-        
+
         if (menuMeal) {
           if (!checkTimeToOrder(menuMeal.createdAt)) {
             return res.status(400).json({ message: 'Time to order elapse' });
@@ -69,7 +69,11 @@ export default class OrdersContoller {
         }
 
         console.log(orderExist.dataValues);
-        const { mealId = orderExist.dataValues.mealId, quantity = orderExist.dataValues.quantity, menuId = orderExist.dataValues.menuId } = req.body;
+        const {
+          mealId = orderExist.dataValues.mealId,
+          quantity = orderExist.dataValues.quantity,
+          menuId = orderExist.dataValues.menuId
+        } = req.body;
         const validation = new Validator({ mealId, quantity, menuId }, validations().orderRules);
         if (!validation.passes()) {
           return res.status(400).json({ message: validation.errors.all() });
