@@ -11,6 +11,12 @@ const menuMealModel = (sequelize, DataTypes) => {
     ]
   });
 
+  MenuMeal.associate = (models) => {
+    MenuMeal.belongsTo(models.Meal, {
+      foreignKey: 'mealId',
+    });
+  };
+
   return MenuMeal;
 };
 

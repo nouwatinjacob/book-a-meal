@@ -11,7 +11,7 @@ module.exports = {
     */
     return queryInterface.addConstraint('MenuMeals', ['menuId', 'mealId'], {
       type: 'unique',
-      name: 'MenuMeals_meanuId_mealId'
+      name: 'MenuMeals_menuId_mealId'
     });
   },
 
@@ -23,6 +23,6 @@ module.exports = {
       Example:
       return queryInterface.dropTable('users');
     */
-    return queryInterface.removeConstraint('MenuMeal', 'MenuMeal_meanuId_mealId');
+    return queryInterface.removeConstraint('MenuMeal', 'MenuMeal_menuId_mealId');
   }
 };

@@ -45,7 +45,7 @@ export default class UserController {
               ...customerDetails
             });
 
-            const user = lodash.pick(newUser, ['id', 'email', 'userType']);
+            const user = lodash.pick(newUser, ['id', 'email', 'userType', 'firstName', 'lastName']);
             const token = jwt.sign(user, secret, { expiresIn: 86400 });
             return res.status(201).json({
               message: 'Registration Successful',
@@ -54,10 +54,10 @@ export default class UserController {
             });
           }
           return res.status(409).json({
-            message: 'A user with that email already exists'
+            message: 'email or password already exists'
           });
         }
-        return res.status(422).json({ message: customerValidation.errors.all() });
+        return res.status(400).json({ message: customerValidation.errors.all() });
       } else if (userType === 'caterer') {
         const catererValidation = new Validator(
           { ...catererDetails, ...userDetails, password_confirmation },
@@ -70,7 +70,8 @@ export default class UserController {
               ...userDetails,
               ...catererDetails
             });
-            const user = lodash.pick(newUser, ['id', 'email', 'userType']);
+            const user = lodash.pick(newUser, ['id', 'email', 'userType',
+              'businessName', 'businessAddress', 'ownerName']);
             const token = jwt.sign(user, secret, { expiresIn: 86400 });
             return res.status(201).json({
               message: 'Registration Successful',
@@ -79,10 +80,10 @@ export default class UserController {
             });
           }
           return res.status(409).json({
-            message: 'A user with that email already exists'
+            message: 'email or password already exists'
           });
         }
-        return res.status(422).json({ message: catererValidation.errors.all() });
+        return res.status(400).json({ message: catererValidation.errors.all() });
       }
       return res.status(400).json({ message: 'Request type must be customer or caterer' });
     } catch (error) {

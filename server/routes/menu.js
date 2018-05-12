@@ -8,7 +8,7 @@ const menuRoutes = (router) => {
       MenusController.setMenu
     )
     .get(
-      authMiddleware.verifyToken, authMiddleware.isCustomer,
+      authMiddleware.verifyToken,
       MenusController.getMenu
     );
 };

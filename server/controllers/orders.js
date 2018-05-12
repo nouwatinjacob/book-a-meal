@@ -1,93 +1,137 @@
-import validator from 'validator';
-import menus from '../models/menus';
-import orders from '../models/orders';
+import Validator from 'validatorjs';
+import db from '../models/index';
+import checkTimeToOrder from '../util/helpers';
+import validations from '../middleware/validations';
 
-class OrdersController {
-  constructor(router) {
-    this.menus = menus;
-    this.orders = orders;
-    this.router = router;
-    this.registerRouters();
-  }
+const { Order, Meal, MenuMeal } = db;
 
-  registerRouters() {
-    this.makeOrder = this.makeOrder.bind(this);
-    this.makeOrder = this.makeOrder.bind(this);
-    this.modifyOrder = this.modifyOrder.bind(this);
-  }
+export default class OrdersContoller {
+  /**
+   * @description - Make order
+   *
+   * @param { object } request
+   * @param { object } response
+   *
+   * @returns { object } object
+   */
+  static async makeOrder(req, res) {
+    try {
+      const { mealId, quantity, menuId } = req.body;
+      console.log(req.body);
+      const validation = new Validator(req.body, validations().orderRules);
+      if (validation.passes()) {
+        const userId = req.decoded.id;
+        const menuMeal = await MenuMeal.findOne({
+          where: {
+            menuId,
+            mealId
+          },
+          include: [
+            {
+              model: Meal
+            },
+          ]
+        });
 
-  makeOrder(req, res) {
-    const { mealId, quantity } = req.body;
-    if (!validator.isNumeric(mealId)) {
+        if (menuMeal) {
+          if (!checkTimeToOrder(menuMeal.createdAt)) {
+            return res.status(400).json({ message: 'Time to order elapse' });
+          }
+          const order = await Order.create({
+            mealId,
+            userId,
+            menuId,
+            quantity
+          });
+          order.dataValues.meal = menuMeal.Meal;
+          return res.status(201).json({
+            message: 'Order placed successfully',
+            order,
+          });
+        }
+        return res.status(400).json({ message: 'This meal is not on this menu' });
+      }
+      return res.status(400).json({ message: validation.errors.all() });
+    } catch (error) {
       return res.status(400).json({
-        Message: 'Enter a valid '
-      });
-    } else if (!validator.isNumeric(quantity)) {
-      return res.status(400).json({
-        Message: 'Enter positive integer'
-      });
-    } else if (!quantity) {
-      return res.status(400).json({
-        Message: 'Specify the quatity of your order'
-      });
-    } else if (!mealId) {
-      return res.status(400).json({
-        Message: 'Enter valid meal id'
+        message: 'Error processing request', error: error.toString()
       });
     }
-    const orderId = (this.orders[this.orders.length - 1].id) + 1;
-    const orderedMeal = this.menus.find(meal => parseInt(meal.mealId, 10) === parseInt(mealId, 10));
-    const mealExists = this.orders.find(meal => parseInt(meal.orderedMeal.mealId, 10) === parseInt(mealId, 10));
-    if (mealExists) {
-      return res.status(409).json({
-        Message: 'You have this meal orderd already'
+  }
+
+  static async modifyOrder(req, res) {
+    try {
+      const orderExist = await Order.findOne({ where: { id: req.params.id } });
+
+      if (orderExist) {
+        if (orderExist.userId !== req.decoded.id) {
+          return res.status(400).json({ message: 'This Order does not belong to this user' });
+        }
+
+        console.log(orderExist.dataValues);
+        const {
+          mealId = orderExist.dataValues.mealId,
+          quantity = orderExist.dataValues.quantity,
+          menuId = orderExist.dataValues.menuId
+        } = req.body;
+        const validation = new Validator({ mealId, quantity, menuId }, validations().orderRules);
+        if (!validation.passes()) {
+          return res.status(400).json({ message: validation.errors.all() });
+        }
+
+        const menuMeal = await MenuMeal.findOne({
+          where: {
+            menuId,
+            mealId
+          },
+          include: [
+            {
+              model: Meal
+            },
+          ]
+        });
+        if (menuMeal) {
+          if (!checkTimeToOrder(menuMeal.createdAt)) {
+            return res.status(400).json({ message: 'Time to update order elapse' });
+          }
+          const modifiedOrder = await orderExist.update({
+            mealId,
+            menuId,
+            quantity
+          });
+          modifiedOrder.dataValues.meal = menuMeal.Meal;
+          return res.status(201).json({
+            message: 'Order modified successfully',
+            modifiedOrder,
+          });
+        }
+        return res.status(400).json({ message: 'This meal is not on this menu' });
+      }
+      return res.status(400).json({ message: 'Order does not exist' });
+    } catch (error) {
+      return res.status(400).json({
+        message: 'Error processing request', error: error.toString()
       });
-    } else if (orderedMeal) {
-      this.orders.push({
-        id: orderId,
-        orderedMeal,
-        quantity
+    }
+  }
+
+  static async getOrder(req, res) {
+    try {
+      const orders = await Order.findAll({
+        include: [
+          {
+            model: Meal
+          },
+        ]
       });
       return res.status(200).json({
-        Message: 'Meal added to your order',
-        orderId,
-        orderedMeal,
-        quantity
+        message: 'All Orders',
+        orders
       });
-    }
-    return res.status(400).json({ Message: 'Meal not available' });
-  }
-
-  getAllOrders(req, res) {
-    if (this.orders.length < 1) {
-      return res.status(404).json({
-        message: 'No orders found',
-      });
-    }
-    return res.status(200).json({ orders: this.orders });
-  }
-
-  modifyOrder(req, res) {
-    const orderedItem = this.orders.find(order => order.id === parseInt(req.params.id, 10));
-    console.log(orderedItem, '=======');
-    // const mealId = req.body.mealId;
-    const mealId = req.body.mealId ? req.body.mealId : orderedItem.orderedMeal.id;
-    console.log(mealId, '<<<<<<');
-    const quantity = req.body.quantity ? req.body.quantity : orderedItem.orderedMeal.quantity;
-    const newOrder = this.menus.find(meal => meal.mealId === parseInt(mealId, 10));
-    console.log(newOrder);
-    if (!orderedItem) {
+    } catch (error) {
       return res.status(400).json({
-        Message: 'This Order does not exist',
+        message: 'Error processing request', error: error.toString()
       });
     }
-    orderedItem.orderedMeal = newOrder;
-    orderedItem.quantity = quantity;
-    return res.status(200).json({
-      Message: 'Order successfully modified',
-      orderedItem
-    });
   }
 }
-
-export default new OrdersController();
