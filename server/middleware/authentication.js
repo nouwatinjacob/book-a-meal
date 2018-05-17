@@ -20,7 +20,6 @@ export default class Auth {
               return res.status(400).json({ message: 'This user does not exist' });
             }
             req.decoded = decoded;
-            console.log(decoded, '<<<<<<<<<');
             return next();
           })
           .catch(err => res.status(404).json(err));

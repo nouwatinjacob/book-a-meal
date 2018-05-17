@@ -27,4 +27,4 @@ const config = {
   }
 };
 
-module.exports = config[process.env.NODE_ENV || 'development' || 'test'];
+module.exports = config[process.env.NODE_ENV || 'development'];

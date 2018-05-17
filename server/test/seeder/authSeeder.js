@@ -76,6 +76,17 @@ const seeder = {
     }).then(() => done())
       .catch(err => done(err));
   },
+  addCatererToDb1(done) {
+    User.create({
+      businessAddress: '12, Liasu Road, Ikotun',
+      businessName: 'Ounje Ayo Food Canteen',
+      ownerName: 'Okafor Emmanuel',
+      email: 'caterer@gmail.com',
+      password: 'kalamusu',
+      userType: 'caterer'
+    }).then(() => done())
+      .catch(err => done(err));
+  },
 };
 
 export default seeder;
