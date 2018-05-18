@@ -7,8 +7,10 @@ branches:
     - develop
     
 before_script:
+  - psql -c 'create database travis;' -U postgres
 
 env:
+    - SECRET_TOKEN=abcxyz
     
 script:
   - npm test
