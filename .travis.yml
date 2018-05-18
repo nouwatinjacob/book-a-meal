@@ -4,7 +4,6 @@ node_js:
 
 branches:
   only:
-    - challenge-2
     - develop
     
 before_script:
