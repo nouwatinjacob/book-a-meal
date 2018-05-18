@@ -65,6 +65,16 @@ const seeder = {
     }).then(() => done())
       .catch(err => done(err));
   },
+  addCustomerToDb1(done) {
+    User.create({
+      firstName: 'Sunday',
+      lastName: 'Jacob',
+      email: 'jaysansa@gmail.com',
+      password: 'kalamusu',
+      userType: 'customer'
+    }).then(() => done())
+      .catch(err => done(err));
+  },
   addCatererToDb(done) {
     User.create({
       businessAddress: '12, Adio Str., Okesokori',
