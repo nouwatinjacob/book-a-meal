@@ -12,19 +12,19 @@ export default class MealsController {
   /**
    * @description - Create new Meal
    *
-   * @param  { object } req
-   * @param  { object } res
+   * @param  { object } request
+   * @param  { object } response
    *
    *
    * @results  { object } object
    */
   static async addMeal(req, res) {
     try {
-      const price = parseInt(req.body.price, 10);
-      const name = req.body.name ? req.body.name.trim() : req.body.name;
-      const image = req.body.image ? req.body.image.trim() : req.body.image;
       const validation = new Validator(req.body, validations().mealRules);
       if (validation.passes()) {
+        const price = parseInt(req.body.price, 10);
+        const name = req.body.name.trim();
+        const image = req.body.image.trim();
         const user = await User.findById(req.decoded.id);
         if (user) {
           const foundMeal = await Meal.findOne({ where: { name } });
@@ -51,8 +51,8 @@ export default class MealsController {
   /**
    * @description - Modify Meal
    *
-   * @param  { object } req
-   * @param  { object } res
+   * @param  { object } request
+   * @param  { object } response
    *
    *
    * @results  { object } object
@@ -76,11 +76,10 @@ export default class MealsController {
           }
           const meal = await mealExist.update({
             name: req.body.name ? req.body.name.trim() : mealExist.name,
-            price: req.body.price ? req.body.price.trim() : mealExist.price,
-            image: req.body.image ? req.body.image.trim() : mealExist.image,
-            userId: mealExist.userId
+            price: req.body.price ? parseInt(req.body.price, 10) : mealExist.price,
+            image: req.body.image ? req.body.image.trim() : mealExist.image
           });
-          return res.status(201).json({
+          return res.status(200).json({
             message: 'Meal successfully updated',
             meal
           });
@@ -98,8 +97,8 @@ export default class MealsController {
   /**
    * @description - Get all meals belonging to A Caterer
    *
-   * @param  { object } req
-   * @param  { object } res
+   * @param  { object } request
+   * @param  { object } response
    *
    *
    * @results  { object } object
@@ -124,8 +123,8 @@ export default class MealsController {
   /**
    * @description - Delete a meal
    *
-   * @param  { object } req
-   * @param  { object } res
+   * @param  { object } request
+   * @param  { object } response
    *
    *
    * @results  {  }

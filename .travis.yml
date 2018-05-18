@@ -1,15 +1,16 @@
 language: node_js
 node_js:
-  - 8
+  - 8.11.1
 
 branches:
   only:
-    - challenge-2
     - develop
     
 before_script:
+  - psql -c 'create database travis;' -U postgres
 
 env:
+    - SECRET_TOKEN=abcxyz
     
 script:
   - npm test
