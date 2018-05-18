@@ -36,7 +36,7 @@ npm manifest:
       "start:dev": "nodemon server/server.js --exec babel-node",
       "start": "node ./dist/server.js",
       "heroku-postbuild": "npx babel server/ --out-dir dist/ --ignore server/test",
-      "test:endpoint": "./node_modules/.bin/cross-env NODE_ENV=test sequelize db:migrate:undo:all && sequelize db:migrate && nyc --reporter=html mocha --require babel-core/register server/test/*.test.js --exit",
+      "test:endpoint": "set NODE_ENV=test sequelize db:migrate:undo:all && sequelize db:migrate && nyc --reporter=html mocha --require babel-core/register server/test/*.test.js --exit",
       "test": "yarn test:endpoint && nyc report",
       "coverage": "nyc report --reporter=text-lcov | coveralls"
     },
