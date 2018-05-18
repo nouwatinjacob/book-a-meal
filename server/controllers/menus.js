@@ -43,11 +43,10 @@ export default class MenusController {
           });
           const acceptedIds = [];
           meals.map(meal => acceptedIds.push(meal.id));
-          console.log(acceptedIds);
 
           if (acceptedIds.length > 0) {
             const menu = await Menu.create({ menuDate, userId });
-            const menuMeal = await menu.addMeals([...acceptedIds]);
+            await menu.addMeals([...acceptedIds]);
 
             return res.status(201).json({
               message: 'Meal added to Menu',
@@ -78,7 +77,7 @@ export default class MenusController {
    */
   static async getMenu(req, res) {
     try {
-      const menuDate = req.query.date;
+      const { menuDate } = req.query;
       if ((moment(menuDate, 'YYYY-MM-DD', true).isValid())) {
         const dateMenu = await Menu.findAll({
           where: { menuDate },
