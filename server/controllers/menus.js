@@ -12,8 +12,8 @@ export default class MenusController {
   /**
    * @description - Caterer set menu for a day
    *
-   * @param { object } req
-   * @param { object } res
+   * @param { object } request
+   * @param { object } response
    *
    * @returns { object } object
    */
@@ -50,6 +50,7 @@ export default class MenusController {
 
             return res.status(201).json({
               message: 'Meal added to Menu',
+              menu,
               meals
             });
           }
@@ -70,8 +71,8 @@ export default class MenusController {
   /**
    * @description - Get menu for a day
    *
-   * @param { object } req
-   * @param { object } res
+   * @param { object } request
+   * @param { object } response
    *
    * @returns { object } object
    */

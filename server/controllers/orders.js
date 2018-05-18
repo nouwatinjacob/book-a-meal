@@ -17,7 +17,6 @@ export default class OrdersContoller {
   static async makeOrder(req, res) {
     try {
       const { mealId, quantity, menuId } = req.body;
-      console.log(req.body);
       const validation = new Validator(req.body, validations().orderRules);
       if (validation.passes()) {
         const userId = req.decoded.id;
@@ -34,9 +33,9 @@ export default class OrdersContoller {
         });
 
         if (menuMeal) {
-          if (!checkTimeToOrder(menuMeal.createdAt)) {
-            return res.status(400).json({ message: 'Time to order elapse' });
-          }
+          // if (!checkTimeToOrder(menuMeal.createdAt)) {
+          //   return res.status(400).json({ message: 'Time to order elapse' });
+          // }
           const order = await Order.create({
             mealId,
             userId,
@@ -59,8 +58,22 @@ export default class OrdersContoller {
     }
   }
 
+  /**
+   * @description - Modify Order
+   *
+   * @param { object } request
+   * @param { object } response
+   *
+   * @returns { object } object
+   */
   static async modifyOrder(req, res) {
     try {
+      const orderId = parseInt(req.params.id, 10);
+      if (!(Number.isInteger(orderId)) && (Number.isNaN(orderId))) {
+        return res.status(400).json({
+          message: 'Provide valid order id'
+        });
+      }
       const orderExist = await Order.findOne({ where: { id: req.params.id } });
 
       if (orderExist) {
@@ -68,7 +81,6 @@ export default class OrdersContoller {
           return res.status(400).json({ message: 'This Order does not belong to this user' });
         }
 
-        console.log(orderExist.dataValues);
         const {
           mealId = orderExist.dataValues.mealId,
           quantity = orderExist.dataValues.quantity,
@@ -91,16 +103,16 @@ export default class OrdersContoller {
           ]
         });
         if (menuMeal) {
-          if (!checkTimeToOrder(menuMeal.createdAt)) {
-            return res.status(400).json({ message: 'Time to update order elapse' });
-          }
+          // if (!checkTimeToOrder(menuMeal.createdAt)) {
+          //   return res.status(400).json({ message: 'Time to update order elapse' });
+          // }
           const modifiedOrder = await orderExist.update({
             mealId,
             menuId,
             quantity
           });
           modifiedOrder.dataValues.meal = menuMeal.Meal;
-          return res.status(201).json({
+          return res.status(200).json({
             message: 'Order modified successfully',
             modifiedOrder,
           });
@@ -115,6 +127,14 @@ export default class OrdersContoller {
     }
   }
 
+  /**
+   * @description - Get all the order
+   *
+   * @param { object } request
+   * @param { object } response
+   *
+   * @returns { object } object
+   */
   static async getOrder(req, res) {
     try {
       const orders = await Order.findAll({
