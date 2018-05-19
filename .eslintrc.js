@@ -6,6 +6,13 @@ module.exports = {
     "es6": true,
     "mocha": true
   },
+  "parserOptions": {
+    "ecmaVersion": 8,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
   rules:{
     "linebreak-style": 0,
     "max-len": [2, 100, 2],
@@ -18,6 +25,7 @@ module.exports = {
     "class-methods-use-this": 0,
     "import/no-named-as-default": 0,
     "no-nested-ternary": 0,
+    "no-undef": 0,
     "no-unused-vars": 1,
     "global-require": 1,
     "curly": ["error", "multi-line"],
