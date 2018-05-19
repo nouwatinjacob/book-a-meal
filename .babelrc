@@ -2,14 +2,11 @@
   "presets": [
     [
       "env",
-      {
-        "targets": {
-          "node": "8"
-        }
-      }
+      "react"
     ]
   ],
   "plugins": [
-    "transform-object-rest-spread"
+    "transform-object-rest-spread",
+    "transform-react-jsx"
   ]
 }
