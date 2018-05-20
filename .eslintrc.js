@@ -26,6 +26,7 @@ module.exports = {
     "import/no-named-as-default": 0,
     "no-nested-ternary": 0,
     "no-undef": 0,
+    "no-script-url": 0,
     "no-unused-vars": 1,
     "global-require": 1,
     "curly": ["error", "multi-line"],

@@ -2,23 +2,12 @@ const path = require('path');
 const webpack = require('webpack');
 
 const PATHS = {
-  dist: path.join(__dirname, 'client/src/dist')
+  build: path.join(__dirname, 'client/src/build')
 };
 
 module.exports = {
   entry: {
     app: './client/src/index.js'
-  },
-  module: {
-    rules: [
-      {
-        test: /\.(js|jsx)?$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader'
-        },
-      }
-    ]
   },
   output: {
     path: PATHS.dist,
@@ -28,11 +17,42 @@ module.exports = {
   resolve: {
     extensions: ['*', '.js', '.jsx']
   },
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader'
+        },
+      },
+      {
+        test: /\.s?css$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'sass-loader'
+        ]
+      },
+      {
+        test: /\.(gif|png|jpe?g|svg)$/i,
+        use: [
+          'file-loader',
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              bypassOnDebug: true,
+            },
+          },
+        ],
+      }
+    ]
+  },
   plugins: [
     new webpack.HotModuleReplacementPlugin()
   ],
   devServer: {
-    contentBase: PATHS.dist,
+    contentBase: PATHS.build,
     hot: true
   },
 };
