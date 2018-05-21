@@ -76,7 +76,10 @@ button a {
 
 /* When the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.icon) */
 @media screen and (max-width: 600px) {
-  .header-right .button {display: none;}
+  .header-right .button {
+    font-weight: 100;
+    font-size: 10px;
+  }
   .header-right a.icon {
     float: right;
     display: block;

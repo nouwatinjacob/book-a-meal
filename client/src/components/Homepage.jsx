@@ -3,25 +3,25 @@ import logo from '../assets/img/bookameal-logo.png';
 import meals from '../assets/img/Meal-menu.png';
 import delivery from '../assets/img/fast-delivery.png';
 import realTime from '../assets/img/24-hrs.png';
+import Header from './partials/Header.jsx';
 
+/**
+ * Homepage class declaration
+ *
+ * @class Homepage
+ *
+ * @extends {React.Component}
+ */
 class HomePage extends React.Component {
+  /**
+   * Renders Homepage component
+   *
+   * @return {XML} JSX
+   */
   render() {
     return (
       <div className='container'>
-      <div className='header'>
-        <div className='wrapper'>
-          <a href='index.html'>
-            <img src={ logo } alt='Logo' />
-          </a>
-          <div className='header-right' id='myTopnav'>
-            <a className='logo' href='./signin.html'>SIGN IN</a>
-            <button className='button' id='header_button'>
-              <a href='./signup.html'>CREATE ACCOUNT</a>
-            </button>
-            <a href='javascript:void(0);' className='icon' onClick='myFunction()'>&#9776;</a>
-          </div>
-        </div>
-      </div>
+      <Header/>
 
       <div className='container'>
         <div className='leading'>
