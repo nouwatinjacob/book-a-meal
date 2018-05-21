@@ -3,5 +3,8 @@
 } 
 
 .pageNotFound {
-  background-image: url('../img/Page-not-found.png') ;
+  background: url('../img/Page-not-found.png') center rgb(252, 251, 251) no-repeat;
+  background-size: cover;
+  height: 90vh;
+  margin-top: 5px;
 }
