@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Link, NavLink, Switch } from 'react-router-dom';
 import HomePage from '../components/Homepage.jsx';
 import Login from '../components/auth/Signin.jsx';
 import CustomerSignup from '../components/auth/CustomerSignup.jsx';
+import CatererSignup from '../components/auth/CatererSignup.jsx';
 import PageNotFound from '../components/PageNotfound.jsx';
 
 const AppRouter = () => (
@@ -12,7 +13,7 @@ const AppRouter = () => (
       <Route path='/' component={HomePage} exact={true}/>
       <Route path='/login' component={Login}/>
       <Route path='/signup' component={CustomerSignup}/>
-      <Route path='/caterer-signup' component={CustomerSignup}/>
+      <Route path='/caterer-signup' component={CatererSignup}/>
       <Route component={PageNotFound}/>
     </Switch>
     </div>

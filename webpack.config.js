@@ -53,6 +53,7 @@ module.exports = {
   ],
   devServer: {
     contentBase: PATHS.build,
+    historyApiFallback: true,
     hot: true
   },
 };

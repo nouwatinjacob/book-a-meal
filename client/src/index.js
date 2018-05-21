@@ -1,13 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import AppRouter from './routes/AppRouter';
 import './assets/css/compiled.css';
-import HomePage from './components/Homepage.jsx';
-
-// const photo = (
-//   <img src='./assets/img/bookameal-logo.png' />
-// );
 
 ReactDOM.render(
-  <HomePage/>,
+  <AppRouter/>,
   document.getElementById('root')
 );
