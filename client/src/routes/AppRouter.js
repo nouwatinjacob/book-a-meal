@@ -8,6 +8,13 @@ import PageNotFound from '../components/PageNotfound.jsx';
 import MenuMeal from '../components/customer/MenuMeal.jsx';
 import Confirmorder from '../components/customer/ConfirmOrder.jsx';
 import ModifyOrder from '../components/customer/ModifyOrder.jsx';
+import UserOrder from '../components/customer/UserOrders.jsx';
+import MyMeals from '../components/caterer/MyMeals.jsx';
+import Orders from '../components/caterer/Orders.jsx';
+import OrderDetail from '../components/caterer/OrderDetail.jsx';
+import AddMeal from '../components/caterer/AddMeal.jsx';
+import SetMenu from '../components/caterer/SetMenu.jsx';
+import EditMeal from '../components/caterer/EditMeal.jsx';
 
 const AppRouter = () => (
   <BrowserRouter>
@@ -19,7 +26,14 @@ const AppRouter = () => (
       <Route path='/caterer-signup' component={CatererSignup}/>
       <Route path='/user-menus' component={MenuMeal}/>
       <Route path='/confirm-order' component={Confirmorder}/>
-      <Route path='/modify-order' component={ModifyOrder}/>
+      <Route path='/modify-order/:orderId' component={ModifyOrder}/>
+      <Route path='/user-order' component={UserOrder}/>
+      <Route path='/my-meals' component={MyMeals}/>
+      <Route path='/orders' component={Orders}/>
+      <Route path='/order-detail' component={OrderDetail}/>
+      <Route path='/add-meal' component={AddMeal}/>
+      <Route path='/edit-meal/:mealId' component={EditMeal}/>
+      <Route path='/set-menu' component={SetMenu}/>
       <Route path='*' component={PageNotFound}/>
     </Switch>
     </div>

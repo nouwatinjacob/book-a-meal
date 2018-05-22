@@ -2,7 +2,19 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../partials/Header.jsx';
 
+/**
+ * CustomerSignup class declaration
+ *
+ * @class CustomerSignup
+ *
+ * @extends {React.Component}
+ */
 class CustomerSignup extends React.Component {
+  /**
+    * Renders CustomerSignup component
+    *
+    * @returns {XML} XML/JSX
+*/
   render() {
     return (
       <div className='container'>

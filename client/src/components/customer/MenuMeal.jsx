@@ -172,7 +172,7 @@ class MenuMeal extends React.Component {
           </div>
       </div><br/><hr/>
 
-      <Pagination/>
+      <Pagination/><br/>
       </div>
     );
   }
