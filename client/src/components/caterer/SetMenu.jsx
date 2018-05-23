@@ -1,13 +1,22 @@
 import React from 'react';
-import Header from '../partials/Header.jsx';
 import CatererHeader from '../partials/CatererHeader.jsx';
 
+/**
+ * SetMenu class declaration
+ *
+ * @class SetMenu
+ *
+ * @extends {React.Component}
+ */
 class SetMenu extends React.Component {
+  /**
+   * Renders SetMenu component
+   *
+   * @returns {XML} XML/JSX
+   */
   render() {
     return (
       <div className='container'>
-
-        <Header/>
         <CatererHeader/>
           <div className='wrapper'>
             <div className='login'>

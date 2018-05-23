@@ -1,12 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../partials/Header.jsx';
 
+/**
+ * CatererSignup class declaration
+ *
+ * @class CatererSignup
+ *
+ * @extends {React.Component}
+ */
 class CatererSignup extends React.Component {
+  /**
+   * Renders CatererSignup component
+   *
+   * @return {XML} JSX
+   */
   render() {
     return (
       <div className='container'>
-        <Header/>
         <div className='wrapper'>
           <div className='login'>
             <div className='login-form'>

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../partials/Header.jsx';
 
 /**
  * Login class declaration
@@ -27,8 +26,7 @@ class Login extends Component {
   *
   */
   onInputChange = (event) => {
-    const { email, password } = this.state.loginData;
-    const loginData = { email, password };
+    const { loginData } = this.state;
     loginData[event.target.name] = event.target.value;
     this.setState(() => ({ loginData }));
   };
@@ -59,7 +57,6 @@ class Login extends Component {
   render() {
     return (
       <div className='container'>
-        <Header/>
 
         <div className='wrapper'>
           <div className='login'>

@@ -1,15 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../partials/Header.jsx';
 import CustomerHeader from '../partials/CustomerHeader.jsx';
 import photo from '../../assets/img/fried-rice.jpg';
 
+/**
+ * ConfirmOrder class declaration
+ *
+ * @class ConfirmOrder
+ *
+ * @extends {React.Component}
+ */
 class ConfirmOrder extends React.Component {
+
+  /**
+   * Renders ConfirmOrder component
+   *
+   * @returns {XML} XML/JSX
+   */
   render() {
     return (
       <div className='container'>
-
-        <Header/>
         <CustomerHeader/>
           <div className='wrapper'>
             <div className='reduced-container'>

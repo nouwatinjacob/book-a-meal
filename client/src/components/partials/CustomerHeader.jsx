@@ -1,7 +1,19 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
+/**
+ * CustomerHeader class declaration
+ *
+ * @class CustomerHeader
+ *
+ * @extends {React.Component}
+ */
 class CustomerHeader extends React.Component {
+  /**
+   * Renders CustomerHeader component
+   *
+   * @returns {XML} XML/JSX
+   */
   render() {
     return (
       <div className='topnav'>

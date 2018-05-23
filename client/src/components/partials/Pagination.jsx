@@ -1,6 +1,19 @@
 import React from 'react';
 
+/**
+ * Pagination class declaration
+ *
+ * @class Pagination
+ *
+ * @extends {React.Component}
+ */
 class Pagination extends React.Component {
+
+  /**
+   * Renders Pagination component
+   *
+   * @returns {XML} XML/JSX
+   */
   render() {
     return (
       <div className='wrapper search'>

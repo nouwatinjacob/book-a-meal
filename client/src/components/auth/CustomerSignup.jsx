@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../partials/Header.jsx';
 
 /**
  * CustomerSignup class declaration
@@ -18,7 +17,6 @@ class CustomerSignup extends React.Component {
   render() {
     return (
       <div className='container'>
-        <Header/>
         <div className='wrapper'>
           <div className='login'>
             <div className='login-form'>

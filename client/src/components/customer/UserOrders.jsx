@@ -1,15 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../partials/Header.jsx';
 import CustomerHeader from '../partials/CustomerHeader.jsx';
 import Pagination from '../partials/Pagination.jsx';
 
+/**
+ * UserOrder class declaration
+ *
+ * @class UserOrder
+ *
+ * @extends {React.Component}
+ */
 class UserOrder extends React.Component {
+
+  /**
+   * Renders UserOrder component
+   *
+   * @returns {XML} XML/JSX
+   */
   render() {
     return (
       <div className='container'>
-
-        <Header/>
         <CustomerHeader/>
         <div className='wrapper'>
         <table className='order-table'>

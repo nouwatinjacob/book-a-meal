@@ -54,7 +54,7 @@ module.exports = {
     "jsx-quotes": 0,
     "react/display-name": [ 1, {"ignoreTranspilerName": false }],
     "react/forbid-prop-types": [1, {"forbid": ["any"]}],
-    "react/jsx-boolean-value": 1,
+    "react/jsx-boolean-value": 0,
     "react/jsx-closing-bracket-location": 0,
     "react/jsx-curly-spacing": 1,
     "react/jsx-indent-props": 0,
@@ -80,7 +80,7 @@ module.exports = {
     "react/prop-types": 1,
     "react/react-in-jsx-scope": 1,
     "react/require-extension": 0,
-    "react/self-closing-comp": 1,
+    "react/self-closing-comp": 0,
     "react/sort-comp": 1,
     "react/wrap-multilines": 0
   }

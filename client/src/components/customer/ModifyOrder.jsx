@@ -1,15 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../partials/Header.jsx';
 import CustomerHeader from '../partials/CustomerHeader.jsx';
 import photo from '../../assets/img/fried-rice.jpg';
 
+/**
+ * ModifyOrder class declaration
+ *
+ * @class ModifyOrder
+ *
+ * @extends {React.Component}
+ */
 class ModifyOrder extends React.Component {
+
+  /**
+   * Renders ModifyOrder component
+   *
+   * @returns {XML} XML/JSX
+   */
   render() {
     return (
       <div className='container'>
-
-        <Header/>
         <CustomerHeader/>
           <div className='wrapper'>
             <div className='reduced-container'>

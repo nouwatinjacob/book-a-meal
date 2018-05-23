@@ -1,13 +1,22 @@
 import React from 'react';
-import Header from '../partials/Header.jsx';
 import CatererHeader from '../partials/CatererHeader.jsx';
 
+/**
+ * AddMeal class declaration
+ *
+ * @class AddMeal
+ *
+ * @extends {React.Component}
+ */
 class AddMeal extends React.Component {
+  /**
+   * Renders Login component
+   *
+   * @returns {XML} XML/JSX
+   */
   render() {
     return (
       <div className='container'>
-
-        <Header/>
         <CatererHeader/>
           <div className='wrapper'>
             <div className='login'>

@@ -1,7 +1,19 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
+/**
+ * CatererHeader class declaration
+ *
+ * @class CatererHeader
+ *
+ * @extends {React.Component}
+ */
 class CatererHeader extends React.Component {
+  /**
+   * Renders CatererHeader Component
+   *
+   * @returns {XML} XML/JSX
+   */
   render() {
     return (
       <div className='topnav'>

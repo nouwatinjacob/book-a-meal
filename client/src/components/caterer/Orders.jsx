@@ -1,15 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../partials/Header.jsx';
 import CatererHeader from '../partials/CatererHeader.jsx';
 import Pagination from '../partials/Pagination.jsx';
 
+/**
+ * Orders class declaration
+ *
+ * @class Orders
+ *
+ * @extends {React.Component}
+ */
 class Orders extends React.Component {
+  /**
+   * Renders Orders component
+   *
+   * @returns {XML} XML/JSX
+   */
   render() {
     return (
       <div className='container'>
-
-        <Header/>
         <CatererHeader/>
         <div className='wrapper'>
         <div className='row'>

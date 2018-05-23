@@ -4,7 +4,6 @@ import logo from '../assets/img/bookameal-logo.png';
 import meals from '../assets/img/Meal-menu.png';
 import delivery from '../assets/img/fast-delivery.png';
 import realTime from '../assets/img/24-hrs.png';
-import Header from './partials/Header.jsx';
 
 /**
  * Homepage class declaration
@@ -22,7 +21,6 @@ class HomePage extends React.Component {
   render() {
     return (
       <div className='container'>
-      <Header/>
 
       <div className='container'>
         <div className='leading'>

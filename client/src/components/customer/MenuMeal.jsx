@@ -1,18 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../partials/Header.jsx';
 import CustomerHeader from '../partials/CustomerHeader.jsx';
 import Search from '../partials/Search.jsx';
 import image from '../../assets/img/spagheti.jpg';
 import Pagination from '../partials/Pagination.jsx';
 
+/**
+ * MenuMeal class declaration
+ *
+ * @class MenuMeal
+ *
+ * @extends {React.Component}
+ */
 class MenuMeal extends React.Component {
+  /**
+   * Renders MenuMeal component
+   *
+   * @returns {XML} XML/JSX
+   */
   render() {
     return (
       <div>
           <div className='container'>
-
-            <Header/>
             <CustomerHeader/>
 
           <div className='wrapper'>

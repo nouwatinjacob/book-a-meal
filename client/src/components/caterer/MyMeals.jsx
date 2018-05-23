@@ -1,17 +1,26 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../partials/Header.jsx';
 import CatererHeader from '../partials/CatererHeader.jsx';
 import photo from '../../assets/img/fried-rice.jpg';
 import Search from '../partials/Search.jsx';
 import Pagination from '../partials/Pagination.jsx';
 
+/**
+ * MyMeals class declaration
+ *
+ * @class MyMeals
+ *
+ * @extends {React.Component}
+ */
 class MyMeals extends React.Component {
+  /**
+   * Renders MyMeals component
+   *
+   * @returns {XML} XML/JSX
+   */
   render() {
     return (
       <div className='container'>
-
-        <Header/>
         <CatererHeader/>
         <div className='wrapper'>
           <Search/>
@@ -24,7 +33,7 @@ class MyMeals extends React.Component {
                 </tr>
                 <tr>
                   <td>Egusi Soup</td>
-                  <td><img src={ photo } width='60' height='50' /></td>
+                  <td><img src={photo} width='60' height='50' /></td>
                   <td>2500</td>
                   <td>
                     <button className='button warning' style={{ marginRight: '5px' }}>
@@ -35,7 +44,7 @@ class MyMeals extends React.Component {
                 </tr>
                 <tr>
                   <td>Fried Rice</td>
-                  <td><img src={ photo } width='60' height='50'/></td>
+                  <td><img src={photo} width='60' height='50'/></td>
                   <td>2500</td>
                   <td>
                     <button className='button warning' style={{ marginRight: '5px' }}>
@@ -46,7 +55,7 @@ class MyMeals extends React.Component {
                 </tr>
                 <tr>
                   <td>Chicken Laps</td>
-                  <td><img src={ photo } width='60' height='50'/></td>
+                  <td><img src={photo} width='60' height='50'/></td>
                   <td>2500</td>
                   <td>
                     <button className='button warning' style={{ marginRight: '5px' }}>
@@ -57,7 +66,7 @@ class MyMeals extends React.Component {
                 </tr>
                 <tr>
                   <td>Ofada Rice</td>
-                  <td><img src={ photo } width='60' height='50'/></td>
+                  <td><img src={photo} width='60' height='50'/></td>
                   <td>2500</td>
                   <td>
                     <button className='button warning'style={{ marginRight: '5px' }}>
@@ -68,7 +77,7 @@ class MyMeals extends React.Component {
                 </tr>
                 <tr>
                   <td>Plantain Chips</td>
-                  <td><img src={ photo } width='60' height='50'/></td>
+                  <td><img src={photo} width='60' height='50'/></td>
                   <td>2500</td>
                   <td>
                     <button className='button warning' style={{ marginRight: '5px' }}>
@@ -79,7 +88,7 @@ class MyMeals extends React.Component {
                 </tr>
                 <tr>
                   <td>Ogbono Soup</td>
-                  <td><img src={ photo } width='60' height='50'/></td>
+                  <td><img src={photo} width='60' height='50'/></td>
                   <td>2500</td>
                   <td>
                     <button className='button warning' style={{ marginRight: '5px' }}>
