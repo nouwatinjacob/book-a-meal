@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import loginValidation from '../../utils/loginValidation';
+import Errors from '../partials/ValidationErrors.jsx';
 
 /**
  * Login class declaration
@@ -14,7 +16,7 @@ class Login extends Component {
       email: '',
       password: ''
     },
-    error: undefined
+    errors: []
   };
 
   /**
@@ -41,11 +43,14 @@ class Login extends Component {
   */
   onSubmit = (event) => {
     event.preventDefault();
-    if (!this.state.loginData.email || !this.state.loginData.password) {
-      this.setState(() => ({ error: 'Please provide email and password.' }));
-    } else {
-      this.setState(() => ({ error: '' }));
+    const validation = loginValidation(this.state.loginData);
+    if (validation.isValid()) {
+      this.setState({ errors: [] });
       console.log(this.state.loginData);
+    } else {
+      this.setState(state => ({ errors: validation.errors }));
+      const { errors } = validation;
+      console.log('>>>>>>>>> ', errors);
     }
   };
 
@@ -63,7 +68,7 @@ class Login extends Component {
             <div className='login-form'>
               <h3>User Login</h3>
               <form onSubmit={this.onSubmit}>
-              {this.state.error && <p className="form-error">{this.state.error}</p>}
+              {this.state.errors && <Errors errors={this.state.errors}>Errors</Errors>}
                 <input
                   type='text'
                   name='email'

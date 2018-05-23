@@ -25,6 +25,7 @@ class MyMeals extends React.Component {
         <div className='wrapper'>
           <Search/>
               <table>
+                <tbody>
                 <tr>
                   <th>Meal Name</th>
                   <th>Image</th>
@@ -97,6 +98,7 @@ class MyMeals extends React.Component {
                     <button className='button danger'>Delete</button>
                   </td>
                 </tr>
+                </tbody>
               </table>
         </div><br/>
         <Pagination/><br/>

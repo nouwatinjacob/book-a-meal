@@ -11,7 +11,6 @@ import Pagination from '../partials/Pagination.jsx';
  * @extends {React.Component}
  */
 class UserOrder extends React.Component {
-
   /**
    * Renders UserOrder component
    *

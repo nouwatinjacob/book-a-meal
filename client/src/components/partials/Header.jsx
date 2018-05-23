@@ -6,7 +6,7 @@ const Header = () => (
   <div className='header'>
         <div className='wrapper'>
           <Link to='/'>
-            <img src={ logo } alt='Logo' />
+            <img src={logo} alt='Logo' />
           </Link>
           <div className='header-right' id='myTopnav'>
             <Link className='logo' to='/login'>SIGN IN</Link>
@@ -15,7 +15,7 @@ const Header = () => (
             </button>
           </div>
         </div>
-      </div>
+  </div>
 );
 
 export default Header;

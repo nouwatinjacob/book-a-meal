@@ -42,7 +42,7 @@ class HomePage extends React.Component {
             <div className='box'>
               <img
                 className='article-img'
-                src={ meals }
+                src={meals}
                 alt='Menu Meals'
                 style={{ width: '100%' }}
               />
@@ -57,7 +57,7 @@ class HomePage extends React.Component {
             <div className="box">
               <img
                 className='article-img'
-                src={ delivery}
+                src={delivery}
                 alt='Fast Delivery'
                 style={{ width: '100%' }}
               />
@@ -70,7 +70,7 @@ class HomePage extends React.Component {
           </div>
           <div className='c-medium-4' id='pd-0'>
             <div className='box'>
-              <img src={ realTime } alt='Real Time' style={{ width: '100%' }} />
+              <img src={realTime} alt='Real Time' style={{ width: '100%' }} />
               <div className='box-body'>
                 <p className='text'>
                   Follow the status of your order with <strong>real-time alerts</strong>

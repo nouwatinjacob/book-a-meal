@@ -11,7 +11,6 @@ import photo from '../../assets/img/fried-rice.jpg';
  * @extends {React.Component}
  */
 class ConfirmOrder extends React.Component {
-
   /**
    * Renders ConfirmOrder component
    *

@@ -11,7 +11,6 @@ import photo from '../../assets/img/fried-rice.jpg';
  * @extends {React.Component}
  */
 class ModifyOrder extends React.Component {
-
   /**
    * Renders ModifyOrder component
    *

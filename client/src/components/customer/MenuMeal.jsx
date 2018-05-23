@@ -29,7 +29,7 @@ class MenuMeal extends React.Component {
             <div className='row'>
               <div className='c-medium-3 c-xsmall-12 c-3' id='pd-0'>
               <div className='box'>
-                <img src={ image } alt='Avatar' style={{ width: '100%' }} />
+                <img src={image} alt='Avatar' style={{ width: '100%' }} />
                 <div className='box-body'>
                   <div className='row'>
                     <div className='c-medium-12 c-xsmall-12' id='pd-0'><p><b>Spaghetti</b></p></div>
@@ -47,7 +47,7 @@ class MenuMeal extends React.Component {
             </div>
             <div className='c-medium-3 c-xsmall-12 c-3' id='pd-0'>
               <div className='box'>
-                <img src={ image } alt='Avatar' style={{ width: '100%' }} />
+                <img src={image} alt='Avatar' style={{ width: '100%' }} />
                 <div className='box-body'>
                   <div className='row'>
                     <div className='c-medium-12 c-xsmall-12' id='pd-0'><p><b>Spaghetti</b></p></div>
@@ -65,7 +65,7 @@ class MenuMeal extends React.Component {
             </div>
             <div className='c-medium-3 c-xsmall-12 c-3' id='pd-0'>
               <div className='box'>
-                <img src={ image } alt='Avatar' style={{ width: '100%' }} />
+                <img src={image} alt='Avatar' style={{ width: '100%' }} />
                 <div className='box-body'>
                   <div className='row'>
                     <div className='c-medium-12 c-xsmall-12' id='pd-0'><p><b>Spaghetti</b></p></div>
@@ -83,7 +83,7 @@ class MenuMeal extends React.Component {
             </div>
             <div className='c-medium-3 c-xsmall-12 c-3' id='pd-0'>
               <div className='box'>
-                <img src={ image } alt='Avatar' style={{ width: '100%' }} />
+                <img src={image} alt='Avatar' style={{ width: '100%' }} />
                 <div className='box-body'>
                   <div className='row'>
                     <div className='c-medium-12 c-xsmall-12' id='pd-0'><p><b>Spaghetti</b></p></div>
@@ -104,7 +104,7 @@ class MenuMeal extends React.Component {
             <div className='row'>
               <div className='c-medium-3 c-xsmall-12 c-3' id='pd-0'>
               <div className='box'>
-                <img src={ image } alt='Avatar' style={{ width: '100%' }} />
+                <img src={image} alt='Avatar' style={{ width: '100%' }} />
                 <div className='box-body'>
                   <div className='row'>
                     <div className='c-medium-12 c-xsmall-12' id='pd-0'><p><b>Spaghetti</b></p></div>
@@ -122,7 +122,7 @@ class MenuMeal extends React.Component {
             </div>
             <div className='c-medium-3 c-xsmall-12 c-3' id='pd-0'>
               <div className='box'>
-                <img src={ image } alt='Avatar' style={{ width: '100%' }} />
+                <img src={image} alt='Avatar' style={{ width: '100%' }} />
                 <div className='box-body'>
                   <div className='row'>
                     <div className='c-medium-12 c-xsmall-12' id='pd-0'><p><b>Spaghetti</b></p></div>
@@ -140,7 +140,7 @@ class MenuMeal extends React.Component {
             </div>
             <div className='c-medium-3 c-xsmall-12 c-3' id='pd-0'>
               <div className='box'>
-                <img src={ image } alt='Avatar' style={{ width: '100%' }} />
+                <img src={image} alt='Avatar' style={{ width: '100%' }} />
                 <div className='box-body'>
                   <div className='row'>
                     <div className='c-medium-12 c-xsmall-12' id='pd-0'><p><b>Spaghetti</b></p></div>
@@ -158,7 +158,7 @@ class MenuMeal extends React.Component {
             </div>
             <div className='c-medium-3 c-xsmall-12 c-3' id='pd-0'>
               <div className='box'>
-                <img src={ image } alt='Avatar' style={{ width: '100%' }} />
+                <img src={image} alt='Avatar' style={{ width: '100%' }} />
                 <div className='box-body'>
                   <div className='row'>
                     <div className='c-medium-12 c-xsmall-12' id='pd-0'>

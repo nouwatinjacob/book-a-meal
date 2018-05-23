@@ -15,10 +15,10 @@ class PageNotFound extends React.Component {
    */
   render() {
     return (
-      <div>
+      <React.Fragment>
         <div className='pageNotFound'>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }
