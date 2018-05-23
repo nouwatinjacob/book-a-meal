@@ -1,0 +1,22 @@
+#pd-0 {
+  padding: 0 !important;
+} 
+
+.pageNotFound {
+  background: url('../img/Page-not-found.png') center rgb(252, 251, 251) no-repeat;
+  background-size: cover;
+  height: 90vh;
+  margin-top: 5px;
+}
+
+@media only screen and (min-width : 150px) and (max-width : 530px){
+  .cart-button {
+    font-weight: 200;
+    font-size: 12px;
+  }
+}
+
+.form-error {
+  color: red;
+  font-size: 1rem;
+}

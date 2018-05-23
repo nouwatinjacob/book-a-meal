@@ -1,11 +1,12 @@
 
 module.exports = { 
-  "extends": ["airbnb-base"],
+  "extends": ["airbnb-base","plugin:react/recommended"],
   "env": {
     "node": true,
     "es6": true,
     "mocha": true
   },
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 8,
     "sourceType": "module",
@@ -26,7 +27,8 @@ module.exports = {
     "import/no-named-as-default": 0,
     "no-nested-ternary": 0,
     "no-undef": 0,
-    "no-unused-vars": 1,
+    "no-script-url": 0,
+    "no-unused-vars": 0,
     "global-require": 1,
     "curly": ["error", "multi-line"],
     "object-curly-newline": 0,
@@ -35,6 +37,51 @@ module.exports = {
     }],
     "no-shadow": ["error", {
       "allow": ["req", "res", "err"]
-    }]
+    }],
+    "valid-jsdoc": ["error", {
+      "requireReturn": true,
+      "requireReturnType": true,
+      "requireParamDescription": false,
+      "requireReturnDescription": true
+    }],
+    "require-jsdoc": ["error", {
+      "require": {
+        "FunctionDeclaration": true,
+        "MethodDefinition": true,
+        "ClassDeclaration": true
+      }
+    }],
+    "jsx-quotes": 0,
+    "react/display-name": [ 1, {"ignoreTranspilerName": false }],
+    "react/forbid-prop-types": [1, {"forbid": ["any"]}],
+    "react/jsx-boolean-value": 0,
+    "react/jsx-closing-bracket-location": 0,
+    "react/jsx-curly-spacing": 1,
+    "react/jsx-indent-props": 0,
+    "react/jsx-key": 1,
+    "react/jsx-max-props-per-line": 0,
+    "react/jsx-no-bind": 1,
+    "react/jsx-no-duplicate-props": 1,
+    "react/jsx-no-literals": 0,
+    "react/jsx-no-undef": 1,
+    "react/jsx-pascal-case": 1,
+    "react/jsx-sort-prop-types": 0,
+    "react/jsx-sort-props": 0,
+    "react/jsx-uses-react": 1,
+    "react/jsx-uses-vars": 1,
+    "react/no-danger": 1,
+    "react/no-did-mount-set-state": 1,
+    "react/no-did-update-set-state": 1,
+    "react/no-direct-mutation-state": 1,
+    "react/no-multi-comp": 1,
+    "react/no-set-state": 0,
+    "react/no-unknown-property": 1,
+    "react/prefer-es6-class": 1,
+    "react/prop-types": 1,
+    "react/react-in-jsx-scope": 1,
+    "react/require-extension": 0,
+    "react/self-closing-comp": 0,
+    "react/sort-comp": 1,
+    "react/wrap-multilines": 0
   }
 };
