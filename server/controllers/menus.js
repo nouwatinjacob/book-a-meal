@@ -8,12 +8,18 @@ const { Op } = Sequelize;
 
 const { Meal, Menu } = db;
 
+/**
+ * MenusController class declaration
+ *
+ * @class MenusController
+ *
+ */
 export default class MenusController {
   /**
-   * @description - Caterer set menu for a day
+   * @description - Create new Menu
    *
-   * @param { object } request
-   * @param { object } response
+   * @param { object }  req
+   * @param { object }  res
    *
    * @returns { object } object
    */
@@ -69,10 +75,10 @@ export default class MenusController {
   }
 
   /**
-   * @description - Get menu for a day
+   * @description - Get the Menu
    *
-   * @param { object } request
-   * @param { object } response
+   * @param { object }  req
+   * @param { object }  res
    *
    * @returns { object } object
    */

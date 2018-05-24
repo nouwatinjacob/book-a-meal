@@ -11,16 +11,21 @@ const secret = process.env.SECRET_TOKEN;
 
 const { User } = db;
 
+/**
+ * UserController class declaration
+ *
+ * @class UserController
+ *
+ */
 export default class UserController {
   /**
-   * @description - Create Users auth and validate request
+   * @description - Create new User
    *
-   * @param  {obj} req - email parameter
-   * @param  {} res
+   * @param { object }  req
+   * @param { object }  res
    *
    * @returns { object } object
    */
-
   static async createUser(req, res) {
     try {
       const {

@@ -5,12 +5,18 @@ import validations from '../middleware/validations';
 
 const { Order, Meal, MenuMeal } = db;
 
+/**
+ * OrdersContoller class declaration
+ *
+ * @class OrdersContoller
+ *
+ */
 export default class OrdersContoller {
   /**
    * @description - Make order
    *
-   * @param { object } request
-   * @param { object } response
+   * @param { object } req
+   * @param { object } res
    *
    * @returns { object } object
    */
@@ -61,8 +67,8 @@ export default class OrdersContoller {
   /**
    * @description - Modify Order
    *
-   * @param { object } request
-   * @param { object } response
+   * @param { object } req
+   * @param { object } res
    *
    * @returns { object } object
    */
@@ -130,8 +136,8 @@ export default class OrdersContoller {
   /**
    * @description - Get all the order
    *
-   * @param { object } request
-   * @param { object } response
+   * @param { object } req
+   * @param { object } res
    *
    * @returns { object } object
    */

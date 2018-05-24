@@ -12,11 +12,10 @@ export default class MealsController {
   /**
    * @description - Create new Meal
    *
-   * @param  { object } request
-   * @param  { object } response
+   * @param { object }  req
+   * @param { object }  res
    *
-   *
-   * @results  { object } object
+   * @returns { object } object
    */
   static async addMeal(req, res) {
     try {
@@ -49,13 +48,12 @@ export default class MealsController {
   }
 
   /**
-   * @description - Modify Meal
+   * @description - Modify meal
    *
-   * @param  { object } request
-   * @param  { object } response
+   * @param { object }  req
+   * @param { object }  res
    *
-   *
-   * @results  { object } object
+   * @returns { object } object
    */
   static async modifyMeal(req, res) {
     try {
@@ -95,13 +93,12 @@ export default class MealsController {
   }
 
   /**
-   * @description - Get all meals belonging to A Caterer
+   * @description - Get all meals belonging to a Caterer
    *
-   * @param  { object } request
-   * @param  { object } response
+   * @param { object }  req
+   * @param { object }  res
    *
-   *
-   * @results  { object } object
+   * @returns { object } object
    */
   static async getMeals(req, res) {
     try {
@@ -123,11 +120,10 @@ export default class MealsController {
   /**
    * @description - Delete a meal
    *
-   * @param  { object } request
-   * @param  { object } response
+   * @param { object }  req
+   * @param { object }  res
    *
-   *
-   * @results  {  }
+   * @returns { object } object
    */
   static async deleteMeal(req, res) {
     try {
