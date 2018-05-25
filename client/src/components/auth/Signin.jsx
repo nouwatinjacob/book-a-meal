@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import loginValidation from '../../utils/loginValidation';
 import Errors from '../partials/ValidationErrors.jsx';
@@ -41,16 +42,20 @@ class Login extends Component {
   * @return {event} event
   *
   */
-  onSubmit = (event) => {
+  onSubmit = async (event) => {
     event.preventDefault();
     const validation = loginValidation(this.state.loginData);
     if (validation.isValid()) {
-      this.setState({ errors: [] });
-      console.log(this.state.loginData);
+      const { loginData } = this.state;
+      try {
+        const { data } = await axios.post('http://localhost:8000/api/v1/auth/login', loginData);
+        console.log('>>>>>', data);
+      } catch (e) {
+        console.log(e);
+      }
     } else {
-      this.setState(state => ({ errors: validation.errors }));
+      this.setState(state => ({ errors: validation.getErrors() }));
       const { errors } = validation;
-      console.log('>>>>>>>>> ', errors);
     }
   };
 

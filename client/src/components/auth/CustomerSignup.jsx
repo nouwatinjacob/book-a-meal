@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import customerValidation from '../../utils/customerValidation';
 import Errors from '../partials/ValidationErrors.jsx';
@@ -17,7 +18,8 @@ class CustomerSignup extends React.Component {
       lastName: '',
       email: '',
       password: '',
-      password_confirmation: ''
+      password_confirmation: '',
+      userType: 'customer'
     },
     errors: []
   }
@@ -44,16 +46,19 @@ class CustomerSignup extends React.Component {
   * @return {event} event
   *
   */
-  onFormSubmit = (event) => {
+  onFormSubmit = async (event) => {
     event.preventDefault();
     const validation = customerValidation(this.state.customerData);
     if (validation.isValid()) {
-      this.setState({ errors: [] });
-      console.log(this.state.customerData);
+      const { customerData } = this.state;
+      try {
+        const { data } = await axios.post('http://localhost:8000/api/v1/auth/signup', customerData);
+      } catch (e) {
+        return error;
+      }
     } else {
-      this.setState(state => ({ errors: validation.errors }));
+      this.setState(state => ({ errors: validation.getErrors() }));
       const { errors } = validation;
-      console.log('>>>>>>>>> ', errors);
     }
   }
   /**

@@ -6,9 +6,8 @@ const PATHS = {
 };
 
 module.exports = {
-  entry: {
-    app: './client/src/index.js'
-  },
+  entry: ['babel-polyfill', './client/src/index.js'
+  ],
   output: {
     path: PATHS.dist,
     publicPath: '/',

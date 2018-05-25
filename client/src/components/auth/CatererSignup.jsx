@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import catererValidation from '../../utils/catererValidation';
 import Errors from '../partials/ValidationErrors.jsx';
@@ -18,7 +19,8 @@ class CatererSignup extends React.Component {
       businessAddress: '',
       email: '',
       password: '',
-      password_confirmation: ''
+      password_confirmation: '',
+      userType: 'caterer'
     },
     errors: []
   }
@@ -45,17 +47,19 @@ class CatererSignup extends React.Component {
   * @return {event} event
   *
   */
- onFormSubmit = (event) => {
+ onFormSubmit = async (event) => {
    event.preventDefault();
    const validation = catererValidation(this.state.catererData);
    if (validation.isValid()) {
-     this.setState({ errors: [] });
-     event.target.value = '';
-     console.log(this.state.catererData);
+     const { catererData } = this.state;
+     try {
+       const { data } = await axios.post('http://localhost:8000/api/v1/auth/signup', catererData);
+     } catch (error) {
+       return error;
+     }
    } else {
-     this.setState(state => ({ errors: validation.errors }));
+     this.setState(state => ({ errors: validation.getErrors() }));
      const { errors } = validation;
-     console.log('>>>>>>>>> ', errors);
    }
  }
 
@@ -77,36 +81,42 @@ class CatererSignup extends React.Component {
                     type='text'
                     name='businessName'
                     placeholder='Business Name'
+                    value={this.state.catererData.businessName}
                     onChange={this.onInputChange}
                   /><br/>
                   <input
                     type='text'
                     name='ownerName'
                     placeholder="Owner's Name"
+                    value={this.state.catererData.ownerName}
                     onChange={this.onInputChange}
                   /><br/>
                   <input
                     type='text'
                     name='businessAddress'
                     placeholder='Business Address'
+                    value={this.state.catererData.businessAddress}
                     onChange={this.onInputChange}
                   /><br/>
                   <input
                     type='email'
                     name='email'
                     placeholder='Email'
+                    value={this.state.catererData.email}
                     onChange={this.onInputChange}
                   /><br/>
                   <input
                     type='password'
                     name='password'
                     placeholder='Password'
+                    value={this.state.catererData.password}
                     onChange={this.onInputChange}
                   /><br/>
                   <input
                     type='password'
                     name='password_confirmation'
                     placeholder='Confirm Password'
+                    value={this.state.catererData.password_confirmation}
                     onChange={this.onInputChange}
                   /><br/>
                 <button className='button warning'>Signup</button>

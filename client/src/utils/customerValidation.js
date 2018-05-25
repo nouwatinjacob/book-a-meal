@@ -12,7 +12,7 @@ const customerValidation = (data) => {
   const validation = new Validator(data, rules);
   const obj = { isValid: () => validation.passes() };
   if (validation.fails()) {
-    obj.errors = validation.errors.all();
+    obj.getErrors = () => validation.errors.all();
   }
   return Object.freeze(obj);
 };

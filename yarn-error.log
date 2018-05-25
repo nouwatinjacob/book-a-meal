@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add state = {
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add babel-polyfill
 
 PATH: 
   C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin\;C:\Program Files (x86)\Brackets\command;C:\WINDOWS\System32\OpenSSH\;C:\Users\MO\AppData\Local\Microsoft\WindowsApps;;C:\Program Files\Microsoft VS Code\bin;C:\Users\MO\AppData\Roaming\npm;C:\Users\MO\AppData\Local\Yarn\bin;C:\Program Files\heroku\bin
@@ -47,6 +47,7 @@ npm manifest:
       "babel-core": "^6.26.0",
       "babel-eslint": "^8.2.3",
       "babel-loader": "^7.1.4",
+      "babel-plugin-transform-class-properties": "^6.24.1",
       "babel-plugin-transform-object-rest-spread": "^6.26.0",
       "babel-plugin-transform-react-jsx": "^6.24.1",
       "babel-polyfill": "^6.26.0",
@@ -70,6 +71,7 @@ npm manifest:
       "nodemon": "^1.17.3",
       "nyc": "^11.7.1",
       "react-hot-loader": "^4.2.0",
+      "redux-devtools": "^3.4.1",
       "sass-loader": "^7.0.1",
       "style-loader": "^0.21.0",
       "supertest": "^3.0.0",
@@ -79,6 +81,7 @@ npm manifest:
       "webpack-dev-server": "^3.1.4"
     },
     "dependencies": {
+      "axios": "^0.18.0",
       "babel-register": "^6.26.0",
       "bcrypt-nodejs": "^0.0.3",
       "body-parser": "^1.18.2",
@@ -94,8 +97,13 @@ npm manifest:
       "pg-hstore": "^2.3.2",
       "react": "^16.3.2",
       "react-dom": "^16.3.2",
+      "react-proptypes": "^1.0.0",
+      "react-redux": "^5.0.7",
       "react-router": "^4.2.0",
       "react-router-dom": "^4.2.2",
+      "redux": "^4.0.0",
+      "redux-logger": "^3.0.6",
+      "redux-thunk": "^2.2.0",
       "sequelize": "^4.37.6",
       "sequelize-cli": "^4.0.0",
       "validator": "^9.4.1",
@@ -661,6 +669,13 @@ Lockfile:
   aws4@^1.2.1, aws4@^1.6.0:
     version "1.7.0"
     resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.7.0.tgz#d4d0e9b9dbfca77bf08eeb0a8a471550fe39e289"
+  
+  axios@^0.18.0:
+    version "0.18.0"
+    resolved "https://registry.yarnpkg.com/axios/-/axios-0.18.0.tgz#32d53e4851efdc0a11993b6cd000789d70c05102"
+    dependencies:
+      follow-redirects "^1.3.0"
+      is-buffer "^1.1.5"
   
   babel-cli@^6.26.0:
     version "6.26.0"
@@ -2870,6 +2885,10 @@ Lockfile:
       pify "^2.3.0"
       strip-dirs "^2.0.0"
   
+  deep-diff@^0.3.5:
+    version "0.3.8"
+    resolved "https://registry.yarnpkg.com/deep-diff/-/deep-diff-0.3.8.tgz#c01de63efb0eec9798801d40c7e0dae25b582c84"
+  
   deep-eql@^3.0.0:
     version "3.0.1"
     resolved "https://registry.yarnpkg.com/deep-eql/-/deep-eql-3.0.1.tgz#dfc9404400ad1c8fe023e7da1df1c147c4b444df"
@@ -3971,6 +3990,12 @@ Lockfile:
   follow-redirects@^1.0.0:
     version "1.4.1"
     resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.4.1.tgz#d8120f4518190f55aac65bb6fc7b85fcd666d6aa"
+    dependencies:
+      debug "^3.1.0"
+  
+  follow-redirects@^1.3.0:
+    version "1.5.0"
+    resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.5.0.tgz#234f49cf770b7f35b40e790f636ceba0c3a0ab77"
     dependencies:
       debug "^3.1.0"
   
@@ -5077,7 +5102,7 @@ Lockfile:
       from2 "^2.1.1"
       p-is-promise "^1.1.0"
   
-  invariant@^2.2.0, invariant@^2.2.1, invariant@^2.2.2:
+  invariant@^2.0.0, invariant@^2.2.0, invariant@^2.2.1, invariant@^2.2.2:
     version "2.2.4"
     resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
     dependencies:
@@ -5944,6 +5969,10 @@ Lockfile:
     dependencies:
       p-locate "^2.0.0"
       path-exists "^3.0.0"
+  
+  lodash-es@^4.17.5:
+    version "4.17.10"
+    resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.10.tgz#62cd7104cdf5dd87f235a837f0ede0e8e5117e05"
   
   lodash._basecopy@^3.0.0:
     version "3.0.1"
@@ -7794,7 +7823,7 @@ Lockfile:
     dependencies:
       asap "~2.0.3"
   
-  prop-types@^15.5.4, prop-types@^15.6.0, prop-types@^15.6.1:
+  prop-types@*, prop-types@^15.5.4, prop-types@^15.5.7, prop-types@^15.6.0, prop-types@^15.6.1:
     version "15.6.1"
     resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.1.tgz#36644453564255ddda391191fb3a125cbdf654ca"
     dependencies:
@@ -7984,6 +8013,23 @@ Lockfile:
     version "3.0.4"
     resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   
+  react-proptypes@^1.0.0:
+    version "1.0.0"
+    resolved "https://registry.yarnpkg.com/react-proptypes/-/react-proptypes-1.0.0.tgz#88e9cf5cc61b18844a5f57a06c839ae39fe9a57f"
+    dependencies:
+      prop-types "*"
+  
+  react-redux@^5.0.7:
+    version "5.0.7"
+    resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-5.0.7.tgz#0dc1076d9afb4670f993ffaef44b8f8c1155a4c8"
+    dependencies:
+      hoist-non-react-statics "^2.5.0"
+      invariant "^2.0.0"
+      lodash "^4.17.5"
+      lodash-es "^4.17.5"
+      loose-envify "^1.1.0"
+      prop-types "^15.6.0"
+  
   react-router-dom@^4.2.2:
     version "4.2.2"
     resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-4.2.2.tgz#c8a81df3adc58bba8a76782e946cbd4eae649b8d"
@@ -8159,6 +8205,38 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/reduce-function-call/-/reduce-function-call-1.0.2.tgz#5a200bf92e0e37751752fe45b0ab330fd4b6be99"
     dependencies:
       balanced-match "^0.4.2"
+  
+  redux-devtools-instrument@^1.0.1:
+    version "1.8.3"
+    resolved "https://registry.yarnpkg.com/redux-devtools-instrument/-/redux-devtools-instrument-1.8.3.tgz#c510d67ab4e5e4525acd6e410c25ab46b85aca7c"
+    dependencies:
+      lodash "^4.2.0"
+      symbol-observable "^1.0.2"
+  
+  redux-devtools@^3.4.1:
+    version "3.4.1"
+    resolved "https://registry.yarnpkg.com/redux-devtools/-/redux-devtools-3.4.1.tgz#09d342ce0ab6087be679e953a1d7c530efa1138e"
+    dependencies:
+      lodash "^4.2.0"
+      prop-types "^15.5.7"
+      redux-devtools-instrument "^1.0.1"
+  
+  redux-logger@^3.0.6:
+    version "3.0.6"
+    resolved "https://registry.yarnpkg.com/redux-logger/-/redux-logger-3.0.6.tgz#f7555966f3098f3c88604c449cf0baf5778274bf"
+    dependencies:
+      deep-diff "^0.3.5"
+  
+  redux-thunk@^2.2.0:
+    version "2.2.0"
+    resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.2.0.tgz#e615a16e16b47a19a515766133d1e3e99b7852e5"
+  
+  redux@^4.0.0:
+    version "4.0.0"
+    resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.0.tgz#aa698a92b729315d22b34a0553d7e6533555cc03"
+    dependencies:
+      loose-envify "^1.1.0"
+      symbol-observable "^1.2.0"
   
   regenerate@^1.2.1:
     version "1.3.3"
@@ -9296,6 +9374,10 @@ Lockfile:
   symbol-observable@^0.2.2:
     version "0.2.4"
     resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-0.2.4.tgz#95a83db26186d6af7e7a18dbd9760a2f86d08f40"
+  
+  symbol-observable@^1.0.2, symbol-observable@^1.2.0:
+    version "1.2.0"
+    resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.2.0.tgz#c22688aed4eab3cdc2dfeacbb561660560a00804"
   
   table@4.0.2:
     version "4.0.2"
@@ -10462,11 +10544,7 @@ Lockfile:
       yeoman-environment "^2.0.5"
 
 Trace: 
-  Error: Couldn't find package "=" on the "npm" registry.
-      at new MessageError (C:\Program Files (x86)\Yarn\lib\cli.js:186:110)
-      at NpmResolver.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:51625:15)
-      at Generator.next (<anonymous>)
-      at step (C:\Program Files (x86)\Yarn\lib\cli.js:98:30)
-      at C:\Program Files (x86)\Yarn\lib\cli.js:109:13
-      at <anonymous>
-      at process._tickCallback (internal/process/next_tick.js:188:7)
+  Error: connect ECONNREFUSED 192.168.8.1:443
+      at Object._errnoException (util.js:1022:11)
+      at _exceptionWithHostPort (util.js:1044:20)
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1198:14)
