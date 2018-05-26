@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import PropTypes from 'react-proptypes';
 import { Link } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { loginAction } from '../../actions/loginAction';
 import loginValidation from '../../utils/loginValidation';
 import Errors from '../partials/ValidationErrors.jsx';
 
@@ -17,7 +20,8 @@ class Login extends Component {
       email: '',
       password: ''
     },
-    errors: []
+    errors: [],
+    fail: null
   };
 
   /**
@@ -42,17 +46,12 @@ class Login extends Component {
   * @return {event} event
   *
   */
-  onSubmit = async (event) => {
+  onSubmit = (event) => {
     event.preventDefault();
     const validation = loginValidation(this.state.loginData);
     if (validation.isValid()) {
       const { loginData } = this.state;
-      try {
-        const { data } = await axios.post('http://localhost:8000/api/v1/auth/login', loginData);
-        console.log('>>>>>', data);
-      } catch (e) {
-        console.log(e);
-      }
+      this.props.loginAction(this.state.loginData);
     } else {
       this.setState(state => ({ errors: validation.getErrors() }));
       const { errors } = validation;
@@ -102,4 +101,14 @@ class Login extends Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  loginAction: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  state: state.loginReducer
+});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ loginAction }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

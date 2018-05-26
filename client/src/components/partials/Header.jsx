@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import logo from '../../assets/img/bookameal-logo.png';
 
 const Header = () => (
@@ -18,4 +18,4 @@ const Header = () => (
   </div>
 );
 
-export default Header;
+export default withRouter(Header);

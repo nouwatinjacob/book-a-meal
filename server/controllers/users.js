@@ -28,21 +28,19 @@ export default class UserController {
    */
   static async createUser(req, res) {
     try {
-      const {
-        email, password, userType, password_confirmation,
-        firstName, lastName, businessName,
-        ownerName, businessAddress
-      } = req.body;
-      const userDetails = { email, password, userType };
-      const customerDetails = { firstName, lastName };
-      const catererDetails = { businessName, businessAddress, ownerName };
-
-      if (userType === 'customer') {
+      const obj = req.body;
+      const userDetails = lodash.pick(
+        obj,
+        ['email', 'password', 'password_confirmation', 'userType']
+      );
+      if (userDetails.userType === 'customer') {
+        const customerDetails = lodash.pick(obj, ['firstName', 'lastName']);      
         const customerValidation = new Validator(
-          { ...customerDetails, ...userDetails, password_confirmation },
+          { ...customerDetails, ...userDetails },
           validations().customerValidation
         );
         if (customerValidation.passes()) {
+          const { email } = customerDetails;
           const foundUser = await User.findOne({ where: { email } });
           if (!foundUser) {
             const newUser = await User.create({
@@ -63,12 +61,17 @@ export default class UserController {
           });
         }
         return res.status(400).json({ message: customerValidation.errors.all() });
-      } else if (userType === 'caterer') {
+      } else if (userDetails.userType === 'caterer') {
+        const catererDetails = lodash.pick(
+          obj, 
+          ['businessName', 'businessAddress', 'ownerName']
+        );       
         const catererValidation = new Validator(
-          { ...catererDetails, ...userDetails, password_confirmation },
+          { ...catererDetails, ...userDetails },
           validations().catererValidation
         );
         if (catererValidation.passes()) {
+          const { email } = userDetails;
           const foundUser = await User.findOne({ where: { email } });
           if (!foundUser) {
             const newUser = await User.create({

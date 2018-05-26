@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter, Route, Link, NavLink, Switch } from 'react-router-dom';
+import { Router, Route, Link, NavLink, Switch } from 'react-router-dom';
+import { history } from '../utils/history';
 import HomePage from '../components/Homepage.jsx';
 import Login from '../components/auth/Signin.jsx';
 import CustomerSignup from '../components/auth/CustomerSignup.jsx';
@@ -18,7 +19,7 @@ import EditMeal from '../components/caterer/EditMeal.jsx';
 import App from '../components/App.jsx';
 
 const AppRouter = () => (
-  <BrowserRouter>
+  <Router history={history}>
       <Switch>
         <App>
           <Route path='/' component={HomePage} exact={true}/>
@@ -38,7 +39,7 @@ const AppRouter = () => (
         </App>
         <Route path='*' component={PageNotFound}/>
       </Switch>
-  </BrowserRouter>
+  </Router>
 );
 
 export default AppRouter;
