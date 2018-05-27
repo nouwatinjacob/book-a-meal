@@ -1,6 +1,9 @@
 import React from 'react';
-import axios from 'axios';
+import PropTypes from 'react-proptypes';
 import { Link } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import signupAction from '../../actions/signupAction';
 import catererValidation from '../../utils/catererValidation';
 import Errors from '../partials/ValidationErrors.jsx';
 
@@ -52,11 +55,7 @@ class CatererSignup extends React.Component {
    const validation = catererValidation(this.state.catererData);
    if (validation.isValid()) {
      const { catererData } = this.state;
-     try {
-       const { data } = await axios.post('http://localhost:8000/api/v1/auth/signup', catererData);
-     } catch (error) {
-       return error;
-     }
+     this.props.signupAction(this.state.catererData);
    } else {
      this.setState(state => ({ errors: validation.getErrors() }));
      const { errors } = validation;
@@ -133,4 +132,15 @@ class CatererSignup extends React.Component {
  }
 }
 
-export default CatererSignup;
+CatererSignup.propTypes = {
+  signupAction: PropTypes.func.isRequired,
+  signupState: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  signupState: state.signupReducer
+});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ signupAction }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(CatererSignup);

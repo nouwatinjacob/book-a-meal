@@ -24,9 +24,9 @@ const decodeToken = token => jwt_decode(token);
  */
 const reDirect = (token) => {
   const decodedToken = jwt_decode(token);
-  if (!decodedToken.userType === 'caterer') {
-    history.push('/my-meals');
-  } else {
+  if (decodedToken.userType === 'caterer') {
+    history.push('/caterer');
+  } else if (decodedToken.userType === 'customer') {
     history.push('/menus');
   }
 };

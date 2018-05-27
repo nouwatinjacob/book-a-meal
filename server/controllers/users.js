@@ -40,7 +40,7 @@ export default class UserController {
           validations().customerValidation
         );
         if (customerValidation.passes()) {
-          const { email } = customerDetails;
+          const { email } = userDetails;
           const foundUser = await User.findOne({ where: { email } });
           if (!foundUser) {
             const newUser = await User.create({

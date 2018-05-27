@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { reDirect, logout, decodeToken } from '../utils/helper';
+import { reDirect } from '../utils/helper';
 import { LOGIN_SUCCESSFUL, LOGIN_UNSUCCESSFUL, LOG_OUT_SUCCESS } from './actionTypes';
 
 const loginAction = loginData => (dispatch) => {
@@ -11,7 +11,6 @@ const loginAction = loginData => (dispatch) => {
       reDirect(token);
     })
     .catch((error) => {
-      console.log(error, '>>>>>>>');
       dispatch({
         type: LOGIN_UNSUCCESSFUL,
         payload: 'Invalid Credentials'

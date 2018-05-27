@@ -1,6 +1,9 @@
-import React from 'react';
-import axios from 'axios';
+import React, { Component } from 'react';
+import PropTypes from 'react-proptypes';
 import { Link } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import signupAction from '../../actions/signupAction';
 import customerValidation from '../../utils/customerValidation';
 import Errors from '../partials/ValidationErrors.jsx';
 
@@ -11,7 +14,7 @@ import Errors from '../partials/ValidationErrors.jsx';
  *
  * @extends {React.Component}
  */
-class CustomerSignup extends React.Component {
+class CustomerSignup extends Component {
   state = {
     customerData: {
       firstName: '',
@@ -21,7 +24,8 @@ class CustomerSignup extends React.Component {
       password_confirmation: '',
       userType: 'customer'
     },
-    errors: []
+    errors: [],
+    fail: null
   }
 
   /**
@@ -51,11 +55,7 @@ class CustomerSignup extends React.Component {
     const validation = customerValidation(this.state.customerData);
     if (validation.isValid()) {
       const { customerData } = this.state;
-      try {
-        const { data } = await axios.post('http://localhost:8000/api/v1/auth/signup', customerData);
-      } catch (e) {
-        return error;
-      }
+      this.props.signupAction(this.state.customerData);
     } else {
       this.setState(state => ({ errors: validation.getErrors() }));
       const { errors } = validation;
@@ -124,4 +124,15 @@ class CustomerSignup extends React.Component {
   }
 }
 
-export default CustomerSignup;
+CustomerSignup.propTypes = {
+  signupAction: PropTypes.func.isRequired,
+  signupState: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  signupState: state.signupReducer
+});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ signupAction }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(CustomerSignup);

@@ -61,7 +61,7 @@ class App extends React.Component {
               <Route path='/confirm-order' component={Confirmorder}/>
               <Route path='/modify-order/:orderId' component={ModifyOrder}/>
               <Route path='/user-order' component={UserOrder}/>
-              <Route path='/my-meals' component={MyMeals}/>
+              <Route path='/caterer' component={MyMeals}/>
               <Route path='/orders' component={Orders}/>
               <Route path='/order-detail' component={OrderDetail}/>
               <Route path='/add-meal' component={AddMeal}/>

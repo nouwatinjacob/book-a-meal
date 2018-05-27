@@ -1,3 +1,4 @@
+import { LOGIN_SUCCESSFUL, LOGIN_UNSUCCESSFUL, LOG_OUT_SUCCESS } from '../actions/actionTypes';
 
 const initialState = {
   success: false,
@@ -6,21 +7,21 @@ const initialState = {
 
 const loginReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'LOGIN_SUCCESSFUL':
+    case LOGIN_SUCCESSFUL:
       state = {
         ...state,
         success: true,
         fail: null
       };
       break;
-    case 'LOGIN_UNSUCCESSFUL':
+    case LOGIN_UNSUCCESSFUL:
       state = {
         ...state,
         success: false,
         fail: action.payload
       };
       break;
-    case 'LOG_OUT_SUCCESS':
+    case LOG_OUT_SUCCESS:
       state = {
         ...state,
         success: false
@@ -29,6 +30,7 @@ const loginReducer = (state = initialState, action) => {
     default:
       return state;
   }
+  return state;
 };
 
 export default loginReducer;
