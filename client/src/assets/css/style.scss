@@ -390,3 +390,18 @@ td input[type="number"] {
 
 /* Add a grey background color on mouse-over */
 .pagination a:hover:not(.active) {background-color: #ddd;}
+
+
+.loading {
+  position: fixed;
+  z-index: 999;
+  height: 2em;
+  width: 2em;
+  overflow: show;
+  margin: auto;
+  top: 250px;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  text-align: center
+}
