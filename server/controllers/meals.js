@@ -1,8 +1,15 @@
+import cloudinary from 'cloudinary';
+import dotenv from 'dotenv';
 import Validator from 'validatorjs';
 import db from '../models';
 import validations from '../middleware/validations';
+import cloudinaryConfig from '../middleware/cloudinaryConfig';
+
+dotenv.config();
+
 
 const { Meal, User } = db;
+
 
 /**
  * Class implementation for /api/v1/meals routes
@@ -19,21 +26,26 @@ export default class MealsController {
    */
   static async addMeal(req, res) {
     try {
-      const validation = new Validator(req.body, validations().mealRules);
+      const validation = new Validator(req.body, req.file, validations().mealRules);
       if (validation.passes()) {
         const price = parseInt(req.body.price, 10);
         const name = req.body.name.trim();
-        const image = req.body.image.trim();
+        console.log(name);
         const user = await User.findById(req.decoded.id);
         if (user) {
           const foundMeal = await Meal.findOne({ where: { name } });
           if (!foundMeal) {
-            const meal = { name, price, image, userId: req.decoded.id };
-            const newMeal = await Meal.create(meal);
-            return res.status(201).json({
-              message: 'Meal Created Successfully',
-              newMeal
-            });
+            console.log(req.file, '>>>>>>>');
+            cloudinaryConfig();
+            cloudinary.uploader.upload(req.file.path, (result) => {
+              console.log('<<<<<<<<<<<<<<<<<<<', result);
+              // const meal = { name, price, image: result.url, userId: req.decoded.id };
+              // console.log(image);
+              // // const newMeal = await Meal.create(meal);
+              // return res.status(201).json({
+              //   message: 'Meal Created Successfully',
+              // // newMeal
+            });           
           }
           return res.status(400).json({ message: 'You have this meal already, please edit it' });
         }

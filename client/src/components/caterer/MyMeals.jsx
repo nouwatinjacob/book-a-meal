@@ -88,7 +88,7 @@ class MyMeals extends React.Component {
                 { meals.map(meal =>
                   <tr key={meal.id}>
                     <td>{meal.name}</td>
-                    <td><img src={photo} width='60' height='50' /></td>
+                    <td><img src={'http://res.cloudinary.com/sansaristic/image/upload/v1527628633/e7uc3q2eadf4vlebm1ov.jpg'} width='60' height='50' /></td>
                     <td>{meal.price}</td>
                     <td>
                     <button className='button warning' style={{ marginRight: '5px' }}>
