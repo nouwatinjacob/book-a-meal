@@ -30,21 +30,15 @@ export default class MealsController {
       if (validation.passes()) {
         const price = parseInt(req.body.price, 10);
         const name = req.body.name.trim();
-        console.log(name);
         const user = await User.findById(req.decoded.id);
         if (user) {
           const foundMeal = await Meal.findOne({ where: { name } });
           if (!foundMeal) {
-            console.log(req.file, '>>>>>>>');
-            cloudinaryConfig();
-            cloudinary.uploader.upload(req.file.path, (result) => {
-              console.log('<<<<<<<<<<<<<<<<<<<', result);
-              // const meal = { name, price, image: result.url, userId: req.decoded.id };
-              // console.log(image);
-              // // const newMeal = await Meal.create(meal);
-              // return res.status(201).json({
-              //   message: 'Meal Created Successfully',
-              // // newMeal
+            const meal = { name, price, image: req.file.secure_url, userId: req.decoded.id };
+            const newMeal = await Meal.create(meal);
+            return res.status(201).json({
+              message: 'Meal Created Successfully',
+              newMeal
             });           
           }
           return res.status(400).json({ message: 'You have this meal already, please edit it' });
