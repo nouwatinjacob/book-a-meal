@@ -24,7 +24,9 @@ const mealRoutes = (router) => {
 
   router.route('/meals/:id')
     .put(
-      authMiddleware.verifyToken, authMiddleware.isCaterer,
+      authMiddleware.verifyToken,
+      authMiddleware.isCaterer,
+      upload.single('image'),
       MealsController.modifyMeal
     )
     .delete(
