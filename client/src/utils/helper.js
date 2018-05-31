@@ -56,7 +56,7 @@ const logout = () => {
  */
 const authorization = () => ({
   headers: {
-    'x-access-token': window.localStorage.token
+    'x-access-token': localStorage.token
   }
 });
 
