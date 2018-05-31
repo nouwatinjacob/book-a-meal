@@ -4,11 +4,11 @@ import PropTypes from 'react-proptypes';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import getMeals from '../../actions/mealAction';
+import { getMeals, deleteMealAction } from '../../actions/mealAction';
 import CatererHeader from '../partials/CatererHeader.jsx';
-import photo from '../../assets/img/fried-rice.jpg';
 import Search from '../partials/Search.jsx';
 import Pagination from '../partials/Pagination.jsx';
+import Meals from './Meals.jsx';
 
 /**
  * MyMeals class declaration
@@ -53,6 +53,18 @@ class MyMeals extends React.Component {
     this.props.getMeals();
   }
 
+  /**
+   * Handles meal deletion
+   * 
+   * @method handleDelete
+   * 
+   * @param { object } mealId
+   * 
+   * @return {void}
+     */
+  handleDelete = (mealId) => {
+    this.props.deleteMealAction(mealId);
+  }
   
   /**
    * Renders MyMeals component
@@ -86,17 +98,11 @@ class MyMeals extends React.Component {
                   <th>Action</th>
                 </tr>
                 { meals.map(meal =>
-                  <tr key={meal.id}>
-                    <td>{meal.name}</td>
-                    <td><img src={'http://res.cloudinary.com/sansaristic/image/upload/v1527628633/e7uc3q2eadf4vlebm1ov.jpg'} width='60' height='50' /></td>
-                    <td>{meal.price}</td>
-                    <td>
-                    <button className='button warning' style={{ marginRight: '5px' }}>
-                     <Link to='/edit-meal/1'> Modify </Link>
-                    </button>
-                    <button className='button danger'>Delete</button>
-                  </td>
-                  </tr>)}
+                <Meals
+                  key={meal.id}
+                  meals={meal}
+                  deleteAction={this.handleDelete}
+                />)}
                 </tbody>
               </table>
           </div><br/>
@@ -109,14 +115,16 @@ class MyMeals extends React.Component {
 }
 
 MyMeals.propTypes = {
+  deleteMealAction: PropTypes.func.isRequired,
   getMeals: PropTypes.func.isRequired,
-  mealState: PropTypes.object.isRequired
+  mealState: PropTypes.object.isRequired,
+  match: PropTypes.object
 };
 
 const mapStateToProps = state => ({
   mealState: state.mealReducer
 });
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ getMeals }, dispatch);
+  bindActionCreators({ getMeals, deleteMealAction }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyMeals);

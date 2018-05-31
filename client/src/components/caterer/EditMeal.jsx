@@ -1,4 +1,8 @@
 import React from 'react';
+import PropTypes from 'react-proptypes';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { getAMealAction, editMealAction } from '../../actions/mealAction';
 import CatererHeader from '../partials/CatererHeader.jsx';
 import mealValidation from '../../utils/mealValidation';
 import Errors from '../partials/ValidationErrors.jsx';
@@ -13,11 +17,41 @@ import Errors from '../partials/ValidationErrors.jsx';
 class EditMeal extends React.Component {
   state = {
     mealData: {
-      name: 'Fried Rice and chicken',
-      price: 2500,
+      name: '',
+      price: '',
       image: ''
     },
+    meal: [],
     errors: []
+  }
+
+  /**
+   *
+   * @param  {object} nextProps
+   * 
+   * @param  {object} prevState
+   * 
+   * @returns {XML} XML/JSX
+   * 
+   * @memberof RecipeDetail
+   */
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const nextState = {};
+    if (nextProps.mealState.success) {      
+      nextState.meal = nextProps.mealState.meal;
+    }
+    return nextState;
+  }
+
+  /**
+   *
+   * @returns {XML} XML/JSX
+   * 
+   * @memberof RecipeDetail
+   */
+  componentDidMount() {
+    const mealId = this.props.match.params.mealId;
+    this.props.getAMealAction(mealId);
   }
 
   /**
@@ -29,9 +63,15 @@ class EditMeal extends React.Component {
   *
   */
  onInputChange = (event) => {
-   const { mealData } = this.state;
-   mealData[event.target.name] = event.target.value;
-   this.setState({ mealData });
+   const mealData = this.state.mealData;
+   switch (event.target.name) {
+     case 'image':
+       mealData.image = event.target.files[0];
+       break;
+     default:
+       mealData[event.target.name] = event.target.value;
+   }
+   this.setState(mealData);
  }
 
  /**
@@ -44,51 +84,48 @@ class EditMeal extends React.Component {
   */
  onFormSubmit = (event) => {
    event.preventDefault();
-   const validation = mealValidation(this.state.mealData);
-   if (validation.isValid()) {
-     this.setState({ errors: [] });
-     console.log(this.state.mealData);
-   } else {
-     this.setState(state => ({ errors: validation.errors }));
-     const { errors } = validation;
-     console.log('>>>>>>>>> ', errors);
-   }
+   const { name, price, image } = this.state.mealData;
+   const mealId = this.props.match.params.mealId;
+   const formData = new FormData();
+
+   formData.append('name', name);
+   formData.append('price', price);
+   formData.append('image', image);
+   this.props.editMealAction(formData, mealId);
  }
 
+ 
   /**
    * Renders EditMeal component
    *
    * @returns {XML} XML/JSX
    */
  render() {
-   return (
+   return (     
       <div className='container'>
         <CatererHeader/>
           <div className='wrapper'>
             <div className='login'>
               <div className='login-form'>
                 <h3>Edit Meal Details</h3>
-                <form onSubmit={this.onFormSubmit}>
+                <form encType='multipart/form-data' onSubmit={this.onFormSubmit}>
                 {this.state.errors && <Errors errors={this.state.errors}>Errors</Errors>}
                 <input
                     type='text'
                     name='name'
-                    placeholder='Meal Name'
-                    value={this.state.mealData.name}
+                    placeholder={this.state.meal.name}
                     onChange={this.onInputChange}
                   /><br/>
                   <input
                     type='text'
                     name='price'
-                    placeholder='Meal Price'
-                    value={this.state.mealData.price}
+                    placeholder={this.state.meal.price}
                     onChange={this.onInputChange}
                   /><br/>
                   <input
                     type='file'
                     name='image'
                     placeholder='Meal Image'
-                    value={this.state.mealData.image}
                     onChange={this.onInputChange}
                   /><br/>
                   <button className='button warning'>Modify Meal</button>
@@ -103,4 +140,18 @@ class EditMeal extends React.Component {
  }
 }
 
-export default EditMeal;
+
+EditMeal.propTypes = {
+  getAMealAction: PropTypes.func.isRequired,
+  editMealAction: PropTypes.func.isRequired,
+  mealState: PropTypes.object.isRequired,
+  match: PropTypes.object
+};
+
+const mapStateToProps = state => ({
+  mealState: state.mealReducer
+});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ getAMealAction, editMealAction }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditMeal);

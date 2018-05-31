@@ -1,4 +1,8 @@
 import React from 'react';
+import PropTypes from 'react-proptypes';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { addMeal } from '../../actions/mealAction';
 import CatererHeader from '../partials/CatererHeader.jsx';
 import mealValidation from '../../utils/mealValidation';
 import Errors from '../partials/ValidationErrors.jsx';
@@ -29,12 +33,18 @@ class AddMeal extends React.Component {
   *
   */
  onInputChange = (event) => {
-   const { mealData } = this.state;
-   mealData[event.target.name] = event.target.value;
-   this.setState({ mealData });
+   const mealData = this.state.mealData;
+   switch (event.target.name) {
+     case 'image':
+       mealData.image = event.target.files[0];
+       break;
+     default:
+       mealData[event.target.name] = event.target.value;
+   }
+   this.setState(mealData);
  }
 
- /**
+  /**
   * Handle onFormSubmit
   *
   * @param {event} event
@@ -46,12 +56,16 @@ class AddMeal extends React.Component {
    event.preventDefault();
    const validation = mealValidation(this.state.mealData);
    if (validation.isValid()) {
-     this.setState({ errors: [] });
-     console.log(this.state.mealData);
+     const { name, price, image } = this.state.mealData;
+     const formData = new FormData();
+
+     formData.append('name', name);
+     formData.append('price', price);
+     formData.append('image', image);
+     this.props.addMeal(formData);
    } else {
      this.setState(state => ({ errors: validation.errors }));
      const { errors } = validation;
-     console.log('>>>>>>>>> ', errors);
    }
  }
 
@@ -68,7 +82,7 @@ class AddMeal extends React.Component {
             <div className='login'>
               <div className='login-form'>
                 <h3>Add New Meal</h3>
-                <form onSubmit={this.onFormSubmit}>
+                <form encType='multipart/form-data' onSubmit={this.onFormSubmit}>
                 {this.state.errors && <Errors errors={this.state.errors}>Errors</Errors>}
                   <input
                     type='text'
@@ -85,6 +99,7 @@ class AddMeal extends React.Component {
                   <input
                     type='file'
                     name='image'
+                    accept='image/*'
                     placeholder='Meal Image'
                     onChange={this.onInputChange}
                   /><br/>
@@ -100,4 +115,15 @@ class AddMeal extends React.Component {
  }
 }
 
-export default AddMeal;
+AddMeal.propTypes = {
+  addMeal: PropTypes.func.isRequired,
+  mealState: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  mealState: state.mealReducer
+});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ addMeal }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddMeal);
