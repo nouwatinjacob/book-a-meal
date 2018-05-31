@@ -10,7 +10,10 @@ cloudinaryConfig();
 const storage = cloudinaryStorage({
   cloudinary,
   folder: 'BookMeal/',
-  allowedFormats: ['jpg', 'png', 'jpeg']
+  allowedFormats: ['jpg', 'png', 'jpeg', 'gif'],
+  filename: (req, file, callback) => {
+    callback(undefined, Number(Date.now()) + file.originalname);
+  }
 });
 
 const upload = multer({ storage });
@@ -28,6 +31,11 @@ const mealRoutes = (router) => {
       authMiddleware.isCaterer,
       upload.single('image'),
       MealsController.modifyMeal
+    )
+    .get(
+      authMiddleware.verifyToken,
+      authMiddleware.isCaterer,
+      MealsController.getAMeal
     )
     .delete(
       authMiddleware.verifyToken, authMiddleware.isCaterer,

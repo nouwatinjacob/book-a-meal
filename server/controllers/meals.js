@@ -124,6 +124,28 @@ export default class MealsController {
   }
 
   /**
+   * @description - Get a particular meal
+   *
+   * @param { object }  req
+   * @param { object }  res
+   *
+   * @returns { object } object
+   */
+  static async getAMeal(req, res) {
+    const mealId = parseInt(req.params.id, 10);
+    if (!(Number.isInteger(mealId)) && (Number.isNaN(mealId))) {
+      return res.status(400).json({
+        message: 'Provide valid meal id'
+      });
+    }
+    const meal = await Meal.findById(mealId);
+    return res.status(200).json({
+      message: 'Meal Details',
+      meal
+    });
+  }
+
+  /**
    * @description - Delete a meal
    *
    * @param { object }  req
