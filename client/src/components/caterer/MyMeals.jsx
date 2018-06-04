@@ -4,6 +4,8 @@ import PropTypes from 'react-proptypes';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { getMeals, deleteMealAction } from '../../actions/mealAction';
 import CatererHeader from '../partials/CatererHeader.jsx';
 import Search from '../partials/Search.jsx';
@@ -23,6 +25,7 @@ class MyMeals extends React.Component {
     meals: [],
     loading: true
   }
+       
 
   /**
    *
@@ -49,9 +52,13 @@ class MyMeals extends React.Component {
    * 
    * @memberof RecipeDetail
    */
-  componentDidMount() {
-    this.props.getMeals();
+  componentDidMount() {    
+    this.props.getMeals();        
   }
+
+  notify = () => {
+    toast("Meal Deleted Successfully");
+  };
 
   /**
    * Handles meal deletion
@@ -64,6 +71,8 @@ class MyMeals extends React.Component {
      */
   handleDelete = (mealId) => {
     this.props.deleteMealAction(mealId);
+    window.location.reload(); 
+    this.notify();
   }
   
   /**
@@ -74,9 +83,10 @@ class MyMeals extends React.Component {
   render() {
     const { meals, loading } = this.state;
     return (
-      <div>
+      <div>     
     {
       loading ? <div className='container loading'>
+      <ToastContainer />
       <Loader 
          type="Rings"
          color="#ff9600"
@@ -86,6 +96,7 @@ class MyMeals extends React.Component {
       <h3>Loading...</h3>  
       </div> : 
       <div className='container'>
+      <ToastContainer />
         <CatererHeader/>
         <div className='wrapper'>        
           <Search/>

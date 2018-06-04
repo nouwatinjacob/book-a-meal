@@ -7,7 +7,8 @@ const loginAction = loginData => (dispatch) => {
     .then((res) => {
       const { token } = res.data; // get the token
       localStorage.setItem('token', token);
-      dispatch({ type: LOGIN_SUCCESSFUL });
+      dispatch({ type: LOGIN_SUCCESSFUL,
+        message: res.data });
       reDirect(token);
     })
     .catch((error) => {
