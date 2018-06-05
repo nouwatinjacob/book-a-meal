@@ -28,7 +28,7 @@ const mealReducer = (state = initialState, action) => {
       return {
         ...state,
         error: action.error,
-        loading: false
+        loading: true
       };
     case ADD_MEAL_SUCCESSFUL:
       return {

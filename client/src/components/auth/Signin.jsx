@@ -3,6 +3,8 @@ import PropTypes from 'react-proptypes';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { loginAction } from '../../actions/loginAction';
 import loginValidation from '../../utils/loginValidation';
 import Errors from '../partials/ValidationErrors.jsx';
@@ -23,6 +25,8 @@ class Login extends Component {
     errors: [],
     fail: null
   };
+
+  notify = () => toast("Login Successfully!");
 
   /**
   * Handle Login input change
@@ -52,6 +56,7 @@ class Login extends Component {
     if (validation.isValid()) {
       const { loginData } = this.state;
       this.props.loginAction(this.state.loginData);
+      this.notify();
     } else {
       this.setState(state => ({ errors: validation.getErrors() }));
       const { errors } = validation;
@@ -66,7 +71,7 @@ class Login extends Component {
   render() {
     return (
       <div className='container'>
-
+        <ToastContainer />
         <div className='wrapper'>
           <div className='login'>
             <div className='login-form'>
