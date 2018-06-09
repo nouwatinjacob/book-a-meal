@@ -1,7 +1,6 @@
 import React from 'react';
 import Loader from 'react-loader-spinner';
 import PropTypes from 'react-proptypes';
-import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
@@ -35,7 +34,7 @@ class MyMeals extends React.Component {
    * 
    * @returns {XML} XML/JSX
    * 
-   * @memberof RecipeDetail
+   * @memberof MyMeals
    */
   static getDerivedStateFromProps(nextProps, prevState) {
     const nextState = {};
@@ -50,7 +49,7 @@ class MyMeals extends React.Component {
    *
    * @returns {XML} XML/JSX
    * 
-   * @memberof RecipeDetail
+   * @memberof MyMeals
    */
   componentDidMount() {    
     this.props.getMeals();        

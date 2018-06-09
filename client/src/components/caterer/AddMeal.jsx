@@ -65,7 +65,6 @@ class AddMeal extends React.Component {
      this.props.addMeal(formData);
    } else {
      this.setState(state => ({ errors: validation.errors }));
-     const { errors } = validation;
    }
  }
 
