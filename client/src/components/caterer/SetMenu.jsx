@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import { getMeals } from '../../actions/mealAction';
-import setMenuAction from '../../actions/menuAction';
+import { setMenuAction } from '../../actions/menuAction';
 import CatererHeader from '../partials/CatererHeader.jsx';
 import menuValidation from '../../utils/menuValidation';
 import Errors from '../partials/ValidationErrors.jsx';
