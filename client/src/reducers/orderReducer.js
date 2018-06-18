@@ -1,11 +1,14 @@
-import { MAKE_ORDER_SUCCESSFUL, MAKE_ORDER_UNSUCCESSFUL
+import { 
+  MAKE_ORDER_SUCCESSFUL, MAKE_ORDER_UNSUCCESSFUL,
+  GET_USER_ORDER_SUCCESSFUL, GET_USER_ORDER_UNSUCCESSFUL
 } from '../actions/actionTypes';
 
 const initialState = {
   error: null,
   success: false,
   loading: true,
-  order: []
+  order: [],
+  orders: []
 };
 
 const orderReducer = (state = initialState, action) => {
@@ -13,15 +16,26 @@ const orderReducer = (state = initialState, action) => {
     case MAKE_ORDER_SUCCESSFUL:
       return {
         ...state,
-        order: action.res.data,
+        order: action.data,
         success: true,
         loading: false
       };
     case MAKE_ORDER_UNSUCCESSFUL:
       return {
         ...state,
-        error: action.error,
-        order: null
+        error: action.error
+      };
+    case GET_USER_ORDER_SUCCESSFUL:
+      return {
+        ...state,
+        orders: action.data.orders,
+        success: true,
+        loading: false,
+      };
+    case GET_USER_ORDER_UNSUCCESSFUL:
+      return {
+        ...state,
+        error: action.error
       };
     default:
       return {

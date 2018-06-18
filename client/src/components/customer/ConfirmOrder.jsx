@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getAMealAction } from '../../actions/mealAction';
-import makeOrderAction from '../../actions/orderAction';
+import { makeOrderAction } from '../../actions/orderAction';
 import CustomerHeader from '../partials/CustomerHeader.jsx';
 import history from '../../utils/history';
 

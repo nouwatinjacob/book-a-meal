@@ -161,6 +161,14 @@ export default class OrdersContoller {
     }
   }
 
+  /**
+   * @description - Get all the orders of a Customer
+   *
+   * @param { object } req
+   * @param { object } res
+   *
+   * @returns { object } object
+   */
   static async getCustomerOrders(req, res) {
     try {
       const userId = req.decoded.id;
