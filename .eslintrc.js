@@ -94,6 +94,7 @@ module.exports = {
     "react/require-extension": 0,
     "react/self-closing-comp": 0,
     "react/sort-comp": 1,
-    "react/wrap-multilines": 0
+    "react/wrap-multilines": 0,
+    "react/jsx-no-bind": 0,
   }
 };

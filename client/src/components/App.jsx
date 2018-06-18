@@ -8,7 +8,7 @@ import CustomerSignup from './auth/CustomerSignup.jsx';
 import CatererSignup from './auth/CatererSignup.jsx';
 import PageNotFound from './PageNotfound.jsx';
 import MenuMeal from './customer/MenuMeal.jsx';
-import Confirmorder from './customer/ConfirmOrder.jsx';
+import ConfirmOrder from './customer/ConfirmOrder.jsx';
 import ModifyOrder from './customer/ModifyOrder.jsx';
 import UserOrder from './customer/UserOrders.jsx';
 import MyMeals from './caterer/MyMeals.jsx';
@@ -58,7 +58,7 @@ class App extends React.Component {
               <Route path='/signup' component={CustomerSignup}/>
               <Route path='/caterer-signup' component={CatererSignup}/>
               <Route path='/menus' component={MenuMeal}/>
-              <Route path='/confirm-order' component={Confirmorder}/>
+              <Route path='/confirm-order' component={ConfirmOrder}/>
               <Route path='/modify-order/:orderId' component={ModifyOrder}/>
               <Route path='/user-order' component={UserOrder}/>
               <Route path='/caterer' component={MyMeals}/>

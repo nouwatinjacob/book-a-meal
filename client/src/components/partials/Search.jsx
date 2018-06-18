@@ -8,7 +8,6 @@ import React from 'react';
  * @extends {React.Component}
  */
 class Search extends React.Component {
-
   /**
    * Renders Search component
    *

@@ -67,7 +67,7 @@ class MyMeals extends React.Component {
    * @param { object } mealId
    * 
    * @return {void}
-     */
+  */
   handleDelete = (mealId) => {
     this.props.deleteMealAction(mealId);
     window.location.reload(); 

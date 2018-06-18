@@ -145,7 +145,6 @@ class SetMenu extends React.Component {
                       type="checkbox"
                       id={meal.id}
                       value={meal.id}
-                      name='meals[]'
                       onChange={this.onCheck}
                     />
                     <label htmlFor="test1">{meal.name}</label>
