@@ -19,7 +19,6 @@ class CustomerHeader extends React.Component {
       <div className='topnav'>
         <div className='wrapper'>
           <Link to='/'>Logout</Link>
-          <NavLink activeClassName='active' to='/confirm-order'>Cart</NavLink>
           <NavLink activeClassName='active' to='/user-order'>My Orders</NavLink>
           <NavLink activeClassName='active' to='#'>My Account</NavLink>
         </div>

@@ -34,7 +34,6 @@ const mealRoutes = (router) => {
     )
     .get(
       authMiddleware.verifyToken,
-      authMiddleware.isCaterer,
       MealsController.getAMeal
     )
     .delete(

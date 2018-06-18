@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'react-proptypes';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import history from '../../utils/history';
 import { getMenuAction } from '../../actions/menuAction';
 import CustomerHeader from '../partials/CustomerHeader.jsx';
 import Search from '../partials/Search.jsx';
@@ -32,6 +32,25 @@ class MenuMeal extends React.Component {
     this.props.getMenuAction('2018-06-15');
   }
 
+  /**
+   * Handles makeOrder button
+   * 
+   * @method onClickOrder
+   * 
+   * @param { object } mealId
+   * 
+   * @param { object } menuId
+   * 
+   * @param { event } event
+   * 
+   * @return {void}
+  */
+  onClickOrder = (mealId, menuId, event) => {
+    const idsArray = [];
+    idsArray.push(mealId, menuId);
+    sessionStorage.setItem('ids', JSON.stringify(idsArray));
+    history.push('/confirm-order');
+  }
 
   /**
    * Renders MenuMeal component
@@ -57,13 +76,15 @@ class MenuMeal extends React.Component {
                   <div className='row'>
                     <div className='c-medium-12 c-xsmall-12 text-center' id='pd-0'>
                       <p><b>{meal.name}</b></p>
-                      <p>{meal.price}</p>
+                      <p>Price {meal.price}</p>
                     </div>
                   </div>
                   <div className='row'>
                     <div className='c-medium-12 c-xsmall-12 text-center' id='pd-0'>
-                      <button className='button warning'>
-                        <Link to='/confirm-order'>Order Meal</Link>
+                      <button 
+                        className='button warning'
+                        onClick={event => this.onClickOrder(meal.id, dateMenu[0].id, event)}
+                      >Order Meal 
                       </button>
                     </div>
                   </div>
