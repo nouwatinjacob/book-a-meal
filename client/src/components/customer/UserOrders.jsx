@@ -39,7 +39,7 @@ class UserOrder extends React.Component {
               <button className='button default' style={{ marginRight: '5px' }}>
                 <Link to='/modify-order/1'>Edit</Link>
               </button>
-              <button className='button delete'>Cancle</button>
+              <button className='button delete'>Cancel</button>
             </td>
           </tr>
           <tr>

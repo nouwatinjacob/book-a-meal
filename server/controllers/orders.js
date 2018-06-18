@@ -134,7 +134,7 @@ export default class OrdersContoller {
   }
 
   /**
-   * @description - Get all the order
+   * @description - Get all the orders
    *
    * @param { object } req
    * @param { object } res
@@ -159,5 +159,28 @@ export default class OrdersContoller {
         message: 'Error processing request', error: error.toString()
       });
     }
+  }
+
+  static async getCustomerOrders(req, res) {
+    try {
+      const userId = req.decoded.id;
+      const orders = await Order.findAll({
+        where: userId,
+        include: [
+          {
+            model: Meal
+          },
+        ]
+      });
+    return res.status(200).json({
+      message: 'Orders gotten successfully',
+      orders
+    })
+    } catch (error) {
+      return res.status(400).json({
+        message: 'Error processing request', error: error.toString()
+      })
+    }
+
   }
 }
