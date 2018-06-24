@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { getUserOrderAction } from '../../actions/orderAction';
 import CustomerHeader from '../partials/CustomerHeader.jsx';
 import Pagination from '../partials/Pagination.jsx';
+import history from '../../utils/history';
 
 /**
  * UserOrder class declaration
@@ -15,7 +16,6 @@ import Pagination from '../partials/Pagination.jsx';
  * @extends {React.Component}
  */
 class UserOrder extends React.Component {
-
   /**
    *
    * @returns {XML} XML/JSX
@@ -24,6 +24,28 @@ class UserOrder extends React.Component {
   */
   componentDidMount() {
     this.props.getUserOrderAction();
+  }
+
+  /**
+   * Handles modify on click of modify 
+   * 
+   * @method handleModify
+   * 
+   * @param {mealId} mealId
+   * 
+   * @param {menuId} menuId
+   * 
+   * @param {orderId} orderId
+   * 
+   * @param {event} event
+   * 
+   * @return {void}
+  */
+  handleModify = (mealId, menuId, orderId, event) => {
+    const idsArray = [];
+    idsArray.push(mealId, menuId, orderId);
+    sessionStorage.setItem('ids', JSON.stringify(idsArray));
+    history.push(`/modify-order/${orderId}`);
   }
 
   /**
@@ -37,7 +59,7 @@ class UserOrder extends React.Component {
       <div className='container'>
         <CustomerHeader/>
         <div className='wrapper'>
-        { orders ? 
+        { orders ?
         <table className='order-table'>
         <tbody>
           <tr>
@@ -46,17 +68,23 @@ class UserOrder extends React.Component {
             <th>Price(&#8358;)</th>
             <th>Details</th>
           </tr>
-          <tr>
-          <td>{orders[0].createdAt}</td>
-          <td>{orders[0].Meal.name}</td>
-          <td>{(orders[0].Meal.price) * orders[0].quantity}</td>
+          {orders.map((order, index) => 
+          <tr key={index}>
+          <td>{order.createdAt.slice(0, 10)}</td>
+          <td>{order.Meal.name}</td>
+          <td>{(order.Meal.price) * order.quantity}</td>
           <td>
-            <button className='button default' style={{ marginRight: '5px' }}>
-              <Link to={`/modify-order/${orders[0].Meal.id}`}>Edit</Link>
+            <button
+              className='button default'
+              style={{ marginRight: '5px' }}
+              onClick={event => 
+                this.handleModify(order.mealId, order.menuId, order.id, event)}
+            >
+              Edit
             </button>
             <button className='button delete'>Cancel</button>
           </td>
-        </tr>
+        </tr>)}
           </tbody>
         </table> :
         <p>You have no Order</p>
@@ -69,7 +97,8 @@ class UserOrder extends React.Component {
 }
 
 UserOrder.propTypes = {
-  getUserOrderAction: PropTypes.func.isRequired
+  getUserOrderAction: PropTypes.func.isRequired,
+  orderState: PropTypes.object
 };
 
 const mapStateToProps = state => ({
@@ -79,4 +108,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ getUserOrderAction }, dispatch);
 
-  export default connect(mapStateToProps, mapDispatchToProps)(UserOrder);
+export default connect(mapStateToProps, mapDispatchToProps)(UserOrder);
