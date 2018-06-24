@@ -5,7 +5,10 @@ import {
 
 const initialState = {
   menu: [],
-  menus: [],
+  menus: {
+    message: '',
+    dateMenu: []
+  },
   error: null,
   success: false,
   loading: true,

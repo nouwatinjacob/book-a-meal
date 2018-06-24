@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../assets/img/bookameal-logo.png';
 import meals from '../assets/img/Meal-menu.png';
 import delivery from '../assets/img/fast-delivery.png';
 import realTime from '../assets/img/24-hrs.png';
@@ -29,7 +28,7 @@ class HomePage extends React.Component {
                 Book A Meal is an online store for<br/> ordering your favourite meals
               </h2>
               <button className='button warning' id='visit'>
-                <Link to='/user-menus'>Visit Store</Link>
+                <Link to='/menus'>Visit Store</Link>
               </button>
             </div>
         </div>

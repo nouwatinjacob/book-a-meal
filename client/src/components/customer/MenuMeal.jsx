@@ -5,8 +5,10 @@ import { connect } from 'react-redux';
 import history from '../../utils/history';
 import { getMenuAction } from '../../actions/menuAction';
 import CustomerHeader from '../partials/CustomerHeader.jsx';
+import CatererHeader from '../partials/CatererHeader.jsx';
 import Search from '../partials/Search.jsx';
 import Pagination from '../partials/Pagination.jsx';
+import { decodeToken } from '../../utils/helper';
 
 /**
  * MenuMeal class declaration
@@ -37,6 +39,21 @@ class MenuMeal extends React.Component {
    * 
    * @method onClickOrder
    * 
+   * @param { event } event
+   * 
+   * @return {void}
+  */
+  handleDateChange = (event) => {
+    const searchDate = event.target.value;
+    this.props.getMenuAction(searchDate);
+    console.log('date>>>>>', searchDate);
+  }
+
+  /**
+   * Handles makeOrder button
+   * 
+   * @method onClickOrder
+   * 
    * @param { object } mealId
    * 
    * @param { object } menuId
@@ -59,15 +76,24 @@ class MenuMeal extends React.Component {
    */
   render() {
     const { menuState: { menus: { dateMenu } } } = this.props;
+    const token = localStorage.getItem('token');
+    const userToken = decodeToken(token);
     return (
       <div>
         <div className='container'>
-          <CustomerHeader/>
+        { userToken.userType === 'customer' ? <CustomerHeader/> : <CatererHeader/>}
+          
           <div className='wrapper'>
-            <Search/>
+            <div className='wrapper search'>
+              <label>Search by date</label>
+              <input
+                type='date'
+                onChange={this.handleDateChange}
+              />
+            </div>
             
               <div className='row'>
-              { (dateMenu) ?
+              { dateMenu.length > 0 ?
                 dateMenu[0].Meals.map((meal, index) => 
               <div className='c-medium-3 c-xsmall-12 c-3' id='pd-0' key={index}>
               <div className='box'>
@@ -90,14 +116,15 @@ class MenuMeal extends React.Component {
                   </div>
                 </div>
               </div>
-              </div>) : '' }
+              </div>) : 
+              <div className='wrapper'>
+                <h6 className='text-center mt-10'>No Menu to display for this date</h6>
+              </div> }
               </div>
             <br/>
 
           </div>
-        </div><br/><hr/>
-
-      <Pagination/><br/>
+        </div><br/>
       </div>
     );
   }
