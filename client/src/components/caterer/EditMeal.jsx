@@ -33,7 +33,7 @@ class EditMeal extends React.Component {
    * 
    * @returns {XML} XML/JSX
    * 
-   * @memberof RecipeDetail
+   * @memberof EditMeal
    */
   static getDerivedStateFromProps(nextProps, prevState) {
     const nextState = {};
@@ -47,7 +47,7 @@ class EditMeal extends React.Component {
    *
    * @returns {XML} XML/JSX
    * 
-   * @memberof RecipeDetail
+   * @memberof EditMeal
    */
   componentDidMount() {
     const mealId = this.props.match.params.mealId;
