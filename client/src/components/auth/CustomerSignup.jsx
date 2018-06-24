@@ -50,7 +50,7 @@ class CustomerSignup extends Component {
   * @return {event} event
   *
   */
-  onFormSubmit = async (event) => {
+  onFormSubmit = (event) => {
     event.preventDefault();
     const validation = customerValidation(this.state.customerData);
     if (validation.isValid()) {

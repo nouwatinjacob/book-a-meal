@@ -50,7 +50,7 @@ class CatererSignup extends React.Component {
   * @return {event} event
   *
   */
- onFormSubmit = async (event) => {
+ onFormSubmit = (event) => {
    event.preventDefault();
    const validation = catererValidation(this.state.catererData);
    if (validation.isValid()) {
