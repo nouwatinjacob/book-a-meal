@@ -16,10 +16,16 @@ const orderRoutes = (router) => {
       authMiddleware.verifyToken, authMiddleware.isCustomer,
       OrdersController.getCustomerOrders
     );
-  router.route('/orders/:id').put(
-    authMiddleware.verifyToken, authMiddleware.isCustomer,
-    OrdersController.modifyOrder
-  );
+  router.route('/order/:id')
+    .get(
+      authMiddleware.verifyToken,
+      OrdersController.getAnOrder
+    );
+  router.route('/orders/:id')
+    .put(
+      authMiddleware.verifyToken, authMiddleware.isCustomer,
+      OrdersController.modifyOrder
+    );
 };
 
 export default orderRoutes;

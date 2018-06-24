@@ -80,7 +80,7 @@ export default class OrdersContoller {
           message: 'Provide valid order id'
         });
       }
-      const orderExist = await Order.findOne({ where: { id: req.params.id } });
+      const orderExist = await Order.findOne({ where: { id: orderId } });
 
       if (orderExist) {
         if (orderExist.userId !== req.decoded.id) {
@@ -173,22 +173,59 @@ export default class OrdersContoller {
     try {
       const userId = req.decoded.id;
       const orders = await Order.findAll({
-        where: userId,
+        where: { userId },
         include: [
           {
             model: Meal
           },
         ]
       });
-    return res.status(200).json({
-      message: 'Orders gotten successfully',
-      orders
-    })
+      return res.status(200).json({
+        message: 'Orders gotten successfully',
+        orders
+      });
     } catch (error) {
       return res.status(400).json({
         message: 'Error processing request', error: error.toString()
-      })
+      });
     }
+  }
 
+  /**
+   * @description - Get all the orders of a Customer
+   *
+   * @param { object } req
+   * @param { object } res
+   *
+   * @returns { object } object
+   */
+  static async getAnOrder(req, res) {
+    try {
+      const orderId = parseInt(req.params.id, 10);
+      if (!(Number.isInteger(orderId)) && (Number.isNaN(orderId))) {
+        return res.status(400).json({
+          message: 'Provide valid order id'
+        });
+      }
+      const order = await Order.findOne({ 
+        where: { id: orderId },
+        include: [
+          {
+            model: Meal
+          },
+        ] 
+      });
+      if (order) {
+        return res.status(200).json({
+          message: 'Order details',
+          order
+        });
+      }
+      return res.status(400).json({ message: 'Order does not exist' });
+    } catch (error) {
+      return res.status(400).json({
+        message: 'Error processing request', error: error.toString()
+      });
+    }
   }
 }
