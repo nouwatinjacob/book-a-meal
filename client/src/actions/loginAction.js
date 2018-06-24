@@ -1,6 +1,7 @@
 import axios from 'axios';
-import { reDirect } from '../utils/helper';
-import { LOGIN_SUCCESSFUL, LOGIN_UNSUCCESSFUL, LOG_OUT_SUCCESS } from './actionTypes';
+import { reDirect, logout } from '../utils/helper';
+
+import { LOGIN_SUCCESSFUL, LOGIN_UNSUCCESSFUL, CLEAR_STATE } from './actionTypes';
 
 const loginAction = loginData => (dispatch) => {
   axios.post('http://localhost:8000/api/v1/auth/login', loginData)
@@ -20,7 +21,7 @@ const loginAction = loginData => (dispatch) => {
 };
 
 const logoutAction = () => (dispatch) => {
-  dispatch({ type: LOG_OUT_SUCCESS });
+  dispatch({ type: CLEAR_STATE });
   logout();
 };
 

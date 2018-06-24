@@ -1,5 +1,4 @@
 import jwt_decode from 'jwt-decode';
-import { browserHistory } from 'react-router';
 import history from './history';
 /**
  * @description decodes token
@@ -41,7 +40,7 @@ const reDirect = (token) => {
  */
 const logout = () => {
   window.localStorage.removeItem('token');
-  browserHistory.push('/');
+  history.push('/');
 };
 
 /**

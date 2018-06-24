@@ -1,5 +1,9 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import PropTypes from 'react-proptypes';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import { logoutAction } from '../../actions/loginAction';
 
 /**
  * CustomerHeader class declaration
@@ -9,6 +13,9 @@ import { Link, NavLink } from 'react-router-dom';
  * @extends {React.Component}
  */
 class CustomerHeader extends React.Component {
+  handleLogout = () => {
+    this.props.logoutAction();
+  }
   /**
    * Renders CustomerHeader component
    *
@@ -18,7 +25,12 @@ class CustomerHeader extends React.Component {
     return (
       <div className='topnav'>
         <div className='wrapper'>
-          <Link to='/'>Logout</Link>
+          <a
+            onClick={this.handleLogout}
+          >
+            Logout
+          </a>
+          
           <NavLink activeClassName='active' to='/user-order'>My Orders</NavLink>
           <NavLink activeClassName='active' to='#'>My Account</NavLink>
         </div>
@@ -27,4 +39,14 @@ class CustomerHeader extends React.Component {
   }
 }
 
-export default CustomerHeader;
+CustomerHeader.propTypes = {
+  logoutAction: PropTypes.func
+};
+
+const mapStateToProps = state => ({
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ logoutAction }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(CustomerHeader);

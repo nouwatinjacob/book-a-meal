@@ -8,12 +8,19 @@ const Header = () => (
           <Link to='/'>
             <img src={logo} alt='Logo' />
           </Link>
-          <div className='header-right' id='myTopnav'>
+          {
+            localStorage.getItem('token') ?
+            <div className='header-right' id='myTopnav'>
+              <Link className='logo' to=''>WELCOME</Link>
+            </div>
+          : 
+            <div className='header-right' id='myTopnav'>
             <Link className='logo' to='/login'>SIGN IN</Link>
             <button className='button' id='header_button'>
               <Link to='/signup'>CREATE ACCOUNT</Link>
             </button>
           </div>
+          }
         </div>
   </div>
 );
