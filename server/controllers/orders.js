@@ -134,19 +134,21 @@ export default class OrdersContoller {
   }
 
   /**
-   * @description - Get all the orders
+   * @description - Get all the caterer orders
    *
    * @param { object } req
    * @param { object } res
    *
    * @returns { object } object
    */
-  static async getOrder(req, res) {
+  static async getCatererOrder(req, res) {
     try {
+      const userId = req.decoded.id;
       const orders = await Order.findAll({
         include: [
           {
-            model: Meal
+            model: Meal,
+            where: { userId }
           },
         ]
       });

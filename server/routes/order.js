@@ -9,7 +9,7 @@ const orderRoutes = (router) => {
     )
     .get(
       authMiddleware.verifyToken, authMiddleware.isCaterer,
-      OrdersController.getOrder
+      OrdersController.getCatererOrder
     );
   router.route('/user-orders')
     .get(
