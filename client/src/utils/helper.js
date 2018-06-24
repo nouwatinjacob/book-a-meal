@@ -1,7 +1,6 @@
 import jwt_decode from 'jwt-decode';
+import { browserHistory } from 'react-router';
 import history from './history';
-// import { browserHistory } from 'react-router';
-
 /**
  * @description decodes token
  *
