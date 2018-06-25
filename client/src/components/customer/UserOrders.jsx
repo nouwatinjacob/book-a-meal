@@ -75,14 +75,14 @@ class UserOrder extends React.Component {
           <td>{(order.Meal.price) * order.quantity}</td>
           <td>
             <button
-              className='button default'
+              className='button warning'
               style={{ marginRight: '5px' }}
               onClick={event => 
                 this.handleModify(order.mealId, order.menuId, order.id, event)}
             >
               Edit
             </button>
-            <button className='button delete'>Cancel</button>
+            <button className='button danger'>Cancel</button>
           </td>
         </tr>)}
           </tbody>

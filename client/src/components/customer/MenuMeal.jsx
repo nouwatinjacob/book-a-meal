@@ -6,8 +6,6 @@ import history from '../../utils/history';
 import { getMenuAction } from '../../actions/menuAction';
 import CustomerHeader from '../partials/CustomerHeader.jsx';
 import CatererHeader from '../partials/CatererHeader.jsx';
-import Search from '../partials/Search.jsx';
-import Pagination from '../partials/Pagination.jsx';
 import { decodeToken } from '../../utils/helper';
 
 /**
@@ -46,7 +44,6 @@ class MenuMeal extends React.Component {
   handleDateChange = (event) => {
     const searchDate = event.target.value;
     this.props.getMenuAction(searchDate);
-    console.log('date>>>>>', searchDate);
   }
 
   /**

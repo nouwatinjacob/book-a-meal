@@ -144,14 +144,15 @@ export default class OrdersContoller {
   static async getCatererOrder(req, res) {
     try {
       const userId = req.decoded.id;
-      const orders = await Order.findAll({
+      const queryBuilder = {
         include: [
           {
             model: Meal,
             where: { userId }
           },
         ]
-      });
+      };
+      const orders = await Order.findAll(queryBuilder);
       return res.status(200).json({
         message: 'All Orders',
         orders
