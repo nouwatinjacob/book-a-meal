@@ -26,7 +26,11 @@ export default class MealsController {
    */
   static async addMeal(req, res) {
     try {
-      const validation = new Validator(req.body, req.file, validations().mealRules);
+      const validation = new Validator(
+        req.body,
+        req.file,
+        validations().mealRules
+      );
       if (validation.passes()) {
         const price = parseInt(req.body.price, 10);
         const name = req.body.name.trim();
@@ -34,16 +38,22 @@ export default class MealsController {
         if (user) {
           const foundMeal = await Meal.findOne({ where: { name } });
           if (!foundMeal) {
-            const meal = { name, price, image: req.file.secure_url, userId: req.decoded.id };
+            const meal = { 
+              name, price, image: req.file.secure_url, userId: req.decoded.id 
+            };
             const newMeal = await Meal.create(meal);
             return res.status(201).json({
               message: 'Meal Created Successfully',
               newMeal
             });           
           }
-          return res.status(400).json({ message: 'You have this meal already, please edit it' });
+          return res.status(400).json({
+            message: 'You have this meal already, please edit it'
+          });
         }
-        return res.status(400).json({ message: 'Please log in to create a meal' });
+        return res.status(400).json({
+          message: 'Please log in to create a meal'
+        });
       }
       return res.status(400).json({ message: validation.errors.all() });
     } catch (error) {
@@ -63,7 +73,8 @@ export default class MealsController {
    */
   static async modifyMeal(req, res) {
     try {
-      const validation = new Validator(req.body, validations().updateMealRules);      
+      const validation = 
+      new Validator(req.body, validations().updateMealRules);      
       if (validation.passes()) {
         const mealId = parseInt(req.params.id, 10);
         if (!(Number.isInteger(mealId)) && (Number.isNaN(mealId))) {
@@ -80,7 +91,8 @@ export default class MealsController {
           }
           const meal = await mealExist.update({
             name: req.body.name ? req.body.name.trim() : mealExist.name,
-            price: req.body.price ? parseInt(req.body.price, 10) : mealExist.price,
+            price: req.body.price ? 
+              parseInt(req.body.price, 10) : mealExist.price,
             image: req.file ? req.file.secure_url : mealExist.image
           });
           return res.status(200).json({

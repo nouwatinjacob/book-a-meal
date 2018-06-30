@@ -54,7 +54,9 @@ export default class OrdersContoller {
             order,
           });
         }
-        return res.status(400).json({ message: 'This meal is not on this menu' });
+        return res.status(400).json({
+          message: 'This meal is not on this menu'
+        });
       }
       return res.status(400).json({ message: validation.errors.all() });
     } catch (error) {
@@ -84,7 +86,9 @@ export default class OrdersContoller {
 
       if (orderExist) {
         if (orderExist.userId !== req.decoded.id) {
-          return res.status(400).json({ message: 'This Order does not belong to this user' });
+          return res.status(400).json({
+            message: 'This Order does not belong to this user'
+          });
         }
 
         const {
@@ -92,7 +96,9 @@ export default class OrdersContoller {
           quantity = orderExist.dataValues.quantity,
           menuId = orderExist.dataValues.menuId
         } = req.body;
-        const validation = new Validator({ mealId, quantity, menuId }, validations().orderRules);
+        const validation = new Validator({
+          mealId, quantity, menuId
+        }, validations().orderRules);
         if (!validation.passes()) {
           return res.status(400).json({ message: validation.errors.all() });
         }
@@ -110,7 +116,9 @@ export default class OrdersContoller {
         });
         if (menuMeal) {
           // if (!checkTimeToOrder(menuMeal.createdAt)) {
-          //   return res.status(400).json({ message: 'Time to update order elapse' });
+          //   return res.status(400).json({
+          //   message: 'Time to update order elapse'
+          // });
           // }
           const modifiedOrder = await orderExist.update({
             mealId,
@@ -123,7 +131,9 @@ export default class OrdersContoller {
             modifiedOrder,
           });
         }
-        return res.status(400).json({ message: 'This meal is not on this menu' });
+        return res.status(400).json({
+          message: 'This meal is not on this menu'
+        });
       }
       return res.status(400).json({ message: 'Order does not exist' });
     } catch (error) {

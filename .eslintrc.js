@@ -16,7 +16,7 @@ module.exports = {
   },
   rules:{
     "linebreak-style": 0,
-    "max-len": [2, 100, 2],
+    "max-len": [2, 80, 4],
     "comma-dangle": 0,
     "consistent-return": 0,
     "no-console": 0,

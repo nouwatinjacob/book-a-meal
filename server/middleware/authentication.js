@@ -23,16 +23,21 @@ export default class Auth {
    * @returns { object } object
    */
   static verifyToken(req, res, next) {
-    const token = req.body.token || req.query.token || req.headers['x-access-token'];
+    const token = req.body.token ||
+    req.query.token || req.headers['x-access-token'];
     if (token) {
       jwt.verify(token, secret, (error, decoded) => {
         if (error) {
-          return res.status(401).json({ message: 'Invalid authorization token' });
+          return res.status(401).json({
+            message: 'Invalid authorization token'
+          });
         }
         User.findById(decoded.id)
           .then((user) => {
             if (!user) {
-              return res.status(400).json({ message: 'This user does not exist' });
+              return res.status(400).json({
+                message: 'This user does not exist'
+              });
             }
             req.decoded = decoded;
             return next();
@@ -64,7 +69,9 @@ export default class Auth {
       }
       return res.status(404).json({ message: 'User not found' });
     } catch (error) {
-      return res.status(400).json({ message: 'Error processing request', error });
+      return res.status(400).json({
+        message: 'Error processing request', error
+      });
     }
   }
 
@@ -95,6 +102,8 @@ export default class Auth {
    */
   static isCustomer(req, res, next) {
     if (req.decoded && req.decoded.userType === 'customer') return next();
-    return res.status(403).send({ message: 'You must be registered to perform this operation' });
+    return res.status(403).send({
+      message: 'You must be registered to perform this operation'
+    });
   }
 }

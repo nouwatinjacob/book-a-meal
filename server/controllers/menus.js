@@ -37,7 +37,9 @@ export default class MenusController {
             }
           });
           if (checkMenu) {
-            return res.status(400).json({ message: 'You already have menu for this date' });
+            return res.status(400).json({
+              message: 'You already have menu for this date'
+            });
           }
           const meals = await Meal.findAll({
             where: {
@@ -64,7 +66,9 @@ export default class MenusController {
             message: 'None of the meals belong to caterer'
           });
         }
-        return res.status(400).json({ message: 'The Date must be of format YYYY-MM-DD' });
+        return res.status(400).json({
+          message: 'The Date must be of format YYYY-MM-DD'
+        });
       }
       return res.status(400).json({ message: validation.errors.all() });
     } catch (error) {
@@ -97,7 +101,9 @@ export default class MenusController {
           dateMenu
         });
       }
-      return res.status(400).json({ message: 'The Date must be of format YYYY-MM-DD' });
+      return res.status(400).json({
+        message: 'The Date must be of format YYYY-MM-DD'
+      });
     } catch (error) {
       return res.status(400).json({
         message: 'Error processing request', error: error.toString()

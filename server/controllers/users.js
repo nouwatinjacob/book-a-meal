@@ -34,7 +34,10 @@ export default class UserController {
         ['email', 'password', 'password_confirmation', 'userType']
       );
       if (userDetails.userType === 'customer') {
-        const customerDetails = lodash.pick(obj, ['firstName', 'lastName']);      
+        const customerDetails = lodash.pick(
+          obj, 
+          ['firstName', 'lastName']
+        );      
         const customerValidation = new Validator(
           { ...customerDetails, ...userDetails },
           validations().customerValidation
@@ -48,7 +51,10 @@ export default class UserController {
               ...customerDetails
             });
 
-            const user = lodash.pick(newUser, ['id', 'email', 'userType', 'firstName', 'lastName']);
+            const user = lodash.pick(
+              newUser,
+              ['id', 'email', 'userType', 'firstName', 'lastName']
+            );
             const token = jwt.sign(user, secret, { expiresIn: 86400 });
             return res.status(201).json({
               message: 'Registration Successful',
@@ -60,7 +66,9 @@ export default class UserController {
             message: 'email or password already exists'
           });
         }
-        return res.status(400).json({ message: customerValidation.errors.all() });
+        return res.status(400).json({
+          message: customerValidation.errors.all()
+        });
       } else if (userDetails.userType === 'caterer') {
         const catererDetails = lodash.pick(
           obj, 
@@ -91,9 +99,13 @@ export default class UserController {
             message: 'email or password already exists'
           });
         }
-        return res.status(400).json({ message: catererValidation.errors.all() });
+        return res.status(400).json({
+          message: catererValidation.errors.all()
+        });
       }
-      return res.status(400).json({ message: 'Request type must be customer or caterer' });
+      return res.status(400).json({
+        message: 'Request type must be customer or caterer'
+      });
     } catch (error) {
       return res.status(400).json({
         message: 'Error processing request', error: error.toString()
@@ -118,7 +130,9 @@ export default class UserController {
         if (userExist) {
           const verifyPassword = userExist.comparePassword(userExist, password);
           if (!verifyPassword) {
-            return res.status(400).json({ message: 'Invalid login credentials' });
+            return res.status(400).json({
+              message: 'Invalid login credentials'
+            });
           }
           const user = lodash.pick(userExist, ['id', 'email', 'userType']);
           const token = jwt.sign(user, secret);
@@ -132,7 +146,9 @@ export default class UserController {
       }
       return res.status(400).json({ message: validation.errors.all() });
     } catch (error) {
-      return res.status(400).json({ message: 'Error processing request', error: error.toString() });
+      return res.status(400).json({ 
+        message: 'Error processing request', error: error.toString()
+      });
     }
   }
 }
