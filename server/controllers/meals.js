@@ -28,18 +28,18 @@ export default class MealsController {
     try {
       const validation = new Validator(
         req.body,
-        req.file,
         validations().mealRules
       );
       if (validation.passes()) {
         const price = parseInt(req.body.price, 10);
         const name = req.body.name.trim();
+        const image = req.file ? req.file.secure_url : req.body.image;
         const user = await User.findById(req.decoded.id);
         if (user) {
           const foundMeal = await Meal.findOne({ where: { name } });
           if (!foundMeal) {
             const meal = { 
-              name, price, image: req.file.secure_url, userId: req.decoded.id 
+              name, price, image, userId: req.decoded.id 
             };
             const newMeal = await Meal.create(meal);
             return res.status(201).json({
@@ -58,7 +58,7 @@ export default class MealsController {
       return res.status(400).json({ message: validation.errors.all() });
     } catch (error) {
       return res.status(400).json({
-        message: 'Error processing request', error
+        message: 'Error processing request', error: error.toString()
       });
     }
   }

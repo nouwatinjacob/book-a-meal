@@ -57,7 +57,7 @@ export default class MenusController {
             await menu.addMeals([...acceptedIds]);
 
             return res.status(201).json({
-              message: 'Meal added to Menu',
+              message: 'Meals added to Menu',
               menu,
               meals
             });

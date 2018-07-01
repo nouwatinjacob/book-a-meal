@@ -33,9 +33,8 @@ const validations = () => ({
     menuDate: 'required'
   },
   mealRules: {
-    name: 'required|min:3|max:20',
-    price: 'required|numeric',
-    image: 'required'
+    name: 'required|min:3|max:50',
+    price: 'required|numeric'
   },
   updateMealRules: {
     name: 'min:3|max:20',

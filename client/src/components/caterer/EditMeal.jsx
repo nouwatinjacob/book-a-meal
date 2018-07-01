@@ -108,8 +108,14 @@ class EditMeal extends React.Component {
             <div className='login'>
               <div className='login-form'>
                 <h3>Edit Meal Details</h3>
-                <form encType='multipart/form-data' onSubmit={this.onFormSubmit}>
-                {this.state.errors && <Errors errors={this.state.errors}>Errors</Errors>}
+                <form
+                  encType='multipart/form-data'
+                  onSubmit={this.onFormSubmit}
+                >
+                {
+                  this.state.errors && 
+                  <Errors errors={this.state.errors}>Errors</Errors>
+                }
                 <input
                     type='text'
                     name='name'
