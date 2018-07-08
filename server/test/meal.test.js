@@ -143,7 +143,8 @@ describe('Test cases for all meals actions', () => {
         .send(mealSeeder.setMealData(
           'Fried Rice and chicken',
           2000,
-          'https://res.cloudinary.com/sansaristic/image/upload/v1530028015/BookMeal/1530027983498pexels-photo-247685.png.png',
+          'https://res.cloudinary.com/sansaristic/image/upload/v1530028015' +
+          '/BookMeal/1530027983498pexels-photo-247685.png.png',
           catererId
         ))
         .end((err, res) => {
