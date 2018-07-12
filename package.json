@@ -6,9 +6,6 @@
   "repository": "https://github.com/nouwatinjacob/book-a-meal",
   "author": "Nouwatin Jacob <jaysansa@gmail.com>",
   "license": "MIT",
-  "engines": {
-    "node": "8.11.1"
-  },
   "nyc": {
     "include": [
       "server/controllers/*.js",
@@ -22,6 +19,7 @@
     "start:webpack": "webpack-dev-server --config ./webpack.config.js --mode development",
     "start": "node ./dist/server.js",
     "heroku-postbuild": "npx babel server/ --out-dir dist/ --ignore server/test",
+    "migrate": "sequelize db:migrate:undo:all && sequelize db:migrate",
     "build": "npx babel server/ --out-dir dist/ --ignore server/test",
     "test:endpoint": "sequelize db:migrate:undo:all && sequelize db:migrate && nyc --reporter=html mocha --require babel-core/register server/test/*.test.js --exit",
     "test": "cross-env-shell NODE_ENV=test yarn test:endpoint && nyc report",

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { authorization } from '../utils/helper';
 import {
   GET_MEAL_SUCCESSFUL, GET_MEAL_UNSUCCESSFUL,
@@ -58,6 +59,10 @@ const deleteMealUnsuccess = error => ({
   error
 });
 
+const notify = () => {
+  toast("Meal Deleted Successfully");
+};
+
 const getMeals = () => (dispatch => ( 
   axios.get('http://localhost:8000/api/v1/meals', authorization())
     .then((res) => {
@@ -97,7 +102,10 @@ const getAMealAction = id => (dispatch => (
 );
 
 const editMealAction = (mealDetail, id) => (dispatch) => {
-  axios.put(`http://localhost:8000/api/v1/meals/${id}`, mealDetail, authorization())
+  axios.put(
+    `http://localhost:8000/api/v1/meals/${id}`,
+    mealDetail, authorization()
+  )
     .then((res) => {
       dispatch(editMealSuccess({
         passes: res.data
@@ -112,6 +120,7 @@ const deleteMealAction = mealId => (dispatch) => {
   axios.delete(`http://localhost:8000/api/v1/meals/${mealId}`, authorization())
     .then((res) => {
       dispatch(deleteMealSuccess(res.data.message));
+      this.notify();
     })
     .catch(error => dispatch(deleteMealUnsuccess(error)));
 };

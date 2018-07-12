@@ -3,7 +3,7 @@ import Loader from 'react-loader-spinner';
 import PropTypes from 'react-proptypes';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getMeals, deleteMealAction } from '../../actions/mealAction';
 import CatererHeader from '../partials/CatererHeader.jsx';
@@ -55,10 +55,6 @@ class MyMeals extends React.Component {
     this.props.getMeals();        
   }
 
-  notify = () => {
-    toast("Meal Deleted Successfully");
-  };
-
   /**
    * Handles meal deletion
    * 
@@ -71,7 +67,6 @@ class MyMeals extends React.Component {
   handleDelete = (mealId) => {
     this.props.deleteMealAction(mealId);
     window.location.reload(); 
-    this.notify();
   }
   
   /**
@@ -84,8 +79,9 @@ class MyMeals extends React.Component {
     return (
       <div>     
     {
-      loading ? <div className='container loading'>
-      <ToastContainer />
+      (meals.length > 0) ?
+      loading ? 
+      <div className='container loading'>
       <Loader 
          type="Rings"
          color="#ff9600"
@@ -117,6 +113,10 @@ class MyMeals extends React.Component {
               </table>
           </div><br/>
         <Pagination/><br/>
+      </div> :
+      <div>
+        <CatererHeader/>
+        <h3 className='text-center'>No Meals to display </h3>
       </div>
     }
     </div>

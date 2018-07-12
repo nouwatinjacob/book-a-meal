@@ -4,7 +4,6 @@ import { Route, Redirect } from 'react-router-dom';
 
 const PublicRoute = ({ component: Component, ...rest }) => {
   console.log(localStorage.getItem('token'), 'token view>>>>>>');
-  console.log('token view>>>>>>');
   return (
   <Route {...rest} render={props => (
     localStorage.getItem('token')
