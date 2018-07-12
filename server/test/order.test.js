@@ -92,7 +92,12 @@ describe('TEST ORDER ROUTES', () => {
     request(app)
       .post('/api/v1/meals')
       .set({ 'x-access-token': catererToken })
-      .send(mealSeeder.setMealData('Ofada ati Dodo', 2500, 'ofada.jpg', catererId))
+      .send(mealSeeder.setMealData(
+        'Ofada ati Dodo',
+        2500,
+        'ofada.jpg',
+        catererId
+      ))
       .expect(201)
       .end((err, res) => {
         if (err) return done(err);
@@ -105,7 +110,12 @@ describe('TEST ORDER ROUTES', () => {
     request(app)
       .post('/api/v1/meals')
       .set({ 'x-access-token': catererToken })
-      .send(mealSeeder.setMealData('Eba and Egusi Soup', 2000, 'eba.jpg', catererId))
+      .send(mealSeeder.setMealData(
+        'Eba and Egusi Soup',
+        2000,
+        'eba.jpg',
+        catererId
+      ))
       .expect(201)
       .end((err, res) => {
         if (err) return done(err);
@@ -139,7 +149,8 @@ describe('TEST ORDER ROUTES', () => {
           done();
         });
     });
-    it('should return status code 401 when invalid authorization token is entered', (done) => {
+    it('should return status code 401 when invalid ' +
+    'authorization token is entered', (done) => {
       request(app)
         .post('/api/v1/orders')
         .set({ 'x-access-token': 'nonsense' })
@@ -227,7 +238,8 @@ describe('TEST ORDER ROUTES', () => {
   });
 
   describe('PUT api/v1/orders/:orderId when updating order', () => {
-    it('should return a status code of 403 if user is not authorized', (done) => {
+    it('should return a status code of 403 ' + 
+    'if user is not authorized', (done) => {
       request(app)
         .put(`/api/v1/orders/${orderId}`)
         .send(orderSeeder.setUpdateOrder(mealId1, 8, menuId))
@@ -250,14 +262,16 @@ describe('TEST ORDER ROUTES', () => {
           done();
         });
     });
-    it('should return a status code of 400 if user is not the owner of the order', (done) => {
+    it('should return a status code of 400 ' + 
+    'if user is not the owner of the order', (done) => {
       request(app)
         .put(`/api/v1/orders/${orderId}`)
         .set({ 'x-access-token': customer1Token })
         .send(orderSeeder.setUpdateOrder(mealId1, 8, menuId))
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
-          expect(res.body.message).to.deep.equal('This Order does not belong to this user');
+          expect(res.body.message)
+            .to.deep.equal('This Order does not belong to this user');
           done();
         });
     });
@@ -272,14 +286,16 @@ describe('TEST ORDER ROUTES', () => {
           done();
         });
     });
-    it('should return a status code of 400 if meal picked does not belong to the menu', (done) => {
+    it('should return a status code of 400 if meal ' + 
+    'picked does not belong to the menu', (done) => {
       request(app)
         .put(`/api/v1/orders/${orderId}`)
         .set({ 'x-access-token': customerToken })
         .send(orderSeeder.setUpdateOrder(800, 8, menuId))
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
-          expect(res.body.message).to.deep.equal('This meal is not on this menu');
+          expect(res.body.message)
+            .to.deep.equal('This meal is not on this menu');
           done();
         });
     });
@@ -318,7 +334,8 @@ describe('TEST ORDER ROUTES', () => {
         .set({ 'x-access-token': customerToken })
         .end((err, res) => {
           expect(res.statusCode).to.equal(403);
-          expect(res.body.message).to.deep.equal('You must be caterer to perform this operation');
+          expect(res.body.message)
+            .to.deep.equal('You must be caterer to perform this operation');
           done();
         });
     });

@@ -33,20 +33,28 @@ vendor know what the customers want to eat.
 - [ESLint](eslint.org) provides a pluggable linting utility for JavaScript.
 - [Mocha](https://mochajs.org/) Mocha is a feature-rich JavaScript test framework running on [NodeJS](nodejs.org/en) for testing [Javascript](javascript.com) applications.
 
+### Frontend
+- [Bootstrap](https://getbootstrap.com/) makes styling responsive web pages faster and easier.
+- [React](https://facebook.github.io/react/) A JavaScript library for building user interfaces.
+- [Redux](http://redux.js.org/) A predictable state container for JavaScript apps.
+- [Webpack](https://webpack.js.org/) A JavaScript tool for bundling scripts, images, styles and other assets
+- [Babel](https://babeljs.io/) A JavaScript compiler for converting codes written in ES6 or JSX to ES5 that is supported by many browsers
+
 ## Installation
 
 - Install [NodeJS](http://nodejs.org/en) and [PostgreSQL](https://www.postgresql.org/) on your computer
 - Clone this repository
 - Navigate to the directoty
-- Install all depencies with ```npm install```
+- Install all depencies with ```yarn install```
 - Globally install ```sequelize-cli```
 - Using ```sequelize db:migrate``` migrate the database
-- Start the server by running ```npm run dev```
+- Start the server by running ```yarn start:dev```
+- Build the application by running ```yarn build```
 
 ## Testing
 
 - Create a test database of your choice by following the example in .env.sample file
-- Run server-side test with `npm test`
+- Run server-side test with `yarn test`
 
 ## Contribution
 

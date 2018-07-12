@@ -72,7 +72,12 @@ describe('TEST MENU ROUTES', () => {
     request(app)
       .post('/api/v1/meals')
       .set({ 'x-access-token': catererToken })
-      .send(mealSeeder.setMealData('Ofada ati Dodo', 2500, 'ofada.jpg', catererId))
+      .send(mealSeeder.setMealData(
+        'Ofada ati Dodo',
+        2500,
+        'ofada.jpg',
+        catererId
+      ))
       .expect(201)
       .end((err, res) => {
         if (err) return done(err);
@@ -85,7 +90,12 @@ describe('TEST MENU ROUTES', () => {
     request(app)
       .post('/api/v1/meals')
       .set({ 'x-access-token': catererToken })
-      .send(mealSeeder.setMealData('Eba and Egusi Soup', 2000, 'eba.jpg', catererId))
+      .send(mealSeeder.setMealData(
+        'Eba and Egusi Soup',
+        2000,
+        'eba.jpg',
+        catererId
+      ))
       .expect(201)
       .end((err, res) => {
         if (err) return done(err);
@@ -105,7 +115,8 @@ describe('TEST MENU ROUTES', () => {
           done();
         });
     });
-    it('should return status code 401 when invalid authorization token is entered', (done) => {
+    it('should return status code 401 when ' +
+    'invalid authorization token is entered', (done) => {
       request(app)
         .post('/api/v1/menu')
         .set({ 'x-access-token': 'nonsense' })
@@ -124,7 +135,8 @@ describe('TEST MENU ROUTES', () => {
         .send(menuSeeder.setMenuData([mealId, mealId1], '2018-05-12'))
         .end((err, res) => {
           expect(res.statusCode).to.equal(403);
-          expect(res.body.message).to.deep.equal('You must be caterer to perform this operation');
+          expect(res.body.message)
+            .to.deep.equal('You must be caterer to perform this operation');
           done();
         });
     });
@@ -149,7 +161,8 @@ describe('TEST MENU ROUTES', () => {
         .send(menuSeeder.setMenuData([mealId, mealId1], '2018-05-12'))
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
-          expect(res.body.message).to.deep.equal('None of the meals belong to caterer');
+          expect(res.body.message)
+            .to.deep.equal('None of the meals belong to caterer');
           done();
         });
     });
@@ -161,7 +174,8 @@ describe('TEST MENU ROUTES', () => {
         .send(menuSeeder.setMenuData([mealId, mealId1], '2018/05/12'))
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
-          expect(res.body.message).to.deep.equal('The Date must be of format YYYY-MM-DD');
+          expect(res.body.message)
+            .to.deep.equal('The Date must be of format YYYY-MM-DD');
           done();
         });
     });
@@ -173,7 +187,7 @@ describe('TEST MENU ROUTES', () => {
         .send(menuSeeder.setMenuData([mealId, mealId1], '2018-05-12'))
         .end((err, res) => {
           expect(res.statusCode).to.equal(201);
-          expect(res.body.message).to.deep.equal('Meal added to Menu');
+          expect(res.body.message).to.deep.equal('Meals added to Menu');
           done();
         });
     });
@@ -185,13 +199,15 @@ describe('TEST MENU ROUTES', () => {
         .send(menuSeeder.setMenuData([mealId, mealId1], '2018-05-12'))
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
-          expect(res.body.message).to.deep.equal('You already have menu for this date');
+          expect(res.body.message)
+            .to.deep.equal('You already have menu for this date');
           done();
         });
     });
   });
 
-  describe('test for GET api/v1/menu when viewing menu meals to a caterer', () => {
+  describe('test for GET api/v1/menu when ' +
+  'viewing menu meals to a caterer', () => {
     it('should return a status code of 400 when an valid authorization' +
     'token enter invalid time format', (done) => {
       request(app)
@@ -199,7 +215,8 @@ describe('TEST MENU ROUTES', () => {
         .set({ 'x-access-token': catererToken })
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
-          expect(res.body.message).to.deep.equal('The Date must be of format YYYY-MM-DD');
+          expect(res.body.message)
+            .to.deep.equal('The Date must be of format YYYY-MM-DD');
           done();
         });
     });

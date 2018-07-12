@@ -5,12 +5,18 @@ import validations from '../middleware/validations';
 
 const { Order, Meal, MenuMeal } = db;
 
+/**
+ * OrdersContoller class declaration
+ *
+ * @class OrdersContoller
+ *
+ */
 export default class OrdersContoller {
   /**
    * @description - Make order
    *
-   * @param { object } request
-   * @param { object } response
+   * @param { object } req
+   * @param { object } res
    *
    * @returns { object } object
    */
@@ -48,7 +54,9 @@ export default class OrdersContoller {
             order,
           });
         }
-        return res.status(400).json({ message: 'This meal is not on this menu' });
+        return res.status(400).json({
+          message: 'This meal is not on this menu'
+        });
       }
       return res.status(400).json({ message: validation.errors.all() });
     } catch (error) {
@@ -61,8 +69,8 @@ export default class OrdersContoller {
   /**
    * @description - Modify Order
    *
-   * @param { object } request
-   * @param { object } response
+   * @param { object } req
+   * @param { object } res
    *
    * @returns { object } object
    */
@@ -74,11 +82,13 @@ export default class OrdersContoller {
           message: 'Provide valid order id'
         });
       }
-      const orderExist = await Order.findOne({ where: { id: req.params.id } });
+      const orderExist = await Order.findOne({ where: { id: orderId } });
 
       if (orderExist) {
         if (orderExist.userId !== req.decoded.id) {
-          return res.status(400).json({ message: 'This Order does not belong to this user' });
+          return res.status(400).json({
+            message: 'This Order does not belong to this user'
+          });
         }
 
         const {
@@ -86,7 +96,9 @@ export default class OrdersContoller {
           quantity = orderExist.dataValues.quantity,
           menuId = orderExist.dataValues.menuId
         } = req.body;
-        const validation = new Validator({ mealId, quantity, menuId }, validations().orderRules);
+        const validation = new Validator({
+          mealId, quantity, menuId
+        }, validations().orderRules);
         if (!validation.passes()) {
           return res.status(400).json({ message: validation.errors.all() });
         }
@@ -104,7 +116,9 @@ export default class OrdersContoller {
         });
         if (menuMeal) {
           // if (!checkTimeToOrder(menuMeal.createdAt)) {
-          //   return res.status(400).json({ message: 'Time to update order elapse' });
+          //   return res.status(400).json({
+          //   message: 'Time to update order elapse'
+          // });
           // }
           const modifiedOrder = await orderExist.update({
             mealId,
@@ -117,7 +131,9 @@ export default class OrdersContoller {
             modifiedOrder,
           });
         }
-        return res.status(400).json({ message: 'This meal is not on this menu' });
+        return res.status(400).json({
+          message: 'This meal is not on this menu'
+        });
       }
       return res.status(400).json({ message: 'Order does not exist' });
     } catch (error) {
@@ -128,16 +144,49 @@ export default class OrdersContoller {
   }
 
   /**
-   * @description - Get all the order
+   * @description - Get all the caterer orders
    *
-   * @param { object } request
-   * @param { object } response
+   * @param { object } req
+   * @param { object } res
    *
    * @returns { object } object
    */
-  static async getOrder(req, res) {
+  static async getCatererOrder(req, res) {
     try {
+      const userId = req.decoded.id;
+      const queryBuilder = {
+        include: [
+          {
+            model: Meal,
+            where: { userId }
+          },
+        ]
+      };
+      const orders = await Order.findAll(queryBuilder);
+      return res.status(200).json({
+        message: 'All Orders',
+        orders
+      });
+    } catch (error) {
+      return res.status(400).json({
+        message: 'Error processing request', error: error.toString()
+      });
+    }
+  }
+
+  /**
+   * @description - Get all the orders of a Customer
+   *
+   * @param { object } req
+   * @param { object } res
+   *
+   * @returns { object } object
+   */
+  static async getCustomerOrders(req, res) {
+    try {
+      const userId = req.decoded.id;
       const orders = await Order.findAll({
+        where: { userId },
         include: [
           {
             model: Meal
@@ -145,9 +194,47 @@ export default class OrdersContoller {
         ]
       });
       return res.status(200).json({
-        message: 'All Orders',
+        message: 'Orders gotten successfully',
         orders
       });
+    } catch (error) {
+      return res.status(400).json({
+        message: 'Error processing request', error: error.toString()
+      });
+    }
+  }
+
+  /**
+   * @description - Get all the orders of a Customer
+   *
+   * @param { object } req
+   * @param { object } res
+   *
+   * @returns { object } object
+   */
+  static async getAnOrder(req, res) {
+    try {
+      const orderId = parseInt(req.params.id, 10);
+      if (!(Number.isInteger(orderId)) && (Number.isNaN(orderId))) {
+        return res.status(400).json({
+          message: 'Provide valid order id'
+        });
+      }
+      const order = await Order.findOne({ 
+        where: { id: orderId },
+        include: [
+          {
+            model: Meal
+          },
+        ] 
+      });
+      if (order) {
+        return res.status(200).json({
+          message: 'Order details',
+          order
+        });
+      }
+      return res.status(400).json({ message: 'Order does not exist' });
     } catch (error) {
       return res.status(400).json({
         message: 'Error processing request', error: error.toString()

@@ -8,12 +8,18 @@ const { Op } = Sequelize;
 
 const { Meal, Menu } = db;
 
+/**
+ * MenusController class declaration
+ *
+ * @class MenusController
+ *
+ */
 export default class MenusController {
   /**
-   * @description - Caterer set menu for a day
+   * @description - Create new Menu
    *
-   * @param { object } request
-   * @param { object } response
+   * @param { object }  req
+   * @param { object }  res
    *
    * @returns { object } object
    */
@@ -31,7 +37,9 @@ export default class MenusController {
             }
           });
           if (checkMenu) {
-            return res.status(400).json({ message: 'You already have menu for this date' });
+            return res.status(400).json({
+              message: 'You already have menu for this date'
+            });
           }
           const meals = await Meal.findAll({
             where: {
@@ -49,7 +57,7 @@ export default class MenusController {
             await menu.addMeals([...acceptedIds]);
 
             return res.status(201).json({
-              message: 'Meal added to Menu',
+              message: 'Meals added to Menu',
               menu,
               meals
             });
@@ -58,7 +66,9 @@ export default class MenusController {
             message: 'None of the meals belong to caterer'
           });
         }
-        return res.status(400).json({ message: 'The Date must be of format YYYY-MM-DD' });
+        return res.status(400).json({
+          message: 'The Date must be of format YYYY-MM-DD'
+        });
       }
       return res.status(400).json({ message: validation.errors.all() });
     } catch (error) {
@@ -69,10 +79,10 @@ export default class MenusController {
   }
 
   /**
-   * @description - Get menu for a day
+   * @description - Get the Menu
    *
-   * @param { object } request
-   * @param { object } response
+   * @param { object }  req
+   * @param { object }  res
    *
    * @returns { object } object
    */
@@ -91,7 +101,9 @@ export default class MenusController {
           dateMenu
         });
       }
-      return res.status(400).json({ message: 'The Date must be of format YYYY-MM-DD' });
+      return res.status(400).json({
+        message: 'The Date must be of format YYYY-MM-DD'
+      });
     } catch (error) {
       return res.status(400).json({
         message: 'Error processing request', error: error.toString()

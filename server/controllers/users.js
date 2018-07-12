@@ -11,33 +11,39 @@ const secret = process.env.SECRET_TOKEN;
 
 const { User } = db;
 
+/**
+ * UserController class declaration
+ *
+ * @class UserController
+ *
+ */
 export default class UserController {
   /**
-   * @description - Create Users auth and validate request
+   * @description - Create new User
    *
-   * @param  {obj} req - email parameter
-   * @param  {} res
+   * @param { object }  req
+   * @param { object }  res
    *
    * @returns { object } object
    */
-
   static async createUser(req, res) {
     try {
-      const {
-        email, password, userType, password_confirmation,
-        firstName, lastName, businessName,
-        ownerName, businessAddress
-      } = req.body;
-      const userDetails = { email, password, userType };
-      const customerDetails = { firstName, lastName };
-      const catererDetails = { businessName, businessAddress, ownerName };
-
-      if (userType === 'customer') {
+      const obj = req.body;
+      const userDetails = lodash.pick(
+        obj,
+        ['email', 'password', 'password_confirmation', 'userType']
+      );
+      if (userDetails.userType === 'customer') {
+        const customerDetails = lodash.pick(
+          obj, 
+          ['firstName', 'lastName']
+        );      
         const customerValidation = new Validator(
-          { ...customerDetails, ...userDetails, password_confirmation },
+          { ...customerDetails, ...userDetails },
           validations().customerValidation
         );
         if (customerValidation.passes()) {
+          const { email } = userDetails;
           const foundUser = await User.findOne({ where: { email } });
           if (!foundUser) {
             const newUser = await User.create({
@@ -45,7 +51,10 @@ export default class UserController {
               ...customerDetails
             });
 
-            const user = lodash.pick(newUser, ['id', 'email', 'userType', 'firstName', 'lastName']);
+            const user = lodash.pick(
+              newUser,
+              ['id', 'email', 'userType', 'firstName', 'lastName']
+            );
             const token = jwt.sign(user, secret, { expiresIn: 86400 });
             return res.status(201).json({
               message: 'Registration Successful',
@@ -57,13 +66,20 @@ export default class UserController {
             message: 'email or password already exists'
           });
         }
-        return res.status(400).json({ message: customerValidation.errors.all() });
-      } else if (userType === 'caterer') {
+        return res.status(400).json({
+          message: customerValidation.errors.all()
+        });
+      } else if (userDetails.userType === 'caterer') {
+        const catererDetails = lodash.pick(
+          obj, 
+          ['businessName', 'businessAddress', 'ownerName']
+        );       
         const catererValidation = new Validator(
-          { ...catererDetails, ...userDetails, password_confirmation },
+          { ...catererDetails, ...userDetails },
           validations().catererValidation
         );
         if (catererValidation.passes()) {
+          const { email } = userDetails;
           const foundUser = await User.findOne({ where: { email } });
           if (!foundUser) {
             const newUser = await User.create({
@@ -83,9 +99,13 @@ export default class UserController {
             message: 'email or password already exists'
           });
         }
-        return res.status(400).json({ message: catererValidation.errors.all() });
+        return res.status(400).json({
+          message: catererValidation.errors.all()
+        });
       }
-      return res.status(400).json({ message: 'Request type must be customer or caterer' });
+      return res.status(400).json({
+        message: 'Request type must be customer or caterer'
+      });
     } catch (error) {
       return res.status(400).json({
         message: 'Error processing request', error: error.toString()
@@ -110,7 +130,9 @@ export default class UserController {
         if (userExist) {
           const verifyPassword = userExist.comparePassword(userExist, password);
           if (!verifyPassword) {
-            return res.status(400).json({ message: 'Invalid login credentials' });
+            return res.status(400).json({
+              message: 'Invalid login credentials'
+            });
           }
           const user = lodash.pick(userExist, ['id', 'email', 'userType']);
           const token = jwt.sign(user, secret);
@@ -124,7 +146,9 @@ export default class UserController {
       }
       return res.status(400).json({ message: validation.errors.all() });
     } catch (error) {
-      return res.status(400).json({ message: 'Error processing request', error: error.toString() });
+      return res.status(400).json({ 
+        message: 'Error processing request', error: error.toString()
+      });
     }
   }
 }

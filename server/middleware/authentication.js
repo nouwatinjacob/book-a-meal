@@ -6,18 +6,38 @@ dotenv.config();
 const secret = process.env.SECRET_TOKEN;
 const { User } = db;
 
+/**
+ * Auth class declaration
+ *
+ * @class Auth
+ *
+ */
 export default class Auth {
+  /**
+   * @description - Verify User Token
+   *
+   * @param { object }  req
+   * @param { object }  res
+   * @param { object }  next
+   *
+   * @returns { object } object
+   */
   static verifyToken(req, res, next) {
-    const token = req.body.token || req.query.token || req.headers['x-access-token'];
+    const token = req.body.token ||
+    req.query.token || req.headers['x-access-token'];
     if (token) {
       jwt.verify(token, secret, (error, decoded) => {
         if (error) {
-          return res.status(401).json({ message: 'Invalid authorization token' });
+          return res.status(401).json({
+            message: 'Invalid authorization token'
+          });
         }
         User.findById(decoded.id)
           .then((user) => {
             if (!user) {
-              return res.status(400).json({ message: 'This user does not exist' });
+              return res.status(400).json({
+                message: 'This user does not exist'
+              });
             }
             req.decoded = decoded;
             return next();
@@ -31,6 +51,15 @@ export default class Auth {
     }
   }
 
+  /**
+   * @description - Verify User
+   *
+   * @param { object }  req
+   * @param { object }  res
+   * @param { object }  next
+   *
+   * @returns { object } object
+   */
   static async verifyUser(req, res, next) {
     try {
       const user = await User.findById(req.params.id);
@@ -40,10 +69,21 @@ export default class Auth {
       }
       return res.status(404).json({ message: 'User not found' });
     } catch (error) {
-      return res.status(400).json({ message: 'Error processing request', error });
+      return res.status(400).json({
+        message: 'Error processing request', error
+      });
     }
   }
 
+  /**
+   * @description - Verify if User is a Caterer
+   *
+   * @param { object }  req
+   * @param { object }  res
+   * @param { object }  next
+   *
+   * @returns { object } object
+   */
   static isCaterer(req, res, next) {
     if (req.decoded && req.decoded.userType === 'caterer') return next();
     return res.status(403).send({
@@ -51,8 +91,19 @@ export default class Auth {
     });
   }
 
+  /**
+   * @description - Verify if User is a Customer
+   *
+   * @param { object }  req
+   * @param { object }  res
+   * @param { object }  next
+   *
+   * @returns { object } object
+   */
   static isCustomer(req, res, next) {
     if (req.decoded && req.decoded.userType === 'customer') return next();
-    return res.status(403).send({ message: 'You must be registered to perform this operation' });
+    return res.status(403).send({
+      message: 'You must be registered to perform this operation'
+    });
   }
 }

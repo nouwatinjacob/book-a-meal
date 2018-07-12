@@ -1,7 +1,9 @@
 import express from 'express';
 import logger from 'morgan';
 import parser from 'body-parser';
+import cors from 'cors';
 import routes from './routes/index';
+
 
 const app = express();
 const router = express.Router();
@@ -13,7 +15,7 @@ app.set('port', port);
 app.use(logger('dev'));
 app.use(parser.json());
 app.use(parser.urlencoded({ extended: false }));
-
+app.use(cors());
 routes(router);
 
 app.use('/api/v1/', router);
