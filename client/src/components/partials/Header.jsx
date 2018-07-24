@@ -1,17 +1,37 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import { decodeToken } from '../../utils/helper';
 import logo from '../../assets/img/bookameal-logo.png';
 
-const Header = () => (
-  <div className='header'>
+
+/**
+ * Header class declaration
+ *
+ * @class Header
+ *
+ * @extends {React.Component}
+ */
+class Header extends React.Component {
+  /**
+   * Renders Header component
+   *
+   * @returns {XML} XML/JSX
+   */
+  render() {
+    return (
+      <div className='header'>
         <div className='wrapper'>
           <Link to='/'>
             <img src={logo} alt='Logo' />
           </Link>
           {
-            localStorage.getItem('token') ?
+            localStorage.getItem('token') ? 
             <div className='header-right' id='myTopnav'>
-              <Link className='logo' to=''>WELCOME</Link>
+              <Link className='logo' to=''>WELCOME &nbsp; 
+              {
+                decodeToken(localStorage.getItem('token')).email
+              }
+              </Link>
             </div>
           : 
             <div className='header-right' id='myTopnav'>
@@ -22,7 +42,9 @@ const Header = () => (
           </div>
           }
         </div>
-  </div>
-);
+    </div>
+    );
+  }
+}
 
 export default withRouter(Header);

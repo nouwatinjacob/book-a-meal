@@ -46,11 +46,8 @@ export default class UserController {
           const { email } = userDetails;
           const foundUser = await User.findOne({ where: { email } });
           if (!foundUser) {
-            const newUser = await User.create({
-              ...userDetails,
-              ...customerDetails
-            });
-
+            const details = { ...userDetails, ...customerDetails };
+            const newUser = await User.create(details);
             const user = lodash.pick(
               newUser,
               ['id', 'email', 'userType', 'firstName', 'lastName']

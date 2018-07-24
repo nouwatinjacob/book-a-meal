@@ -14,6 +14,10 @@ const userModel = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
     lastName: {
       type: DataTypes.STRING,
       allowNull: true
@@ -40,6 +44,10 @@ const userModel = (sequelize, DataTypes) => {
     User.hasMany(models.Meal, {
       foreignKey: 'userId',
       as: 'meal'
+    });
+
+    User.hasMany(models.Order, {
+      foreignKey: 'userId',
     });
   };
 
