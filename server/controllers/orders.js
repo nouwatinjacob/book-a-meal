@@ -54,7 +54,7 @@ export default class OrdersContoller {
             order,
           });
         }
-        return res.status(400).json({
+        return res.status(404).json({
           message: 'This meal is not on this menu'
         });
       }
@@ -131,7 +131,7 @@ export default class OrdersContoller {
             modifiedOrder,
           });
         }
-        return res.status(400).json({
+        return res.status(404).json({
           message: 'This meal is not on this menu'
         });
       }

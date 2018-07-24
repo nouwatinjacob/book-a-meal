@@ -6,8 +6,13 @@ const checkTimeToModifyOrder = (menuDate) => {
 };
 
 const checkTimeToOrder = () => {
-  const checkTime = moment().hour() >= 7 && moment().hour() <= 18;
-  return checkTime;
+  const currentTime = moment();
+  const beforeTime = moment('06:59:00');
+  const afterTime = moment('18:00:00');
+  if (currentTime.isBetween(beforeTime, afterTime)) {
+    return true;
+  }
+  return false;
 };
 
 export {
