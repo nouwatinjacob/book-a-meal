@@ -3,7 +3,8 @@ import {
   MAKE_ORDER_SUCCESSFUL, MAKE_ORDER_UNSUCCESSFUL,
   GET_USER_ORDER_SUCCESSFUL, GET_USER_ORDER_UNSUCCESSFUL,
   GET_AN_ORDER_SUCCESSFUL, GET_AN_ORDER_UNSUCCESSFUL,
-  MODIFY_ORDER_SUCCESSFUL, MODIFY_ORDER_UNSUCCESSFUL
+  MODIFY_ORDER_SUCCESSFUL, MODIFY_ORDER_UNSUCCESSFUL,
+  GET_ALL_CATERER_ORDER_SUCCESSFUL, GET_ALL_CATERER_ORDER_UNSUCCESSFUL
 } from '../actions/actionTypes';
 import { authorization } from '../utils/helper';
 
@@ -47,8 +48,21 @@ const modifyOrderUnsuccess = error => ({
   error
 });
 
+const getAllCatererOrderSuccess = data => ({
+  type: GET_ALL_CATERER_ORDER_SUCCESSFUL,
+  data
+});
+
+const getAllCatererOrderUnuccess = error => ({
+  type: GET_ALL_CATERER_ORDER_UNSUCCESSFUL,
+  error
+});
+
 const makeOrderAction = orderDetail => (dispatch) => {
-  axios.post('http://localhost:8000/api/v1/orders', orderDetail, authorization())
+  axios.post(
+    'http://localhost:8000/api/v1/orders',
+    orderDetail, authorization()
+  )
     .then((res) => {
       dispatch(makeOrderSuccess({
         order: res.data
@@ -84,7 +98,10 @@ const getAnOrderAction = orderId => (dispatch) => {
 };
 
 const modifyOrderAction = (orderId, newOrderDetail) => (dispatch) => {
-  axios.put(`http://localhost:8000/api/v1/orders/${orderId}`, newOrderDetail, authorization())
+  axios.put(
+    `http://localhost:8000/api/v1/orders/${orderId}`,
+    newOrderDetail, authorization()
+  )
     .then((res) => {
       dispatch(modifyOrderSuccess({
         order: res.data
@@ -95,9 +112,22 @@ const modifyOrderAction = (orderId, newOrderDetail) => (dispatch) => {
     });
 };
 
+const getAllCatererOrderAction = () => (dispatch) => {
+  axios.get('http://localhost:8000/api/v1/orders', authorization())
+    .then((res) => {
+      dispatch(getAllCatererOrderSuccess({
+        orders: res.data.orders
+      }));
+    })
+    .catch((err) => {
+      dispatch(getAllCatererOrderUnuccess(err));
+    });
+};
+
 export {
   makeOrderAction,
   getUserOrderAction,
   getAnOrderAction,
-  modifyOrderAction
+  modifyOrderAction,
+  getAllCatererOrderAction
 };

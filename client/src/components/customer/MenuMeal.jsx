@@ -78,7 +78,10 @@ class MenuMeal extends React.Component {
     return (
       <div>
         <div className='container'>
-        { userToken.userType === 'customer' ? <CustomerHeader/> : <CatererHeader/>}
+        { 
+          userToken.userType === 'customer' ? 
+          <CustomerHeader/> : <CatererHeader/>
+        }
           
           <div className='wrapper'>
             <div className='wrapper search'>
@@ -97,16 +100,25 @@ class MenuMeal extends React.Component {
                 <img src={meal.image} alt='Avatar' style={{ width: '100%' }} />
                 <div className='box-body'>
                   <div className='row'>
-                    <div className='c-medium-12 c-xsmall-12 text-center' id='pd-0'>
+                    <div
+                      className='c-medium-12 c-xsmall-12 text-center' 
+                      id='pd-0'
+                    >
                       <p><b>{meal.name}</b></p>
                       <p>Price {meal.price}</p>
                     </div>
                   </div>
                   <div className='row'>
-                    <div className='c-medium-12 c-xsmall-12 text-center' id='pd-0'>
+                    <div
+                      className='c-medium-12 c-xsmall-12 text-center' 
+                      id='pd-0'
+                    >
                       <button 
                         className='button warning'
-                        onClick={event => this.onClickOrder(meal.id, dateMenu[0].id, event)}
+                        onClick={
+                          event => 
+                          this.onClickOrder(meal.id, dateMenu[0].id, event)
+                        }
                       >Order Meal 
                       </button>
                     </div>
@@ -115,7 +127,9 @@ class MenuMeal extends React.Component {
               </div>
               </div>) : 
               <div className='wrapper'>
-                <h6 className='text-center mt-10'>No Menu to display for this date</h6>
+                <h6
+                  className='text-center mt-10'>No Menu to display for this date
+                </h6>
               </div> }
               </div>
             <br/>

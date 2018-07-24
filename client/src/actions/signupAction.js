@@ -15,7 +15,7 @@ const signupAction = userDatas => (dispatch) => {
     .catch((err) => {      
       dispatch({
         type: SIGNUP_UNSUCCESSFUL,
-        payload: 'Registration Failed'
+        error: err
       });
     });
 };

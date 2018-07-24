@@ -23,6 +23,10 @@ const orderModel = (sequelize, DataTypes) => {
     Order.belongsTo(models.Meal, {
       foreignKey: 'mealId',
     });
+
+    Order.belongsTo(models.User, {
+      foreignKey: 'userId',
+    });
   };
 
   return Order;

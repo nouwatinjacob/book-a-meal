@@ -25,6 +25,10 @@ const orderRoutes = (router) => {
     .put(
       authMiddleware.verifyToken, authMiddleware.isCustomer,
       OrdersController.modifyOrder
+    )
+    .delete(
+      authMiddleware.verifyToken, authMiddleware.isCustomer,
+      OrdersController.cancelOrder
     );
 };
 

@@ -1,11 +1,21 @@
 import moment from 'moment';
 
-const checkTimeToOrder = (menuDate) => {
-  const now = new Date();
-  const menuDay = moment.utc(menuDate).format('YYYY-MM-DD');
-  const expiredTime = new Date(`${menuDay} 22:00:00`);
-
-  return expiredTime.getTime() >= now.getTime();
+const checkTimeToModifyOrder = (menuDate) => {
+  const timeCheck = moment(menuDate).add(1, 'hour') > moment();
+  return timeCheck;
 };
 
-export default checkTimeToOrder;
+const checkTimeToOrder = () => {
+  const currentTime = moment();
+  const beforeTime = moment('06:59:00');
+  const afterTime = moment('18:00:00');
+  if (currentTime.isBetween(beforeTime, afterTime)) {
+    return true;
+  }
+  return false;
+};
+
+export {
+  checkTimeToModifyOrder,
+  checkTimeToOrder
+};

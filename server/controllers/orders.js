@@ -1,9 +1,9 @@
 import Validator from 'validatorjs';
 import db from '../models/index';
-import checkTimeToOrder from '../util/helpers';
+import { checkTimeToOrder, checkTimeToModifyOrder } from '../util/helpers';
 import validations from '../middleware/validations';
 
-const { Order, Meal, MenuMeal } = db;
+const { Order, Meal, MenuMeal, User } = db;
 
 /**
  * OrdersContoller class declaration
@@ -39,9 +39,9 @@ export default class OrdersContoller {
         });
 
         if (menuMeal) {
-          // if (!checkTimeToOrder(menuMeal.createdAt)) {
-          //   return res.status(400).json({ message: 'Time to order elapse' });
-          // }
+          if (checkTimeToOrder()) {
+            return res.status(400).json({ message: 'Time to order elapse' });
+          }
           const order = await Order.create({
             mealId,
             userId,
@@ -54,7 +54,7 @@ export default class OrdersContoller {
             order,
           });
         }
-        return res.status(400).json({
+        return res.status(404).json({
           message: 'This meal is not on this menu'
         });
       }
@@ -115,11 +115,11 @@ export default class OrdersContoller {
           ]
         });
         if (menuMeal) {
-          // if (!checkTimeToOrder(menuMeal.createdAt)) {
-          //   return res.status(400).json({
-          //   message: 'Time to update order elapse'
-          // });
-          // }
+          if (!checkTimeToModifyOrder(menuMeal.createdAt)) {
+            return res.status(400).json({
+              message: 'Time to update order elapse'
+            });
+          }
           const modifiedOrder = await orderExist.update({
             mealId,
             menuId,
@@ -131,11 +131,11 @@ export default class OrdersContoller {
             modifiedOrder,
           });
         }
-        return res.status(400).json({
+        return res.status(404).json({
           message: 'This meal is not on this menu'
         });
       }
-      return res.status(400).json({ message: 'Order does not exist' });
+      return res.status(404).json({ message: 'Order not found' });
     } catch (error) {
       return res.status(400).json({
         message: 'Error processing request', error: error.toString()
@@ -160,7 +160,10 @@ export default class OrdersContoller {
             model: Meal,
             where: { userId }
           },
-        ]
+          {
+            model: User,
+          },
+        ],
       };
       const orders = await Order.findAll(queryBuilder);
       return res.status(200).json({
@@ -224,7 +227,10 @@ export default class OrdersContoller {
         where: { id: orderId },
         include: [
           {
-            model: Meal
+            model: Meal,
+          },
+          {
+            model: User,
           },
         ] 
       });
@@ -234,7 +240,43 @@ export default class OrdersContoller {
           order
         });
       }
-      return res.status(400).json({ message: 'Order does not exist' });
+      return res.status(404).json({ message: 'Order not found' });
+    } catch (error) {
+      return res.status(400).json({
+        message: 'Error processing request', error: error.toString()
+      });
+    }
+  }
+
+  /**
+   * @description - Cancel/Delete an order of a Customer
+   *
+   * @param { object } req
+   * @param { object } res
+   *
+   * @returns { object } object
+   */
+  static async cancelOrder(req, res) {
+    try {
+      const orderId = parseInt(req.params.id, 10);
+      if (!(Number.isInteger(orderId))) {
+        return res.status(400).json({
+          message: 'Provide valid order id'
+        });
+      }
+      const order = await Meal.findById(orderId);
+      if (order) {
+        if (!checkTimeToModifyOrder(order.createdAt)) {
+          return res.status(400).json({
+            message: 'Time elapse for order to be canceled'
+          });
+        }
+        await order.destroy();
+        return res.status(200).json({
+          message: 'Order cancelled succesfully'
+        });
+      }
+      return res.status(404).json({ message: 'Order not found' });
     } catch (error) {
       return res.status(400).json({
         message: 'Error processing request', error: error.toString()

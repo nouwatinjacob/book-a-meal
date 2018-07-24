@@ -55,7 +55,7 @@ class CustomerSignup extends Component {
     const validation = customerValidation(this.state.customerData);
     if (validation.isValid()) {
       const { customerData } = this.state;
-      this.props.signupAction(this.state.customerData);
+      this.props.signupAction(customerData);
     } else {
       this.setState(state => ({ errors: validation.getErrors() }));
       const { errors } = validation;
@@ -74,7 +74,10 @@ class CustomerSignup extends Component {
             <div className='login-form'>
               <h3>User Registration</h3>
               <form onSubmit={this.onFormSubmit}>
-              {this.state.errors && <Errors errors={this.state.errors}>Errors</Errors>}
+              {
+                this.state.errors && 
+                <Errors errors={this.state.errors}>Errors</Errors>
+              }
                   <input
                     type='text'
                     name='firstName'

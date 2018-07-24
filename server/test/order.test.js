@@ -215,7 +215,7 @@ describe('TEST ORDER ROUTES', () => {
         .set({ 'x-access-token': customerToken })
         .send(orderSeeder.setOrderData(1234, 2, 5, menuId))
         .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
+          expect(res.statusCode).to.equal(404);
           expect(res.body.message)
             .to.deep.equal('This meal is not on this menu');
           done();
@@ -238,30 +238,6 @@ describe('TEST ORDER ROUTES', () => {
   });
 
   describe('PUT api/v1/orders/:orderId when updating order', () => {
-    it('should return a status code of 403 ' + 
-    'if user is not authorized', (done) => {
-      request(app)
-        .put(`/api/v1/orders/${orderId}`)
-        .send(orderSeeder.setUpdateOrder(mealId1, 8, menuId))
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(403);
-          expect(res.body.message).to.deep.equal('Token not provided');
-          done();
-        });
-    });
-    it('should return status code 400 when orderId params' +
-    ' is not a number', (done) => {
-      request(app)
-        .put('/api/v1/orders/abc')
-        .set({ 'x-access-token': customerToken })
-        .send(orderSeeder.setUpdateOrder(mealId1, 8, menuId))
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
-          expect(res.body.message)
-            .to.deep.equal('Provide valid order id');
-          done();
-        });
-    });
     it('should return a status code of 400 ' + 
     'if user is not the owner of the order', (done) => {
       request(app)
@@ -281,8 +257,8 @@ describe('TEST ORDER ROUTES', () => {
         .set({ 'x-access-token': customerToken })
         .send(orderSeeder.setUpdateOrder(mealId1, 8, menuId))
         .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
-          expect(res.body.message).to.deep.equal('Order does not exist');
+          expect(res.statusCode).to.equal(404);
+          expect(res.body.message).to.deep.equal('Order not found');
           done();
         });
     });
@@ -293,7 +269,7 @@ describe('TEST ORDER ROUTES', () => {
         .set({ 'x-access-token': customerToken })
         .send(orderSeeder.setUpdateOrder(800, 8, menuId))
         .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
+          expect(res.statusCode).to.equal(404);
           expect(res.body.message)
             .to.deep.equal('This meal is not on this menu');
           done();
@@ -316,17 +292,7 @@ describe('TEST ORDER ROUTES', () => {
     });
   });
 
-  describe('PUT api/v1/orders/:orderId when updating order', () => {
-    it('should return a status code of 400 when ' +
-    'no token is provided', (done) => {
-      request(app)
-        .get('/api/v1/orders')
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(403);
-          expect(res.body.message).to.deep.equal('Token not provided');
-          done();
-        });
-    });
+  describe('GET api/v1/orders when getting order', () => {
     it('should return a status code of 400 when ' +
     'customer token is provided', (done) => {
       request(app)

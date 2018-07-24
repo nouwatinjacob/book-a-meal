@@ -77,7 +77,10 @@ class Login extends Component {
             <div className='login-form'>
               <h3>User Login</h3>
               <form onSubmit={this.onSubmit}>
-              {this.state.errors && <Errors errors={this.state.errors}>Errors</Errors>}
+              {
+                this.state.errors && 
+                <Errors errors={this.state.errors}>Errors</Errors>
+              }
                 <input
                   type='text'
                   name='email'

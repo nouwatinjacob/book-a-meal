@@ -59,14 +59,24 @@ class App extends React.Component {
               <Route path='/' component={HomePage} exact={true}/>
               <PublicRoute exact path='/login' component={Login}/>
               <PublicRoute exact path='/signup' component={CustomerSignup}/>
-              <PublicRoute exact path='/caterer-signup' component={CatererSignup}/>
+              <PublicRoute 
+                exact 
+                path='/caterer-signup'
+                component={CatererSignup}
+              />
               <PrivateRoute path='/menus' component={MenuMeal}/>
               <PrivateRoute path='/confirm-order' component={ConfirmOrder}/>
-              <PrivateRoute path='/modify-order/:orderId' component={ModifyOrder}/>
+              <PrivateRoute
+                path='/modify-order/:orderId'
+                component={ModifyOrder}
+              />
               <PrivateRoute path='/user-order' component={UserOrder}/>
               <PrivateRoute path='/caterer' component={MyMeals}/>
               <PrivateRoute path='/orders' component={Orders}/>
-              <PrivateRoute path='/order-detail' component={OrderDetail}/>
+              <PrivateRoute
+                path='/order-detail/:orderId'
+                component={OrderDetail}
+              />
               <PrivateRoute path='/add-meal' component={AddMeal}/>
               <PrivateRoute path='/edit-meal/:mealId' component={EditMeal}/>
               <PrivateRoute path='/set-menu' component={SetMenu}/>
