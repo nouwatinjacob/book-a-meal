@@ -86,7 +86,7 @@ export default class Auth {
    */
   static isCaterer(req, res, next) {
     if (req.decoded && req.decoded.userType === 'caterer') return next();
-    return res.status(403).send({
+    return res.status(403).json({
       message: 'You must be caterer to perform this operation'
     });
   }
@@ -102,7 +102,7 @@ export default class Auth {
    */
   static isCustomer(req, res, next) {
     if (req.decoded && req.decoded.userType === 'customer') return next();
-    return res.status(403).send({
+    return res.status(403).json({
       message: 'You must be registered to perform this operation'
     });
   }
