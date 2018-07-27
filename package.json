@@ -21,7 +21,7 @@
     "heroku-postbuild": "npx babel server/ --out-dir dist/ --ignore server/test",
     "migrate": "sequelize db:migrate:undo:all && sequelize db:migrate",
     "build": "npx babel server/ --out-dir dist/ --ignore server/test",
-    "test:endpoint": "sequelize db:migrate:undo:all && sequelize db:migrate && nyc --reporter=html mocha --require babel-core/register server/test/*.test.js --exit",
+    "test:endpoint": "sequelize db:migrate:undo:all && sequelize db:migrate && nyc --reporter=html mocha --require babel-core/register server/test/**/*.test.js --exit",
     "test": "cross-env-shell NODE_ENV=test yarn test:endpoint && nyc report",
     "db:migrate": "node_modules/.bin/sequelize db:migrate",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
@@ -98,6 +98,9 @@
     "redux-thunk": "^2.2.0",
     "sequelize": "^4.37.6",
     "sequelize-cli": "^4.0.0",
+    "sinon": "^6.1.4",
+    "sinon-chai": "^3.2.0",
+    "sinon-express-mock": "^2.0.5",
     "validator": "^9.4.1",
     "validatorjs": "^3.14.2"
   }
