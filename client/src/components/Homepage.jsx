@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import meals from '../assets/img/Meal-menu.png';
-import delivery from '../assets/img/fast-delivery.png';
-import realTime from '../assets/img/24-hrs.png';
+// import meals from '../assets/img/Meal-menu.png';
+// import delivery from '../assets/img/fast-delivery.png';
+// import realTime from '../assets/img/24-hrs.png';
 
 /**
  * Homepage class declaration
@@ -25,7 +25,8 @@ class HomePage extends React.Component {
         <div className='leading'>
             <div className='wrapper'>
               <h2 className='leading-text'>
-                Book A Meal is an online store for<br/> ordering your favourite meals
+                Book A Meal is an online store for<br/>
+                ordering your favourite meals
               </h2>
               <button className='button warning' id='visit'>
                 <Link to='/menus'>Visit Store</Link>
@@ -41,13 +42,14 @@ class HomePage extends React.Component {
             <div className='box'>
               <img
                 className='article-img'
-                src={meals}
+                src='http://res.cloudinary.com/sansaristic/image/upload/v1533140471/BookMeal/Default%20images/Meal-menu.png'
                 alt='Menu Meals'
                 style={{ width: '100%' }}
               />
               <div className='box-body'>
                 <p className='text'>
-                  Browse menus and <strong>your order</strong> in seconds without any delay
+                  Browse menus and <strong>your order</strong> 
+                  in seconds without any delay
                 </p>
               </div>
             </div>
@@ -56,23 +58,28 @@ class HomePage extends React.Component {
             <div className="box">
               <img
                 className='article-img'
-                src={delivery}
+                src='http://res.cloudinary.com/sansaristic/image/upload/v1533140467/BookMeal/Default%20images/fast-delivery.png'
                 alt='Fast Delivery'
                 style={{ width: '100%' }}
               />
               <div className='box-body'>
                 <p className='text'>
-                  <strong>Explore restaurants </strong> that deliver to your doorstep
+                  <strong>Explore restaurants </strong> 
+                  that deliver to your doorstep
                 </p>
               </div>
             </div>
           </div>
           <div className='c-medium-4' id='pd-0'>
             <div className='box'>
-              <img src={realTime} alt='Real Time' style={{ width: '100%' }} />
+              <img 
+                src='http://res.cloudinary.com/sansaristic/image/upload/v1533140467/BookMeal/Default%20images/24-hrs.png' 
+                alt='Real Time' 
+                style={{ width: '100%' }} />
               <div className='box-body'>
                 <p className='text'>
-                  Follow the status of your order with <strong>real-time alerts</strong>
+                  Follow the status of your order with 
+                  <strong>real-time alerts</strong>
                 </p>
               </div>
             </div>
