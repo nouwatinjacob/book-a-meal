@@ -6,6 +6,9 @@
   "repository": "https://github.com/nouwatinjacob/book-a-meal",
   "author": "Nouwatin Jacob <jaysansa@gmail.com>",
   "license": "MIT",
+  "engines": {
+    "node": "8.11.1"
+  },
   "nyc": {
     "include": [
       "server/controllers/*.js",

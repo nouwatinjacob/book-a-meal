@@ -22,7 +22,9 @@ class Header extends React.Component {
       <div className='header'>
         <div className='wrapper'>
           <Link to='/'>
-            <img src={logo} alt='Logo' />
+            <img 
+            src='http://res.cloudinary.com/sansaristic/image/upload/v1533140463/BookMeal/Default%20images/bookameal-logo.png' 
+            alt='Logo' />
           </Link>
           {
             localStorage.getItem('token') ? 

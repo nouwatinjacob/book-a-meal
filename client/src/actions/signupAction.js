@@ -7,7 +7,7 @@ import {
 const notify = () => toast.error('Network Error');
 
 const signupAction = userDatas => (dispatch) => {
-  axios.post('http://localhost:8000/api/v1/auth/signup', userDatas)
+  axios.post('/auth/signup', userDatas)
     .then((res) => {
       const { token } = res.data;
       localStorage.setItem('token', token);
