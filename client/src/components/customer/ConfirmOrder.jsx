@@ -6,7 +6,9 @@ import { Link } from 'react-router-dom';
 import { getAMealAction } from '../../actions/mealAction';
 import { makeOrderAction } from '../../actions/orderAction';
 import CustomerHeader from '../partials/CustomerHeader.jsx';
+import CatererHeader from '../partials/CatererHeader.jsx';
 import history from '../../utils/history';
+import { decodeToken } from '../../utils/helper';
 
 /**
  * ConfirmOrder class declaration
@@ -75,7 +77,10 @@ class ConfirmOrder extends React.Component {
     const price = quantity * meal.price;
     const mealId = this.state.meal.id;
     const menuId = parseInt(data[1], 10);
-    this.setState(state => ({ quantity, price, orderDetail: { mealId, quantity, menuId } }));
+    this.setState(state => (
+      { 
+        quantity, price, orderDetail: { mealId, quantity, menuId } 
+      }));
   }
 
 
@@ -92,16 +97,24 @@ class ConfirmOrder extends React.Component {
    */
   render() {
     const { mealState: { meal } } = this.props;
+    const token = localStorage.getItem('token');
+    const userToken = decodeToken(token);
     return (
       <div className='container'>
-        <CustomerHeader/>
+        { 
+          userToken.userType === 'customer' ? 
+          <CustomerHeader/> : <CatererHeader/>
+        }
           <div className='wrapper'>
             <div className='reduced-container'>
               <div className='row'>
               <div className='c-medium-6 c-small-12 c-xsmall-12' id='pd-0'>
                 <h3>CART</h3>
               </div>
-              <div className='c-medium-6 c-small-12 c-xsmall-12 amount' id='pd-0'>
+              <div
+                className='c-medium-6 c-small-12 c-xsmall-12 amount' 
+                id='pd-0'
+              >
                 <button className='button default'>
                   <Link to='/user-menus'>Back to Menu</Link>
                 </button>
@@ -118,10 +131,15 @@ class ConfirmOrder extends React.Component {
                   <th>Total Price(&#8358;)</th>
                 </tr>
                 <tr>
-                  <td><img src={meal.image} alt='' width='100' height='100' /></td>
+                  <td>
+                    <img src={meal.image} alt='' width='100' height='100' />
+                  </td>
                   <td>{meal.name}</td>
                   <td>
-                    <select style={{ width: '50px' }} onChange={this.handleQuantityChange}>
+                    <select 
+                      style={{ width: '50px' }} 
+                      onChange={this.handleQuantityChange}
+                    >
                       <option value='1'>1</option>
                       <option value='2'>2</option>
                       <option value='3'>3</option>
@@ -144,7 +162,10 @@ class ConfirmOrder extends React.Component {
               <div className='c-medium-6 c-small-12 c-xsmall-12' id='pd-0'>
 
               </div>
-              <div className='c-medium-6 c-small-12 c-xsmall-12 amount' id='pd-0'>
+              <div 
+                className='c-medium-6 c-small-12 c-xsmall-12 amount' 
+                id='pd-0'
+              >
                 <button
                   className='button warning'
                   onClick={this.handleMakeOrder}

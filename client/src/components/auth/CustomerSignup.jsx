@@ -58,7 +58,6 @@ class CustomerSignup extends Component {
       this.props.signupAction(customerData);
     } else {
       this.setState(state => ({ errors: validation.getErrors() }));
-      const { errors } = validation;
     }
   }
   /**
@@ -74,10 +73,6 @@ class CustomerSignup extends Component {
             <div className='login-form'>
               <h3>User Registration</h3>
               <form onSubmit={this.onFormSubmit}>
-              {
-                this.state.errors && 
-                <Errors errors={this.state.errors}>Errors</Errors>
-              }
                   <input
                     type='text'
                     name='firstName'
@@ -85,6 +80,11 @@ class CustomerSignup extends Component {
                     value={this.state.customerData.firstName}
                     onChange={this.onInputChange}
                   /><br/>
+                  { 
+                    this.state.errors.firstName ?
+                    <span>The First Name field is required.</span>
+                    : ''
+                  }
                   <input
                     type='text'
                     name='lastName'
@@ -92,6 +92,11 @@ class CustomerSignup extends Component {
                     value={this.state.customerData.lastName}
                     onChange={this.onInputChange}
                   /><br/>
+                  { 
+                    this.state.errors.lastName ?
+                    <span>The Last Name field is required.</span>
+                    : ''
+                  }
                   <input
                     type='email'
                     name='email'
@@ -99,6 +104,11 @@ class CustomerSignup extends Component {
                     value={this.state.customerData.email}
                     onChange={this.onInputChange}
                   /><br/>
+                  { 
+                    this.state.errors.email ?
+                    <span>{this.state.errors.email[0]}</span>
+                    : ''
+                  }
                   <input
                     type='password'
                     name='password'
@@ -106,6 +116,11 @@ class CustomerSignup extends Component {
                     value={this.state.customerData.password}
                     onChange={this.onInputChange}
                   /><br/>
+                  { 
+                    this.state.errors.password ?
+                    <span>{this.state.errors.password[0]}</span>
+                    : ''
+                  }
                   <input
                     type='password'
                     name='password_confirmation'
@@ -115,7 +130,7 @@ class CustomerSignup extends Component {
                   /><br/>
                 <button className='button warning'>Signup</button>
                 <p>
-                  Do you want to be part of our Caterers?
+                  Do you want to be part of our Caterers? &nbsp;
                   <Link to='/caterer-signup'>Signup  here</Link>
                 </p>
             </form>

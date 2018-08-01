@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'react-proptypes';
+import Loader from 'react-loader-spinner';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { addMeal } from '../../actions/mealAction';
@@ -21,6 +22,7 @@ class AddMeal extends React.Component {
       price: '',
       image: ''
     },
+    loading: false,
     errors: []
   }
 
@@ -62,7 +64,15 @@ class AddMeal extends React.Component {
      formData.append('name', name);
      formData.append('price', price);
      formData.append('image', image);
-     this.props.addMeal(formData);
+     
+     this.props.addMeal(formData).then(() => {
+       if (this.props.mealState.success) {
+         swal("Meal Added Successfully!", "success");
+       } else if (!this.props.mealState.success && this.props.mealState.error) {
+         const message = this.props.mealState.error.message;
+         swal(message);
+       }
+     });
    } else {
      this.setState(state => ({ errors: validation.errors }));
    }
@@ -81,20 +91,44 @@ class AddMeal extends React.Component {
             <div className='login'>
               <div className='login-form'>
                 <h3>Add New Meal</h3>
-                <form encType='multipart/form-data' onSubmit={this.onFormSubmit}>
-                {this.state.errors && <Errors errors={this.state.errors}>Errors</Errors>}
+                { 
+                  this.props.isLoading ? 
+                  <Loader 
+                    type="Rings"
+                    color="#ff9600"
+                    height="50"
+                    width="100"
+                    margin="2px"
+                  />
+                  :
+                  ''
+                }
+                <form
+                  encType='multipart/form-data'
+                  onSubmit={this.onFormSubmit}
+                >
                   <input
                     type='text'
                     name='name'
                     placeholder='Meal Name'
                     onChange={this.onInputChange}
                   /><br/>
+                  { 
+                    this.state.errors.name ?
+                    <span>{this.state.errors.name[0]}</span>
+                    : ''
+                  }
                   <input
                     type='text'
                     name='price'
                     placeholder='Meal Price'
                     onChange={this.onInputChange}
                   /><br/>
+                  { 
+                    this.state.errors.price ?
+                    <span>{this.state.errors.price[0]}</span>
+                    : ''
+                  }
                   <input
                     type='file'
                     name='image'
@@ -102,6 +136,11 @@ class AddMeal extends React.Component {
                     placeholder='Meal Image'
                     onChange={this.onInputChange}
                   /><br/>
+                  { 
+                    this.state.errors.image ?
+                    <span>{this.state.errors.image[0]}</span>
+                    : ''
+                  }<br/>
                   <button className='button warning'>Add Meal</button>
                 </form>
               </div>
@@ -116,11 +155,13 @@ class AddMeal extends React.Component {
 
 AddMeal.propTypes = {
   addMeal: PropTypes.func.isRequired,
-  mealState: PropTypes.object.isRequired
+  mealState: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
-  mealState: state.mealReducer
+  mealState: state.mealReducer,
+  isLoading: state.mealReducer.loading
 });
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ addMeal }, dispatch);

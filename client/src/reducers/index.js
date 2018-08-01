@@ -4,7 +4,7 @@ import signupReducer from './signupReducer';
 import mealReducer from './mealReducer';
 import menuReducer from './menuReducer';
 import orderReducer from './orderReducer';
-import { CLEAR_STATE } from '../actions/actionTypes';
+import { CLEAR_STATE } from '../constants/actionTypes';
 
 const appReducer = combineReducers({
   loginReducer,

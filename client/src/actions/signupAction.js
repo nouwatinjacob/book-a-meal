@@ -2,7 +2,9 @@ import axios from 'axios';
 import { reDirect } from '../utils/helper';
 import {
   SIGNUP_SUCCESSFUL,
-  SIGNUP_UNSUCCESSFUL } from './actionTypes';
+  SIGNUP_UNSUCCESSFUL } from '../constants/actionTypes';
+
+const notify = () => toast.error('Network Error');
 
 const signupAction = userDatas => (dispatch) => {
   axios.post('http://localhost:8000/api/v1/auth/signup', userDatas)

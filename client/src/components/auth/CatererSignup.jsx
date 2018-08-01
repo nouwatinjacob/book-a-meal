@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'react-proptypes';
-import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import signupAction from '../../actions/signupAction';
 import catererValidation from '../../utils/catererValidation';
-import Errors from '../partials/ValidationErrors.jsx';
 
 /**
  * CatererSignup class declaration
@@ -37,6 +35,7 @@ class CatererSignup extends React.Component {
   *
   */
  onInputChange = (event) => {
+   event.preventDefault();
    const { catererData } = this.state;
    catererData[event.target.name] = event.target.value;
    this.setState({ catererData });
@@ -55,10 +54,9 @@ class CatererSignup extends React.Component {
    const validation = catererValidation(this.state.catererData);
    if (validation.isValid()) {
      const { catererData } = this.state;
-     this.props.signupAction(this.state.catererData);
+     this.props.signupAction(catererData);
    } else {
      this.setState(state => ({ errors: validation.getErrors() }));
-     const { errors } = validation;
    }
  }
 
@@ -75,7 +73,6 @@ class CatererSignup extends React.Component {
             <div className='login-form'>
               <h3>Caterer Registration</h3>
               <form onSubmit={this.onFormSubmit}>
-              {this.state.errors && <Errors errors={this.state.errors}>Errors</Errors>}
                   <input
                     type='text'
                     name='businessName'
@@ -83,6 +80,11 @@ class CatererSignup extends React.Component {
                     value={this.state.catererData.businessName}
                     onChange={this.onInputChange}
                   /><br/>
+                  { 
+                    this.state.errors.businessName ?
+                    <span>The Business Name field is required.</span>
+                    : ''
+                  }
                   <input
                     type='text'
                     name='ownerName'
@@ -90,6 +92,11 @@ class CatererSignup extends React.Component {
                     value={this.state.catererData.ownerName}
                     onChange={this.onInputChange}
                   /><br/>
+                  { 
+                    this.state.errors.ownerName ?
+                    <span>The Owner Name field is required.</span>
+                    : ''
+                  }
                   <input
                     type='text'
                     name='businessAddress'
@@ -97,6 +104,11 @@ class CatererSignup extends React.Component {
                     value={this.state.catererData.businessAddress}
                     onChange={this.onInputChange}
                   /><br/>
+                  { 
+                    this.state.errors.businessAddress ?
+                    <span>The Business Address field is required.</span>
+                    : ''
+                  }
                   <input
                     type='email'
                     name='email'
@@ -104,6 +116,11 @@ class CatererSignup extends React.Component {
                     value={this.state.catererData.email}
                     onChange={this.onInputChange}
                   /><br/>
+                  { 
+                    this.state.errors.email ?
+                    <span>{this.state.errors.email[0]}</span>
+                    : ''
+                  }
                   <input
                     type='password'
                     name='password'
@@ -111,6 +128,11 @@ class CatererSignup extends React.Component {
                     value={this.state.catererData.password}
                     onChange={this.onInputChange}
                   /><br/>
+                  { 
+                    this.state.errors.password ?
+                    <span>{this.state.errors.password[0]}</span>
+                    : ''
+                  }
                   <input
                     type='password'
                     name='password_confirmation'

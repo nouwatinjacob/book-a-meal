@@ -592,6 +592,14 @@ th, td {
   margin: 0 0 0 20px !important;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
+  height: 20em;
+  #menu-image {
+    height: 60% !important;
+    img {
+      height: 100%;
+      width: 100%;
+    }
+  }
 }
 .card:hover {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
@@ -600,7 +608,9 @@ th, td {
 .box-body {
   padding: 2px 4px;
   background-color: #f7f7f7;
-  border: solid 1px #e7e7e7,
+  border: solid 1px #e7e7e7;
+  display: flex;
+  flex-direction: column;
 }
 
 .box-body .button {
@@ -613,3 +623,8 @@ th, td {
   padding: 0 5px 0 5px;;
 }
 
+@media only screen and (min-width : 150px) and (max-width : 530px){
+  .box {
+    margin-bottom: 30px !important;
+  }
+}

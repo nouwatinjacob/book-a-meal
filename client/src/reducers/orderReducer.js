@@ -4,7 +4,7 @@ import {
   GET_AN_ORDER_SUCCESSFUL, GET_AN_ORDER_UNSUCCESSFUL,
   MODIFY_ORDER_SUCCESSFUL, MODIFY_ORDER_UNSUCCESSFUL,
   GET_ALL_CATERER_ORDER_SUCCESSFUL, GET_ALL_CATERER_ORDER_UNSUCCESSFUL
-} from '../actions/actionTypes';
+} from '../constants/actionTypes';
 
 const initialState = {
   error: null,

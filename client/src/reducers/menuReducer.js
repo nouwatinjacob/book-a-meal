@@ -1,7 +1,7 @@
 import {
   SET_MENU_SUCCESSFUL, SET_MENU_UNSUCCESSFUL,
   GET_MENU_SUCCESSFUL, GET_MENU_UNSUCCESSFUL
-} from '../actions/actionTypes';
+} from '../constants/actionTypes';
 
 const initialState = {
   menu: [],

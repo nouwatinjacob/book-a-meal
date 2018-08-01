@@ -87,6 +87,14 @@ button a {
   }
 }
 
+@media screen and (max-width: 425px) {
+ .button {
+    font-weight: 50;
+    font-size: 10px;
+    padding: 0;
+  }
+}
+
 /* The "responsive" class is added to the header with JavaScript when the user clicks on the icon. This class makes the header look good on small screens (display the links vertically instead of horizontally) */
 @media screen and (max-width: 600px) {
   .header-right.responsive {position: relative;}
@@ -202,9 +210,15 @@ h3.text-center {
 	padding-bottom: 10%;
   margin: 10% auto;
   text-align:center;
+  span {
+    color: red;
+    font-size: 14px;
+    margin-top: 0 !important;
+  }
 }
 
 .login .button {
+  margin-top: 10px;
   width: 70%;
 }
 
@@ -359,6 +373,11 @@ select {
   color: white;
 }
 
+/* Hide the link that should open and close the topnav on small screens */
+.topnav .icon {
+  display: none;
+}
+
 @media only screen and (min-width : 150px) and (max-width : 530px){
   .topnav a {
     font-size: 15px;
@@ -455,3 +474,4 @@ label:hover:before {
     margin-left: 5px;
   }
 }
+

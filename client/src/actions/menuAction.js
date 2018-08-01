@@ -3,7 +3,7 @@ import { authorization } from '../utils/helper';
 import {
   SET_MENU_SUCCESSFUL, SET_MENU_UNSUCCESSFUL,
   GET_MENU_SUCCESSFUL, GET_MENU_UNSUCCESSFUL,
-} from '../actions/actionTypes';
+} from '../constants/actionTypes';
 
 const setMenuSuccess = data => ({
   type: SET_MENU_SUCCESSFUL,
@@ -26,7 +26,7 @@ const getMenuUnsuccess = error => ({
 });
 
 const setMenuAction = menuDetail => (dispatch) => {
-  axios.post('http://localhost:8000/api/v1/menu', menuDetail, authorization())
+  axios.post('/menu', menuDetail, authorization())
     .then((res) => {
       dispatch(setMenuSuccess({
         passes: res.data
@@ -38,7 +38,10 @@ const setMenuAction = menuDetail => (dispatch) => {
 };
 
 const getMenuAction = todayDate => (dispatch) => {
-  axios.get(`http://localhost:8000/api/v1/menu?menuDate=${todayDate}`, authorization())
+  axios.get(
+    `/menu?menuDate=${todayDate}`,
+    authorization()
+  )
     .then((res) => {
       dispatch(getMenuSuccess({
         menus: res.data

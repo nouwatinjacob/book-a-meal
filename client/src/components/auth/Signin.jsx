@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'react-proptypes';
-import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { loginAction } from '../../actions/loginAction';
 import loginValidation from '../../utils/loginValidation';
-import Errors from '../partials/ValidationErrors.jsx';
 
 /**
  * Login class declaration
@@ -22,11 +20,8 @@ class Login extends Component {
       email: '',
       password: ''
     },
-    errors: [],
-    fail: null
+    errors: []
   };
-
-  notify = () => toast("Login Successfully!");
 
   /**
   * Handle Login input change
@@ -55,21 +50,21 @@ class Login extends Component {
     const validation = loginValidation(this.state.loginData);
     if (validation.isValid()) {
       const { loginData } = this.state;
-      this.props.loginAction(this.state.loginData);
-      this.notify();
+      this.props.loginAction(loginData);
     } else {
       this.setState(state => ({ errors: validation.getErrors() }));
-      const { errors } = validation;
     }
   };
+
+ loginSuccess = () => toast.success('Invalid Credentials');
 
   /**
     * Renders Login component
     *
     * @returns {XML} XML/JSX
 */
-  render() {
-    return (
+ render() {
+   return (
       <div className='container'>
         <ToastContainer />
         <div className='wrapper'>
@@ -77,10 +72,6 @@ class Login extends Component {
             <div className='login-form'>
               <h3>User Login</h3>
               <form onSubmit={this.onSubmit}>
-              {
-                this.state.errors && 
-                <Errors errors={this.state.errors}>Errors</Errors>
-              }
                 <input
                   type='text'
                   name='email'
@@ -88,6 +79,12 @@ class Login extends Component {
                   value={this.state.loginData.email}
                   onChange={this.onInputChange}
                 /><br/>
+                { 
+                  this.state.errors.email ?
+                  <span>{this.state.errors.email[0]}</span>
+                  : ''
+                }
+                
                 <input
                   type='password'
                   name='password'
@@ -95,6 +92,11 @@ class Login extends Component {
                   value={this.state.loginData.password}
                   onChange={this.onInputChange}
                 /><br/>
+                { 
+                  this.state.errors.password ?
+                  <span>{this.state.errors.password[0]}</span>
+                  : ''
+                }
                 <button className='button warning'>Login</button>
                 <p>Forgot <a href='#'>Password?</a></p>
               </form>
@@ -105,8 +107,8 @@ class Login extends Component {
         </div>
 
     </div>
-    );
-  }
+   );
+ }
 }
 
 Login.propTypes = {

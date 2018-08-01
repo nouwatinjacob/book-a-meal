@@ -1,10 +1,9 @@
 import {
   SIGNUP_SUCCESSFUL,
-  SIGNUP_UNSUCCESSFUL } from '../actions/actionTypes';
+  SIGNUP_UNSUCCESSFUL } from '../constants/actionTypes';
 
 const initialState = {
   success: false,
-  fail: null,
   errors: null
 };
 
@@ -15,14 +14,13 @@ const signupReducer = (state = initialState, action) => {
         ...state,
         success: true,
         errors: null,
-        fails: null
       };
       break;
     case SIGNUP_UNSUCCESSFUL:
       state = {
         ...state,
         success: false,
-        fails: action.payload
+        errors: action.error
       };
       break;
     default:
