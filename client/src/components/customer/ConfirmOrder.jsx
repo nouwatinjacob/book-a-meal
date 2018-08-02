@@ -3,6 +3,8 @@ import PropTypes from 'react-proptypes';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import swal from 'sweetalert';
 import { getAMealAction } from '../../actions/mealAction';
 import { makeOrderAction } from '../../actions/orderAction';
 import CustomerHeader from '../partials/CustomerHeader.jsx';
@@ -86,7 +88,18 @@ class ConfirmOrder extends React.Component {
 
   handleMakeOrder = () => {
     const { orderDetail } = this.state;
-    this.props.makeOrderAction(orderDetail);
+    this.props.makeOrderAction(orderDetail).then(() => {
+      if (this.props.orderState.success) {
+        swal("Meal Added Successfully!");
+        history.push('/user-order');
+      } else if (
+        !this.props.orderState.success && this.props.orderState.error
+      ) {
+        const message = this.props.mealState.error.message;
+        const notify = () => toast.info(message);
+        notify();
+      }
+    });
     sessionStorage.clear();
   }
 
@@ -116,7 +129,7 @@ class ConfirmOrder extends React.Component {
                 id='pd-0'
               >
                 <button className='button default'>
-                  <Link to='/user-menus'>Back to Menu</Link>
+                  <Link to='/menus'>Back to Menu</Link>
                 </button>
               </div>
               </div><br/>
@@ -186,10 +199,12 @@ ConfirmOrder.propTypes = {
   getAMealAction: PropTypes.func.isRequired,
   makeOrderAction: PropTypes.func.isRequired,
   mealState: PropTypes.object.isRequired,
+  orderState: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  mealState: state.mealReducer
+  mealState: state.mealReducer,
+  orderState: state.orderReducer
 });
 
 const mapDispatchToProps = dispatch =>

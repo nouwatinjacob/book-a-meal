@@ -58,7 +58,7 @@ const getAllCatererOrderUnuccess = error => ({
   error
 });
 
-const makeOrderAction = orderDetail => (dispatch) => {
+const makeOrderAction = orderDetail => dispatch => 
   axios.post(
     '/orders',
     orderDetail, authorization()
@@ -71,7 +71,6 @@ const makeOrderAction = orderDetail => (dispatch) => {
     .catch((err) => {
       dispatch(makeOrderUnsuccess(err));
     });
-};
 
 const getUserOrderAction = () => (dispatch) => {
   axios.get('/user-orders', authorization())

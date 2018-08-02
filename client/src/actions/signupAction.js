@@ -6,7 +6,7 @@ import {
 
 const notify = () => toast.error('Network Error');
 
-const signupAction = userDatas => (dispatch) => {
+const signupAction = userDatas => dispatch => 
   axios.post('/auth/signup', userDatas)
     .then((res) => {
       const { token } = res.data;
@@ -17,9 +17,8 @@ const signupAction = userDatas => (dispatch) => {
     .catch((err) => {      
       dispatch({
         type: SIGNUP_UNSUCCESSFUL,
-        error: err
+        error: err.response.data
       });
     });
-};
 
 export default signupAction;

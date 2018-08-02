@@ -29,7 +29,7 @@ class MenuMeal extends React.Component {
    */
   componentDidMount() {
     const todayDate = new Date().toISOString().slice(0, 10);
-    this.props.getMenuAction('2018-06-15');
+    this.props.getMenuAction(todayDate);
   }
 
   /**

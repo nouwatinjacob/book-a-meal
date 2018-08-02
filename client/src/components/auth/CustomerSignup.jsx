@@ -3,6 +3,7 @@ import PropTypes from 'react-proptypes';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
 import signupAction from '../../actions/signupAction';
 import customerValidation from '../../utils/customerValidation';
 import Errors from '../partials/ValidationErrors.jsx';
@@ -55,7 +56,14 @@ class CustomerSignup extends Component {
     const validation = customerValidation(this.state.customerData);
     if (validation.isValid()) {
       const { customerData } = this.state;
-      this.props.signupAction(customerData);
+
+      this.props.signupAction(customerData).then(() => {
+        if (this.props.errorResponse) {
+          const message = this.props.errorResponse.message;
+          const notify = () => toast.info(message);
+          notify();
+        }
+      });
     } else {
       this.setState(state => ({ errors: validation.getErrors() }));
     }
@@ -68,6 +76,7 @@ class CustomerSignup extends Component {
   render() {
     return (
       <div className='container'>
+        <ToastContainer />
         <div className='wrapper'>
           <div className='login'>
             <div className='login-form'>
@@ -144,11 +153,13 @@ class CustomerSignup extends Component {
 
 CustomerSignup.propTypes = {
   signupAction: PropTypes.func.isRequired,
-  signupState: PropTypes.object.isRequired
+  signupState: PropTypes.object.isRequired,
+  errorResponse: PropTypes.object
 };
 
 const mapStateToProps = state => ({
-  signupState: state.signupReducer
+  signupState: state.signupReducer,
+  errorResponse: state.signupReducer.errors
 });
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ signupAction }, dispatch);

@@ -3,10 +3,11 @@ import PropTypes from 'react-proptypes';
 import Loader from 'react-loader-spinner';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import swal from 'sweetalert';
 import { addMeal } from '../../actions/mealAction';
 import CatererHeader from '../partials/CatererHeader.jsx';
 import mealValidation from '../../utils/mealValidation';
-import Errors from '../partials/ValidationErrors.jsx';
 
 /**
  * AddMeal class declaration
@@ -67,10 +68,14 @@ class AddMeal extends React.Component {
      
      this.props.addMeal(formData).then(() => {
        if (this.props.mealState.success) {
-         swal("Meal Added Successfully!", "success");
+         swal("Meal Added Successfully!");
        } else if (!this.props.mealState.success && this.props.mealState.error) {
          const message = this.props.mealState.error.message;
-         swal(message);
+         const notify = () => toast.info(message);
+         notify();
+       } else {
+         const notify = () => toast.info('Internal Server Error');
+         notify();
        }
      });
    } else {
@@ -88,6 +93,7 @@ class AddMeal extends React.Component {
       <div className='container'>
         <CatererHeader/>
           <div className='wrapper'>
+          <ToastContainer />
             <div className='login'>
               <div className='login-form'>
                 <h3>Add New Meal</h3>

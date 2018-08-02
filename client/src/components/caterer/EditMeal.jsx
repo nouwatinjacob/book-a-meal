@@ -3,6 +3,7 @@ import PropTypes from 'react-proptypes';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Loader from 'react-loader-spinner';
+import { ToastContainer, toast } from 'react-toastify';
 import swal from 'sweetalert';
 import { getAMealAction, editMealAction } from '../../actions/mealAction';
 import CatererHeader from '../partials/CatererHeader.jsx';
@@ -91,8 +92,15 @@ class EditMeal extends React.Component {
    formData.append('name', name);
    formData.append('price', price);
    formData.append('image', image);
-   this.props.editMealAction(formData, mealId);
-   swal("Meal Modified!", "Your Update is successful!", "success");
+   this.props.editMealAction(formData, mealId).then(() => {
+     if (this.props.mealState.success) {
+       swal("Meal Modified!", "Your Update is successful!", "success");
+     } else {
+       const message = this.props.mealState.error.message;
+       const notify = () => toast.info(message);
+       notify();
+     }
+   });
  }
 
  
@@ -105,6 +113,7 @@ class EditMeal extends React.Component {
    return (     
       <div className='container'>
         <CatererHeader/>
+        <ToastContainer />
           <div className='wrapper'>
             <div className='login'>
               <div className='login-form'>

@@ -4,7 +4,7 @@ import authMiddleware from '../middleware/authentication';
 const orderRoutes = (router) => {
   router.route('/orders')
     .post(
-      authMiddleware.verifyToken, authMiddleware.isCustomer,
+      authMiddleware.verifyToken,
       OrdersController.makeOrder
     )
     .get(
@@ -13,7 +13,7 @@ const orderRoutes = (router) => {
     );
   router.route('/user-orders')
     .get(
-      authMiddleware.verifyToken, authMiddleware.isCustomer,
+      authMiddleware.verifyToken,
       OrdersController.getCustomerOrders
     );
   router.route('/order/:id')

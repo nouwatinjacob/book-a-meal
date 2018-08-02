@@ -25,7 +25,7 @@ const getMenuUnsuccess = error => ({
   error
 });
 
-const setMenuAction = menuDetail => (dispatch) => {
+const setMenuAction = menuDetail => dispatch => 
   axios.post('/menu', menuDetail, authorization())
     .then((res) => {
       dispatch(setMenuSuccess({
@@ -35,7 +35,6 @@ const setMenuAction = menuDetail => (dispatch) => {
     .catch((err) => {
       dispatch(setMenuUnsuccess(err));
     });
-};
 
 const getMenuAction = todayDate => (dispatch) => {
   axios.get(

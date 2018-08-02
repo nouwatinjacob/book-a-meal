@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'react-proptypes';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
 import signupAction from '../../actions/signupAction';
 import catererValidation from '../../utils/catererValidation';
 
@@ -54,7 +55,14 @@ class CatererSignup extends React.Component {
    const validation = catererValidation(this.state.catererData);
    if (validation.isValid()) {
      const { catererData } = this.state;
-     this.props.signupAction(catererData);
+
+     this.props.signupAction(catererData).then(() => {
+       if (this.props.errorResponse) {
+         const message = this.props.errorResponse.message;
+         const notify = () => toast.info(message);
+         notify();
+       }
+     });
    } else {
      this.setState(state => ({ errors: validation.getErrors() }));
    }
@@ -68,6 +76,7 @@ class CatererSignup extends React.Component {
  render() {
    return (
       <div className='container'>
+        <ToastContainer />
         <div className='wrapper'>
           <div className='login'>
             <div className='login-form'>
@@ -156,11 +165,13 @@ class CatererSignup extends React.Component {
 
 CatererSignup.propTypes = {
   signupAction: PropTypes.func.isRequired,
-  signupState: PropTypes.object.isRequired
+  signupState: PropTypes.object.isRequired,
+  errorResponse: PropTypes.object
 };
 
 const mapStateToProps = state => ({
-  signupState: state.signupReducer
+  signupState: state.signupReducer,
+  errorResponse: state.signupReducer.errors
 });
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ signupAction }, dispatch);

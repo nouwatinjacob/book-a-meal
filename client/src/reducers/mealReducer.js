@@ -74,9 +74,8 @@ const mealReducer = (state = initialState, action) => {
       return {
         ...state,
         success: false,
-        passes: null,
         loading: false,
-        error: action.error
+        error: action.error.response.data
       };
     case DELETE_MEAL_SUCCESSFUL:
       return {

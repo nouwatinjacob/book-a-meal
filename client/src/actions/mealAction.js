@@ -65,7 +65,7 @@ const notify = () => {
 };
 
 const getMeals = () => (dispatch => ( 
-  axios.get('http://localhost:8000/api/v1/meals', authorization())
+  axios.get('/meals', authorization())
     .then((res) => {
       dispatch(getMealSuccess({
         meals: res.data.meals
@@ -84,7 +84,7 @@ const addMeal = mealDetail => (dispatch) => {
   });
   return (
     axios.post(
-      'api/v1/meals',
+      '/meals',
       mealDetail, authorization()
     )
       .then((res) => {
@@ -111,20 +111,18 @@ const getAMealAction = id => (dispatch => (
 )
 );
 
-const editMealAction = (mealDetail, id) => (dispatch) => {
-  axios.put(
-    `/meals/${id}`,
-    mealDetail, authorization()
-  )
-    .then((res) => {
-      dispatch(editMealSuccess({
-        passes: res.data
-      }));
-    })
-    .catch((err) => {
-      dispatch(editMealUnsuccess(err));
-    });
-};
+const editMealAction = (mealDetail, id) => dispatch => axios.put(
+  `/meals/${id}`,
+  mealDetail, authorization()
+)
+  .then((res) => {
+    dispatch(editMealSuccess({
+      passes: res.data
+    }));
+  })
+  .catch((err) => {
+    dispatch(editMealUnsuccess(err));
+  });
 
 const deleteMealAction = mealId => (dispatch) => {
   axios.delete(`/meals/${mealId}`, authorization())
