@@ -3,6 +3,7 @@ import PropTypes from 'react-proptypes';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
+import swal from 'sweetalert';
 import { getMeals } from '../../actions/mealAction';
 import { setMenuAction } from '../../actions/menuAction';
 import CatererHeader from '../partials/CatererHeader.jsx';
@@ -57,10 +58,6 @@ class SetMenu extends React.Component {
     this.props.getMeals();        
   }
 
-  notify = () => {
-    toast.success("Menu set Successfully");
-  };
-
   /**
   * Handle onInputChange
   *
@@ -109,8 +106,14 @@ class SetMenu extends React.Component {
    const menuData = this.state.menuData;
    const validation = menuValidation(menuData);
    if (validation.isValid()) {
-     this.props.setMenuAction(menuData);
-     this.notify();
+     this.props.setMenuAction(menuData).then(() => {
+       if (this.props.menuState) {
+         console.log('menuState', this.props.menuState);
+         swal("Menu set Successfully!", "", "success");
+       } else {
+         console.log('errors', this.props.menuState.error);
+       }
+     });
    } else {
      this.setState(state => ({ errors: validation.errors }));
    }
@@ -132,14 +135,24 @@ class SetMenu extends React.Component {
               <div className='login-form'>
                 <h3>Add New Menu</h3>
                 <form onSubmit={this.onFormSubmit}>
-                  {this.state.errors && <Errors errors={this.state.errors}>Errors</Errors>}
                   <input
                     type='date'
                     name='date'
                     id='my-input'
                     onChange={this.onDateChange}
-                  /><br/>
+                  />
+                  <br/>
+                  { 
+                    this.state.errors.menuDate ?
+                    <span>Pick a date for your menu</span>
+                    : ''
+                  }
                   <h6>Pick meals to be added to your Menu</h6>
+                  { 
+                    this.state.errors.mealId ?
+                    <span>Pick meals to be added to the menu</span>
+                    : ''
+                  }
                   {meals.map(meal => <p className='paragraph' key={meal.id}>
                     <input
                       type="checkbox"
@@ -167,11 +180,13 @@ class SetMenu extends React.Component {
 
 SetMenu.propTypes = {
   getMeals: PropTypes.func.isRequired,
+  menuState: PropTypes.object.isRequired,
   mealState: PropTypes.object.isRequired,
   setMenuAction: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
+  menuState: state.menuReducer,
   mealState: state.mealReducer
 });
 const mapDispatchToProps = dispatch =>

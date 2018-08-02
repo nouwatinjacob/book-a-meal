@@ -29,7 +29,7 @@ class MenuMeal extends React.Component {
    */
   componentDidMount() {
     const todayDate = new Date().toISOString().slice(0, 10);
-    this.props.getMenuAction('2018-06-15');
+    this.props.getMenuAction(todayDate);
   }
 
   /**
@@ -97,7 +97,12 @@ class MenuMeal extends React.Component {
                 dateMenu[0].Meals.map((meal, index) => 
               <div className='c-medium-3 c-xsmall-12 c-3' id='pd-0' key={index}>
               <div className='box'>
-                <img src={meal.image} alt='Avatar' style={{ width: '100%' }} />
+                <div id='menu-image'>
+                  <img 
+                    src={meal.image} 
+                    alt='Avatar'
+                  />
+                </div>
                 <div className='box-body'>
                   <div className='row'>
                     <div

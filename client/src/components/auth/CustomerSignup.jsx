@@ -3,6 +3,7 @@ import PropTypes from 'react-proptypes';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
 import signupAction from '../../actions/signupAction';
 import customerValidation from '../../utils/customerValidation';
 import Errors from '../partials/ValidationErrors.jsx';
@@ -55,10 +56,16 @@ class CustomerSignup extends Component {
     const validation = customerValidation(this.state.customerData);
     if (validation.isValid()) {
       const { customerData } = this.state;
-      this.props.signupAction(customerData);
+
+      this.props.signupAction(customerData).then(() => {
+        if (this.props.errorResponse) {
+          const message = this.props.errorResponse.message;
+          const notify = () => toast.info(message);
+          notify();
+        }
+      });
     } else {
       this.setState(state => ({ errors: validation.getErrors() }));
-      const { errors } = validation;
     }
   }
   /**
@@ -69,15 +76,12 @@ class CustomerSignup extends Component {
   render() {
     return (
       <div className='container'>
+        <ToastContainer />
         <div className='wrapper'>
           <div className='login'>
             <div className='login-form'>
               <h3>User Registration</h3>
               <form onSubmit={this.onFormSubmit}>
-              {
-                this.state.errors && 
-                <Errors errors={this.state.errors}>Errors</Errors>
-              }
                   <input
                     type='text'
                     name='firstName'
@@ -85,6 +89,11 @@ class CustomerSignup extends Component {
                     value={this.state.customerData.firstName}
                     onChange={this.onInputChange}
                   /><br/>
+                  { 
+                    this.state.errors.firstName ?
+                    <span>The First Name field is required.</span>
+                    : ''
+                  }
                   <input
                     type='text'
                     name='lastName'
@@ -92,6 +101,11 @@ class CustomerSignup extends Component {
                     value={this.state.customerData.lastName}
                     onChange={this.onInputChange}
                   /><br/>
+                  { 
+                    this.state.errors.lastName ?
+                    <span>The Last Name field is required.</span>
+                    : ''
+                  }
                   <input
                     type='email'
                     name='email'
@@ -99,6 +113,11 @@ class CustomerSignup extends Component {
                     value={this.state.customerData.email}
                     onChange={this.onInputChange}
                   /><br/>
+                  { 
+                    this.state.errors.email ?
+                    <span>{this.state.errors.email[0]}</span>
+                    : ''
+                  }
                   <input
                     type='password'
                     name='password'
@@ -106,6 +125,11 @@ class CustomerSignup extends Component {
                     value={this.state.customerData.password}
                     onChange={this.onInputChange}
                   /><br/>
+                  { 
+                    this.state.errors.password ?
+                    <span>{this.state.errors.password[0]}</span>
+                    : ''
+                  }
                   <input
                     type='password'
                     name='password_confirmation'
@@ -115,7 +139,7 @@ class CustomerSignup extends Component {
                   /><br/>
                 <button className='button warning'>Signup</button>
                 <p>
-                  Do you want to be part of our Caterers?
+                  Do you want to be part of our Caterers? &nbsp;
                   <Link to='/caterer-signup'>Signup  here</Link>
                 </p>
             </form>
@@ -129,11 +153,13 @@ class CustomerSignup extends Component {
 
 CustomerSignup.propTypes = {
   signupAction: PropTypes.func.isRequired,
-  signupState: PropTypes.object.isRequired
+  signupState: PropTypes.object.isRequired,
+  errorResponse: PropTypes.object
 };
 
 const mapStateToProps = state => ({
-  signupState: state.signupReducer
+  signupState: state.signupReducer,
+  errorResponse: state.signupReducer.errors
 });
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ signupAction }, dispatch);

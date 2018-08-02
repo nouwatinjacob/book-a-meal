@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'react-proptypes';
 import { Link } from 'react-router-dom';
+import swal from 'sweetalert';
 
 /**
  * Meals class declaration
@@ -20,8 +21,22 @@ class Meals extends React.Component {
    * @return {void}
      */
   handleDelete = () => {
-    this.props.deleteAction(this.props.meals.id);
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover the meal!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        this.props.deleteAction(this.props.meals.id);
+        swal("Meal Deleted Successfully", {
+          icon: "success",
+        });
+      }
+    });
   }
+  
 
   /**
    * Renders Meals component
@@ -38,12 +53,16 @@ class Meals extends React.Component {
           <td>{meals.price}</td>
           <td>
           <button className='button warning' style={{ marginRight: '5px' }}>
-          <Link to={`/edit-meal/${meals.id}`} > Modify </Link>
+          <Link to={`/edit-meal/${meals.id}`}>
+          <i className="fa fa-pencil"></i>
+          </Link>
           </button>
           <button
           onClick={this.handleDelete}
           className='button danger'
-          >Delete</button>
+          >
+            <i className="fa fa-trash"></i>
+          </button>
         </td>
         </tr>
     );

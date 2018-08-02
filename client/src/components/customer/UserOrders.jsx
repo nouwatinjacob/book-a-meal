@@ -6,7 +6,9 @@ import { Link } from 'react-router-dom';
 import { getUserOrderAction } from '../../actions/orderAction';
 import CustomerHeader from '../partials/CustomerHeader.jsx';
 import Pagination from '../partials/Pagination.jsx';
+import CatererHeader from '../partials/CatererHeader.jsx';
 import history from '../../utils/history';
+import { decodeToken } from '../../utils/helper';
 
 /**
  * UserOrder class declaration
@@ -55,9 +57,14 @@ class UserOrder extends React.Component {
    */
   render() {
     const { orderState: { orders: { orders } } } = this.props;
+    const token = localStorage.getItem('token');
+    const userToken = decodeToken(token);
     return (
       <div className='container'>
-        <CustomerHeader/>
+        { 
+          userToken.userType === 'customer' ? 
+          <CustomerHeader/> : <CatererHeader/>
+        }
         <div className='wrapper'>
         { orders ?
         <table className='order-table'>

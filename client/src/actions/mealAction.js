@@ -6,8 +6,9 @@ import {
   ADD_MEAL_SUCCESSFUL, ADD_MEAL_UNSUCCESSFUL,
   GET_A_MEAL_SUCCESSFUL, GET_A_MEAL_UNSUCCESSFUL,
   EDIT_MEAL_SUCCESSFUL, EDIT_MEAL_UNSUCCESSFUL,
-  DELETE_MEAL_SUCCESSFUL, DELETE_MEAL_UNSUCCESSFUL
-} from '../actions/actionTypes';
+  DELETE_MEAL_SUCCESSFUL, DELETE_MEAL_UNSUCCESSFUL,
+  SET_LOADING_STATE
+} from '../constants/actionTypes';
 
 const getMealSuccess = data => ({
   type: GET_MEAL_SUCCESSFUL,
@@ -64,7 +65,7 @@ const notify = () => {
 };
 
 const getMeals = () => (dispatch => ( 
-  axios.get('http://localhost:8000/api/v1/meals', authorization())
+  axios.get('/meals', authorization())
     .then((res) => {
       dispatch(getMealSuccess({
         meals: res.data.meals
@@ -77,19 +78,28 @@ const getMeals = () => (dispatch => (
 );
 
 const addMeal = mealDetail => (dispatch) => {
-  axios.post('http://localhost:8000/api/v1/meals', mealDetail, authorization())
-    .then((res) => {
-      dispatch(addMealSuccess({
-        passes: res.data
-      }));
-    })
-    .catch((err) => {
-      dispatch(addMealUnsuccess(err));
-    });
+  dispatch({
+    type: SET_LOADING_STATE,
+    payload: true
+  });
+  return (
+    axios.post(
+      '/meals',
+      mealDetail, authorization()
+    )
+      .then((res) => {
+        dispatch(addMealSuccess({
+          passes: res.data
+        }));
+      })
+      .catch((err) => {
+        dispatch(addMealUnsuccess(err));
+      })
+  );
 };
 
 const getAMealAction = id => (dispatch => ( 
-  axios.get(`http://localhost:8000/api/v1/meals/${id}`, authorization())
+  axios.get(`/meals/${id}`, authorization())
     .then((res) => {
       dispatch(getAMealSuccess({
         meal: res.data.meal
@@ -101,23 +111,21 @@ const getAMealAction = id => (dispatch => (
 )
 );
 
-const editMealAction = (mealDetail, id) => (dispatch) => {
-  axios.put(
-    `http://localhost:8000/api/v1/meals/${id}`,
-    mealDetail, authorization()
-  )
-    .then((res) => {
-      dispatch(editMealSuccess({
-        passes: res.data
-      }));
-    })
-    .catch((err) => {
-      dispatch(editMealUnsuccess(err));
-    });
-};
+const editMealAction = (mealDetail, id) => dispatch => axios.put(
+  `/meals/${id}`,
+  mealDetail, authorization()
+)
+  .then((res) => {
+    dispatch(editMealSuccess({
+      passes: res.data
+    }));
+  })
+  .catch((err) => {
+    dispatch(editMealUnsuccess(err));
+  });
 
 const deleteMealAction = mealId => (dispatch) => {
-  axios.delete(`http://localhost:8000/api/v1/meals/${mealId}`, authorization())
+  axios.delete(`/meals/${mealId}`, authorization())
     .then((res) => {
       dispatch(deleteMealSuccess(res.data.message));
       this.notify();

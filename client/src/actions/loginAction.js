@@ -1,12 +1,14 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { reDirect, logout } from '../utils/helper';
 
 import { 
-  LOGIN_SUCCESSFUL, LOGIN_UNSUCCESSFUL,
-  CLEAR_STATE } from './actionTypes';
+  LOGIN_SUCCESSFUL,
+  CLEAR_STATE } from '../constants/actionTypes';
 
+const notify = () => toast.info('Invalid Credentials');
 const loginAction = loginData => (dispatch) => {
-  axios.post('http://localhost:8000/api/v1/auth/login', loginData)
+  axios.post('/auth/login', loginData)
     .then((res) => {
       const { token } = res.data; // get the token
       localStorage.setItem('token', token);
@@ -14,11 +16,8 @@ const loginAction = loginData => (dispatch) => {
         message: res.data });
       reDirect(token);
     })
-    .catch((error) => {
-      dispatch({
-        type: LOGIN_UNSUCCESSFUL,
-        payload: 'Invalid Credentials'
-      });
+    .catch(() => {
+      notify();
     });
 };
 

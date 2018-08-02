@@ -5,7 +5,7 @@ import {
   GET_AN_ORDER_SUCCESSFUL, GET_AN_ORDER_UNSUCCESSFUL,
   MODIFY_ORDER_SUCCESSFUL, MODIFY_ORDER_UNSUCCESSFUL,
   GET_ALL_CATERER_ORDER_SUCCESSFUL, GET_ALL_CATERER_ORDER_UNSUCCESSFUL
-} from '../actions/actionTypes';
+} from '../constants/actionTypes';
 import { authorization } from '../utils/helper';
 
 const makeOrderSuccess = data => ({
@@ -58,9 +58,9 @@ const getAllCatererOrderUnuccess = error => ({
   error
 });
 
-const makeOrderAction = orderDetail => (dispatch) => {
+const makeOrderAction = orderDetail => dispatch => 
   axios.post(
-    'http://localhost:8000/api/v1/orders',
+    '/orders',
     orderDetail, authorization()
   )
     .then((res) => {
@@ -71,10 +71,9 @@ const makeOrderAction = orderDetail => (dispatch) => {
     .catch((err) => {
       dispatch(makeOrderUnsuccess(err));
     });
-};
 
 const getUserOrderAction = () => (dispatch) => {
-  axios.get('http://localhost:8000/api/v1/user-orders', authorization())
+  axios.get('/user-orders', authorization())
     .then((res) => {
       dispatch(getUserOrderSuccess({
         orders: res.data
@@ -86,7 +85,7 @@ const getUserOrderAction = () => (dispatch) => {
 };
 
 const getAnOrderAction = orderId => (dispatch) => {
-  axios.get(`http://localhost:8000/api/v1/order/${orderId}`, authorization())
+  axios.get(`/order/${orderId}`, authorization())
     .then((res) => {
       dispatch(getAnOrderSuccess({
         order: res.data
@@ -99,7 +98,7 @@ const getAnOrderAction = orderId => (dispatch) => {
 
 const modifyOrderAction = (orderId, newOrderDetail) => (dispatch) => {
   axios.put(
-    `http://localhost:8000/api/v1/orders/${orderId}`,
+    `/orders/${orderId}`,
     newOrderDetail, authorization()
   )
     .then((res) => {
@@ -113,7 +112,7 @@ const modifyOrderAction = (orderId, newOrderDetail) => (dispatch) => {
 };
 
 const getAllCatererOrderAction = () => (dispatch) => {
-  axios.get('http://localhost:8000/api/v1/orders', authorization())
+  axios.get('/orders', authorization())
     .then((res) => {
       dispatch(getAllCatererOrderSuccess({
         orders: res.data.orders

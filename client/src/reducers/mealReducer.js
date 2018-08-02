@@ -3,16 +3,17 @@ import {
   ADD_MEAL_SUCCESSFUL, ADD_MEAL_UNSUCCESSFUL,
   GET_A_MEAL_SUCCESSFUL, GET_A_MEAL_UNSUCCESSFUL,
   EDIT_MEAL_SUCCESSFUL, EDIT_MEAL_UNSUCCESSFUL,
-  DELETE_MEAL_SUCCESSFUL, DELETE_MEAL_UNSUCCESSFUL
-} from '../actions/actionTypes';
+  DELETE_MEAL_SUCCESSFUL, DELETE_MEAL_UNSUCCESSFUL,
+  SET_LOADING_STATE
+} from '../constants/actionTypes';
 
 const initialState = {
   meals: [],
   meal: [],
   error: null,
   success: false,
-  loading: true,
-  passes: null
+  loading: false,
+  passes: null,
 };
 
 const mealReducer = (state = initialState, action) => {
@@ -30,18 +31,24 @@ const mealReducer = (state = initialState, action) => {
         error: action.error,
         loading: true
       };
+    case SET_LOADING_STATE:
+      return {
+        ...state,
+        loading: true,
+      };
     case ADD_MEAL_SUCCESSFUL:
       return {
         ...state,
         success: true,
+        loading: false,
         passes: action.data.message
       };
     case ADD_MEAL_UNSUCCESSFUL:
       return {
         ...state,
         success: false,
-        passes: null,
-        error: action.payload
+        loading: false,
+        error: action.error.response.data
       };
     case GET_A_MEAL_SUCCESSFUL:
       return {
@@ -60,19 +67,21 @@ const mealReducer = (state = initialState, action) => {
       return {
         ...state,
         success: true,
+        loading: false,
         passes: action.data.message
       };
     case EDIT_MEAL_UNSUCCESSFUL:
       return {
         ...state,
         success: false,
-        passes: null,
-        error: action.error
+        loading: false,
+        error: action.error.response.data
       };
     case DELETE_MEAL_SUCCESSFUL:
       return {
         ...state,
         success: true,
+        loading: false,
         passes: action.data.message
       };
     case DELETE_MEAL_UNSUCCESSFUL:

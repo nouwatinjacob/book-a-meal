@@ -1,8 +1,9 @@
-import { LOGIN_SUCCESSFUL, LOGIN_UNSUCCESSFUL, LOG_OUT_SUCCESS } from '../actions/actionTypes';
+import { 
+  LOGIN_SUCCESSFUL,
+  LOG_OUT_SUCCESS } from '../constants/actionTypes';
 
 const initialState = {
   success: false,
-  fail: null
 };
 
 const loginReducer = (state = initialState, action) => {
@@ -12,13 +13,6 @@ const loginReducer = (state = initialState, action) => {
         ...state,
         success: true,
         fail: null
-      };
-      break;
-    case LOGIN_UNSUCCESSFUL:
-      state = {
-        ...state,
-        success: false,
-        fail: action.payload
       };
       break;
     case LOG_OUT_SUCCESS:

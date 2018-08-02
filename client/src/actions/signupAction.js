@@ -2,10 +2,12 @@ import axios from 'axios';
 import { reDirect } from '../utils/helper';
 import {
   SIGNUP_SUCCESSFUL,
-  SIGNUP_UNSUCCESSFUL } from './actionTypes';
+  SIGNUP_UNSUCCESSFUL } from '../constants/actionTypes';
 
-const signupAction = userDatas => (dispatch) => {
-  axios.post('http://localhost:8000/api/v1/auth/signup', userDatas)
+const notify = () => toast.error('Network Error');
+
+const signupAction = userDatas => dispatch => 
+  axios.post('/auth/signup', userDatas)
     .then((res) => {
       const { token } = res.data;
       localStorage.setItem('token', token);
@@ -15,9 +17,8 @@ const signupAction = userDatas => (dispatch) => {
     .catch((err) => {      
       dispatch({
         type: SIGNUP_UNSUCCESSFUL,
-        error: err
+        error: err.response.data
       });
     });
-};
 
 export default signupAction;

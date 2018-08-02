@@ -1,8 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const PATHS = {
-  build: path.join(__dirname, 'client/build')
+  build: path.join(__dirname, 'public')
 };
 
 module.exports = {
@@ -48,8 +49,15 @@ module.exports = {
     ]
   },
   plugins: [
+    new HtmlWebpackPlugin({
+      template: './client/src/index.html',
+    }),
+    new webpack.EnvironmentPlugin({
+      API_BASE_URL: 'http://localhost:8000/api/v1'
+    }),
     new webpack.HotModuleReplacementPlugin()
   ],
+  devtool: 'inline-source-map',
   devServer: {
     contentBase: PATHS.build,
     historyApiFallback: true,
