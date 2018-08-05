@@ -46,6 +46,7 @@ class CatererHeader extends React.Component {
           >
             Orders History
           </NavLink>
+          <NavLink activeClassName='active' to='/menus'>Menus</NavLink>
           <NavLink activeClassName='active' to='/set-menu'>Set Menu</NavLink>
           <NavLink activeClassName='active' to='/add-meal'>Add Meal</NavLink>
           <NavLink activeClassName='active' to='/caterer'>My Meals</NavLink>

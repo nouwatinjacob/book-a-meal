@@ -73,6 +73,9 @@ class MenuMeal extends React.Component {
    */
   render() {
     const { menuState: { menus: { dateMenu } } } = this.props;
+    const menuMeals = dateMenu.reduce(((acc, menu) => {
+      return acc.concat(menu.Meals);
+    }), []);
     const token = localStorage.getItem('token');
     const userToken = decodeToken(token);
     return (
@@ -94,7 +97,7 @@ class MenuMeal extends React.Component {
             
               <div className='row'>
               { dateMenu.length > 0 ?
-                dateMenu[0].Meals.map((meal, index) => 
+                menuMeals.map((meal, index) => 
               <div className='c-medium-3 c-xsmall-12 c-3' id='pd-0' key={index}>
               <div className='box'>
                 <div id='menu-image'>
