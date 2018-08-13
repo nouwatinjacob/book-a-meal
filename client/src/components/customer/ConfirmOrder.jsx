@@ -20,15 +20,23 @@ import { decodeToken } from '../../utils/helper';
  * @extends {React.Component}
  */
 class ConfirmOrder extends React.Component {
-  state = {
-    quantity: 1,
-    price: null,
-    meal: [],
-    orderDetail: {
-      mealId: null,
-      quantity: null,
-      menuId: null
-    }
+  /**
+   * Component constructor
+   * @param {object} props
+   * @memberOf App
+   */
+  constructor(props) {
+    super(props);
+    this.state = {
+      meal: {},
+      orderDetail: {
+        mealId: null,
+        quantity: 1,
+        menuId: null
+      }
+    };
+    this.handleQuantityChange = this.handleQuantityChange.bind(this);
+    this.handleMakeOrder = this.handleMakeOrder.bind(this);
   }
 
   /**
@@ -73,34 +81,43 @@ class ConfirmOrder extends React.Component {
    * @return {void}
   */
   handleQuantityChange = (event) => {
+    event.preventDefault();
     const data = JSON.parse(sessionStorage.getItem('ids'));
-    const quantity = parseInt(event.target.value, 10);
+    const quantity = parseInt(event.currentTarget.value, 10);
     const { meal } = this.state;
-    const price = quantity * meal.price;
-    const mealId = this.state.meal.id;
+    const mealId = meal.id;
     const menuId = parseInt(data[1], 10);
     this.setState(state => (
       { 
-        quantity, price, orderDetail: { mealId, quantity, menuId } 
+        orderDetail: { mealId, quantity, menuId } 
       }));
   }
 
-
-  handleMakeOrder = () => {
+  /**
+   * Handles quantity change
+   * 
+   * @method handleMakeOrder
+   * 
+   * @param {event} event
+   * 
+   * @return {void}
+  */
+  handleMakeOrder = (event) => {
+    event.preventDefault();
     const { orderDetail } = this.state;
     this.props.makeOrderAction(orderDetail).then(() => {
       if (this.props.orderState.success) {
-        swal("Meal Added Successfully!");
+        swal("Order Placed Successfully!");
         history.push('/user-order');
+        sessionStorage.clear();
       } else if (
         !this.props.orderState.success && this.props.orderState.error
       ) {
-        const message = this.props.mealState.error.message;
+        const message = this.props.orderState.error.message;
         const notify = () => toast.info(message);
         notify();
       }
     });
-    sessionStorage.clear();
   }
 
   /**
@@ -109,16 +126,19 @@ class ConfirmOrder extends React.Component {
    * @returns {XML} XML/JSX
    */
   render() {
-    const { mealState: { meal } } = this.props;
+    const { mealState: { meal } } = this.props || {};
+    const { quantity } = this.state.orderDetail;
     const token = localStorage.getItem('token');
     const userToken = decodeToken(token);
-    return (
+
+    return !!meal && (
       <div className='container'>
         { 
           userToken.userType === 'customer' ? 
           <CustomerHeader/> : <CatererHeader/>
         }
           <div className='wrapper'>
+            <ToastContainer />
             <div className='reduced-container'>
               <div className='row'>
               <div className='c-medium-6 c-small-12 c-xsmall-12' id='pd-0'>
@@ -149,24 +169,25 @@ class ConfirmOrder extends React.Component {
                   </td>
                   <td>{meal.name}</td>
                   <td>
-                    <select 
-                      style={{ width: '50px' }} 
+                  <input
+                      type='number'
+                      name='quantity'
+                      value={this.state.orderDetail.quantity}
+                      style={{ width: '100px' }}
+                      min='1'
+                      max='20'
                       onChange={this.handleQuantityChange}
-                    >
-                      <option value='1'>1</option>
-                      <option value='2'>2</option>
-                      <option value='3'>3</option>
-                      <option value='4'>4</option>
-                      <option value='5'>5</option>
-                      <option value='6'>6</option>
-                      <option value='7'>7</option>
-                      <option value='8'>8</option>
-                      <option value='9'>9</option>
-                      <option value='10'>10</option>
-                    </select>
+                    />
                   </td>
                   <td>{meal.price}</td>
-                  <td><strong>{this.state.price}</strong></td>
+                  <td>
+                    <strong>
+                      {
+                        meal ? (meal.price) * 
+                        (this.state.orderDetail.quantity) : null
+                      }
+                    </strong>
+                  </td>
                 </tr>
                 </tbody>
               </table><br/>

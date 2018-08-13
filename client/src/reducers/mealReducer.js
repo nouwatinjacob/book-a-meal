@@ -9,7 +9,7 @@ import {
 
 const initialState = {
   meals: [],
-  meal: [],
+  meal: null,
   error: null,
   success: false,
   loading: false,
@@ -29,7 +29,7 @@ const mealReducer = (state = initialState, action) => {
       return {
         ...state,
         error: action.error,
-        loading: true
+        loading: false
       };
     case SET_LOADING_STATE:
       return {

@@ -4,6 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getAnOrderAction, modifyOrderAction } from '../../actions/orderAction';
 import CustomerHeader from '../partials/CustomerHeader.jsx';
+import CatererHeader from '../partials/CatererHeader.jsx';
+import { decodeToken } from '../../utils/helper';
 
 /**
  * ModifyOrder class declaration
@@ -43,7 +45,6 @@ class ModifyOrder extends React.Component {
   static getDerivedStateFromProps(props, state) {
     const { orderState: { order: { order } } } = props;
     const quantity = (order && order.order && order.order.quantity);
-    console.log('order ', order);
     return { ...state, quantity: state.quantity || quantity };
   }
 
@@ -102,11 +103,16 @@ class ModifyOrder extends React.Component {
   render() {
     const { orderState: { order: { order } } } = this.props;
     const { quantity } = this.state;
-  
+    const token = localStorage.getItem('token');
+    const userToken = decodeToken(token);
     return (
       <div className='container'>
-        <CustomerHeader/>
+        { 
+          userToken.userType === 'customer' ? 
+          <CustomerHeader/> : <CatererHeader/>
+        }
           <div className='wrapper'>
+          
             <div className='reduced-container'>
               <div className='row'>
               <div className='c-medium-6 c-small-12 c-xsmall-12' id='pd-0'>
@@ -124,7 +130,13 @@ class ModifyOrder extends React.Component {
                   <th>Total Price(&#8358;)</th>
                 </tr>
                 <tr>
-                  <td><img src={order.order.Meal.image} alt='' width='50' height='50' /></td>
+                  <td>
+                    <img src={order.order.Meal.image}
+                    alt='' 
+                    width='50'
+                    height='50'
+                  />
+                  </td>
                   <td>{order.order.Meal.name}</td>
                   <td>
                     <input
@@ -139,7 +151,12 @@ class ModifyOrder extends React.Component {
                   </td>
                   <td>{order.order.Meal.price}</td>
                   <td>
-                    <strong>{(order.order.Meal.price) * (quantity || order.order.quantity)}</strong>
+                    <strong>
+                    {
+                      (order.order.Meal.price) * 
+                      (quantity || order.order.quantity)
+                      }
+                    </strong>
                   </td>
                 </tr> 
                 </tbody>
@@ -151,7 +168,10 @@ class ModifyOrder extends React.Component {
               <div className='c-medium-6 c-small-12 c-xsmall-12' id='pd-0'>
 
               </div>
-              <div className='c-medium-6 c-small-12 c-xsmall-12 amount' id='pd-0'>
+              <div
+                className='c-medium-6 c-small-12 c-xsmall-12 amount' 
+                id='pd-0'
+              >
                 <button
                   className='button warning'
                   onClick={this.handleSubmit}

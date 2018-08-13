@@ -78,6 +78,12 @@ vendor know what the customers want to eat.
 * Is the application licensed ?
   - Yes, the application and its contents is under MIT license
 
+  ## Book A Meal Documentation is available on
+
+  - [Documentation](https://nouwatinjacob.github.io/slate)
+
+
+
 ## User template is available on
 
 - [Book-A-Meal](https://nouwatinjacob.github.io/book-a-meal)
