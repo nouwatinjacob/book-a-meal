@@ -3,6 +3,7 @@ import PropTypes from 'react-proptypes';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
+import moment from 'moment';
 import swal from 'sweetalert';
 import { getMeals } from '../../actions/mealAction';
 import { setMenuAction } from '../../actions/menuAction';
@@ -107,11 +108,12 @@ class SetMenu extends React.Component {
    const validation = menuValidation(menuData);
    if (validation.isValid()) {
      this.props.setMenuAction(menuData).then(() => {
-       if (this.props.menuState) {
-         console.log('menuState', this.props.menuState);
+       if (this.props.menuState.success) {
          swal("Menu set Successfully!", "", "success");
-       } else {
-         console.log('errors', this.props.menuState.error);
+       } else if (!this.props.menuState.success && this.props.menuState.error) {
+         const message = this.props.menuState.error.message;
+         const notify = () => toast.info(message);
+         notify();
        }
      });
    } else {
@@ -126,6 +128,7 @@ class SetMenu extends React.Component {
    */
  render() {
    const { meals, loading } = this.state;
+   const yesterday = moment().toISOString().slice(0, 10);
    return (
       <div className='container'>
         <ToastContainer />
@@ -139,6 +142,7 @@ class SetMenu extends React.Component {
                     type='date'
                     name='date'
                     id='my-input'
+                    min={yesterday}
                     onChange={this.onDateChange}
                   />
                   <br/>

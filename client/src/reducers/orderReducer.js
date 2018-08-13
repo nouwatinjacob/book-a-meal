@@ -26,7 +26,8 @@ const orderReducer = (state = initialState, action) => {
     case MAKE_ORDER_UNSUCCESSFUL:
       return {
         ...state,
-        error: action.error.response
+        success: false,
+        error: action.error.response.data
       };
     case GET_USER_ORDER_SUCCESSFUL:
       return {

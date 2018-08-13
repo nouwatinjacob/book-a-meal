@@ -39,6 +39,11 @@ export default class OrdersContoller {
         });
 
         if (menuMeal) {
+          if (userId === menuMeal.Meal.userId) {
+            return res.status(400).json({ 
+              message: 'You cant order your meal' 
+            });
+          }
           if (checkTimeToOrder()) {
             return res.status(400).json({ message: 'Time to order elapse' });
           }
