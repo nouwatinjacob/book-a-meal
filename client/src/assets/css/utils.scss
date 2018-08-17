@@ -7,11 +7,16 @@ body {
   line-height: 1.5;
   color: #212529;
   text-align: left;
+   #holder {
+    min-height: 100vh;
+    position: relative;
+   }
 }
 
 .container {
   width: 100%;
   margin: 0 auto;
+  padding-bottom: 100px;
 }
 
 .wrapper {

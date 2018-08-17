@@ -24,21 +24,20 @@ class MyMeals extends React.Component {
     meals: [],
     loading: true
   }
-       
 
   /**
    *
    * @param  {object} nextProps
-   * 
+   *
    * @param  {object} prevState
-   * 
+   *
    * @returns {XML} XML/JSX
-   * 
+   *
    * @memberof MyMeals
    */
   static getDerivedStateFromProps(nextProps, prevState) {
     const nextState = {};
-    if (nextProps.mealState.success) {      
+    if (nextProps.mealState.success) {
       nextState.meals = nextProps.mealState.meals;
       nextState.loading = false;
     }
@@ -48,27 +47,27 @@ class MyMeals extends React.Component {
   /**
    *
    * @returns {XML} XML/JSX
-   * 
+   *
    * @memberof MyMeals
    */
-  componentDidMount() {    
-    this.props.getMeals();        
+  componentDidMount() {
+    this.props.getMeals();
   }
 
   /**
    * Handles meal deletion
-   * 
+   *
    * @method handleDelete
-   * 
+   *
    * @param { object } mealId
-   * 
+   *
    * @return {void}
   */
   handleDelete = (mealId) => {
     this.props.deleteMealAction(mealId);
-    window.location.reload(); 
+    window.location.reload();
   }
-  
+
   /**
    * Renders MyMeals component
    *
@@ -77,23 +76,23 @@ class MyMeals extends React.Component {
   render() {
     const { meals, loading } = this.state;
     return (
-      <div>     
+      <div>
     {
       (meals.length > 0) ?
-      loading ? 
+      loading ?
       <div className='container loading'>
-      <Loader 
+      <Loader
          type="Rings"
          color="#ff9600"
          height="100"
          width="100"
       />
-      <h3>Loading...</h3>  
-      </div> : 
+      <h3>Loading...</h3>
+      </div> :
       <div className='container'>
       <ToastContainer />
         <CatererHeader/>
-        <div className='wrapper'>        
+        <div className='wrapper'>
           <Search/>
               <table>
                 <tbody>

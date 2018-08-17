@@ -1,9 +1,10 @@
-import { 
+import {
   MAKE_ORDER_SUCCESSFUL, MAKE_ORDER_UNSUCCESSFUL,
   GET_USER_ORDER_SUCCESSFUL, GET_USER_ORDER_UNSUCCESSFUL,
   GET_AN_ORDER_SUCCESSFUL, GET_AN_ORDER_UNSUCCESSFUL,
   MODIFY_ORDER_SUCCESSFUL, MODIFY_ORDER_UNSUCCESSFUL,
-  GET_ALL_CATERER_ORDER_SUCCESSFUL, GET_ALL_CATERER_ORDER_UNSUCCESSFUL
+  GET_ALL_CATERER_ORDER_SUCCESSFUL, GET_ALL_CATERER_ORDER_UNSUCCESSFUL,
+  CANCEL_ORDER_SUCCESSFUL, CANCEL_ORDER_UNSUCCESSFUL
 } from '../constants/actionTypes';
 
 const initialState = {
@@ -11,7 +12,8 @@ const initialState = {
   success: false,
   loading: true,
   order: [],
-  orders: []
+  orders: [],
+  passes: null
 };
 
 const orderReducer = (state = initialState, action) => {
@@ -62,7 +64,8 @@ const orderReducer = (state = initialState, action) => {
     case MODIFY_ORDER_UNSUCCESSFUL:
       return {
         ...state,
-        error: action.error
+        success: false,
+        error: action.error.response.data
       };
     case GET_ALL_CATERER_ORDER_SUCCESSFUL:
       return {
@@ -74,6 +77,18 @@ const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         error: action.error
+      };
+    case CANCEL_ORDER_SUCCESSFUL:
+      return {
+        ...state,
+        success: true,
+        passes: action.data
+      };
+    case CANCEL_ORDER_UNSUCCESSFUL:
+      return {
+        ...state,
+        success: false,
+        error: action.error.response.data
       };
     default:
       return {

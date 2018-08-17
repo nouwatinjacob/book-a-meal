@@ -23,11 +23,11 @@ const orderRoutes = (router) => {
     );
   router.route('/orders/:id')
     .put(
-      authMiddleware.verifyToken, authMiddleware.isCustomer,
+      authMiddleware.verifyToken,
       OrdersController.modifyOrder
     )
     .delete(
-      authMiddleware.verifyToken, authMiddleware.isCustomer,
+      authMiddleware.verifyToken,
       OrdersController.cancelOrder
     );
 };

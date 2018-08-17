@@ -40,8 +40,8 @@ export default class OrdersContoller {
 
         if (menuMeal) {
           if (userId === menuMeal.Meal.userId) {
-            return res.status(400).json({ 
-              message: 'You cant order your meal' 
+            return res.status(400).json({
+              message: 'You cant order your meal'
             });
           }
           if (checkTimeToOrder()) {
@@ -228,7 +228,7 @@ export default class OrdersContoller {
           message: 'Provide valid order id'
         });
       }
-      const order = await Order.findOne({ 
+      const order = await Order.findOne({
         where: { id: orderId },
         include: [
           {
@@ -237,7 +237,7 @@ export default class OrdersContoller {
           {
             model: User,
           },
-        ] 
+        ]
       });
       if (order) {
         return res.status(200).json({
@@ -269,11 +269,16 @@ export default class OrdersContoller {
           message: 'Provide valid order id'
         });
       }
-      const order = await Meal.findById(orderId);
+      const order = await Order.findById(orderId);
       if (order) {
         if (!checkTimeToModifyOrder(order.createdAt)) {
           return res.status(400).json({
             message: 'Time elapse for order to be canceled'
+          });
+        }
+        if (order.userId === req.decoded.id) {
+          return res.status(400).json({
+            message: 'This Order does not belong to you'
           });
         }
         await order.destroy();
