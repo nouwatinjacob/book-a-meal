@@ -2,6 +2,7 @@ import React from 'react';
 import { Router, Route, Link, NavLink, Switch } from 'react-router-dom';
 import history from '../utils/history';
 import Header from './partials/Header.jsx';
+import Footer from './partials/Footer.jsx';
 import HomePage from './Homepage.jsx';
 import Login from './auth/Signin.jsx';
 import CustomerSignup from './auth/CustomerSignup.jsx';
@@ -39,7 +40,8 @@ class App extends React.Component {
     super(props);
 
     history.listen((location, action) => {
-      console.log(`The current URL is ${location.pathname}${location.search}${location.hash}`);
+      console.log(`The current URL is 
+      ${location.pathname}${location.search}${location.hash}`);
       console.log(`The last navigation action was ${action}`);
     });
   }
@@ -53,7 +55,7 @@ class App extends React.Component {
     return (
        <div>
          <Router history={history}>
-          <div>
+          <div id='holder'>
             <Header/>
             <Switch>
               <Route path='/' component={HomePage} exact={true}/>
@@ -83,6 +85,7 @@ class App extends React.Component {
               <PrivateRoute exact path='/' component={HomePage}/>
               <Route path="*" component={PageNotFound}/>
             </Switch>
+            <Footer/>
           </div>
           </Router>
         </div>

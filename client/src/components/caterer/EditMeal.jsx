@@ -29,16 +29,16 @@ class EditMeal extends React.Component {
   /**
    *
    * @param  {object} nextProps
-   * 
+   *
    * @param  {object} prevState
-   * 
+   *
    * @returns {XML} XML/JSX
-   * 
+   *
    * @memberof EditMeal
    */
   static getDerivedStateFromProps(nextProps, prevState) {
     const nextState = {};
-    if (nextProps.mealState.success) {      
+    if (nextProps.mealState.success) {
       nextState.meal = nextProps.mealState.meal;
     }
     return nextState;
@@ -47,7 +47,7 @@ class EditMeal extends React.Component {
   /**
    *
    * @returns {XML} XML/JSX
-   * 
+   *
    * @memberof EditMeal
    */
   componentDidMount() {
@@ -103,14 +103,14 @@ class EditMeal extends React.Component {
    });
  }
 
- 
+
   /**
    * Renders EditMeal component
    *
    * @returns {XML} XML/JSX
    */
  render() {
-   return (     
+   return (
       <div className='container'>
         <CatererHeader/>
         <ToastContainer />
@@ -118,9 +118,9 @@ class EditMeal extends React.Component {
             <div className='login'>
               <div className='login-form'>
                 <h3>Edit Meal Details</h3>
-                { 
-                  this.props.isLoading ? 
-                  <Loader 
+                {
+                  this.props.isLoading ?
+                  <Loader
                     type="Rings"
                     color="#ff9600"
                     height="50"

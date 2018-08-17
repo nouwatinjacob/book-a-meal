@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'react-proptypes';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import swal from 'sweetalert';
 import { getAnOrderAction, modifyOrderAction } from '../../actions/orderAction';
 import CustomerHeader from '../partials/CustomerHeader.jsx';
 import CatererHeader from '../partials/CatererHeader.jsx';
@@ -92,7 +94,15 @@ class ModifyOrder extends React.Component {
     const data = JSON.parse(sessionStorage.getItem('ids'));
     const orderId = parseInt(data[2], 10);
     const { newOrderDetail } = this.state;
-    this.props.modifyOrderAction(orderId, newOrderDetail);
+    this.props.modifyOrderAction(orderId, newOrderDetail).then(() => {
+      if (this.props.orderState.success) {
+        swal("Order Modified Successfully!", "", "success");
+      } else {
+        const message = this.props.orderState.error.message;
+        const notify = () => toast.info(message);
+        notify();
+      }
+    });
   }
 
   /**
@@ -112,7 +122,7 @@ class ModifyOrder extends React.Component {
           <CustomerHeader/> : <CatererHeader/>
         }
           <div className='wrapper'>
-          
+            <ToastContainer />
             <div className='reduced-container'>
               <div className='row'>
               <div className='c-medium-6 c-small-12 c-xsmall-12' id='pd-0'>

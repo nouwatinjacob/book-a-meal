@@ -1,10 +1,11 @@
 import axios from 'axios';
-import { 
+import {
   MAKE_ORDER_SUCCESSFUL, MAKE_ORDER_UNSUCCESSFUL,
   GET_USER_ORDER_SUCCESSFUL, GET_USER_ORDER_UNSUCCESSFUL,
   GET_AN_ORDER_SUCCESSFUL, GET_AN_ORDER_UNSUCCESSFUL,
   MODIFY_ORDER_SUCCESSFUL, MODIFY_ORDER_UNSUCCESSFUL,
-  GET_ALL_CATERER_ORDER_SUCCESSFUL, GET_ALL_CATERER_ORDER_UNSUCCESSFUL
+  GET_ALL_CATERER_ORDER_SUCCESSFUL, GET_ALL_CATERER_ORDER_UNSUCCESSFUL,
+  CANCEL_ORDER_SUCCESSFUL, CANCEL_ORDER_UNSUCCESSFUL
 } from '../constants/actionTypes';
 import { authorization } from '../utils/helper';
 
@@ -58,7 +59,17 @@ const getAllCatererOrderUnuccess = error => ({
   error
 });
 
-const makeOrderAction = orderDetail => dispatch => 
+const cancelOrderSuccess = data => ({
+  type: CANCEL_ORDER_SUCCESSFUL,
+  data
+});
+
+const cancelOrderUnSuccess = error => ({
+  type: CANCEL_ORDER_UNSUCCESSFUL,
+  error
+});
+
+const makeOrderAction = orderDetail => dispatch =>
   axios.post(
     '/orders',
     orderDetail, authorization()
@@ -96,7 +107,7 @@ const getAnOrderAction = orderId => (dispatch) => {
     });
 };
 
-const modifyOrderAction = (orderId, newOrderDetail) => (dispatch) => {
+const modifyOrderAction = (orderId, newOrderDetail) => dispatch =>
   axios.put(
     `/orders/${orderId}`,
     newOrderDetail, authorization()
@@ -109,7 +120,6 @@ const modifyOrderAction = (orderId, newOrderDetail) => (dispatch) => {
     .catch((err) => {
       dispatch(modifyOrderUnsuccess(err));
     });
-};
 
 const getAllCatererOrderAction = () => (dispatch) => {
   axios.get('/orders', authorization())
@@ -123,10 +133,18 @@ const getAllCatererOrderAction = () => (dispatch) => {
     });
 };
 
+const cancelOrderAction = orderId => dispatch =>
+  axios.delete(`/orders/${orderId}`, authorization())
+    .then((res) => {
+      dispatch(cancelOrderSuccess(res.data.message));
+    })
+    .catch(error => dispatch(cancelOrderUnSuccess(error)));
+
 export {
   makeOrderAction,
   getUserOrderAction,
   getAnOrderAction,
   modifyOrderAction,
-  getAllCatererOrderAction
+  getAllCatererOrderAction,
+  cancelOrderAction
 };

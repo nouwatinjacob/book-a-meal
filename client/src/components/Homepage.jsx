@@ -1,9 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import meals from '../assets/img/Meal-menu.png';
-// import delivery from '../assets/img/fast-delivery.png';
-// import realTime from '../assets/img/24-hrs.png';
-
 /**
  * Homepage class declaration
  *
@@ -21,7 +17,7 @@ class HomePage extends React.Component {
     return (
       <div className='container'>
 
-      <div className='container'>
+      <div className='hero'>
         <div className='leading'>
             <div className='wrapper'>
               <h2 className='leading-text'>
@@ -85,7 +81,6 @@ class HomePage extends React.Component {
             </div>
           </div>
         </div>
-        <hr className='horizon'/>
       </div>
 
     </div>

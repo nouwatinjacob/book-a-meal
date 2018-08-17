@@ -27,12 +27,14 @@ class ConfirmOrder extends React.Component {
    */
   constructor(props) {
     super(props);
+    const ids = JSON.parse(sessionStorage.getItem('ids'));
+
     this.state = {
       meal: {},
       orderDetail: {
-        mealId: null,
+        mealId: ids[1],
         quantity: 1,
-        menuId: null
+        menuId: ids[0]
       }
     };
     this.handleQuantityChange = this.handleQuantityChange.bind(this);
@@ -42,15 +44,15 @@ class ConfirmOrder extends React.Component {
   /**
    *
    * @param  {object} props
-   * 
+   *
    * @param  {object} state
-   * 
+   *
    * @returns {object} object
-   * 
+   *
    * @memberof ConfirmOrder
    */
   static getDerivedStateFromProps(props, state) {
-    if (props.mealState.success) {      
+    if (props.mealState.success) {
       state.meal = props.mealState.meal;
     }
     return state;
@@ -59,47 +61,43 @@ class ConfirmOrder extends React.Component {
   /**
    *
    * @returns {XML} XML/JSX
-   * 
+   *
    * @memberof ConfirmOrder
    */
   componentDidMount() {
-    const data = JSON.parse(sessionStorage.getItem('ids'));
-    if (!data) {
+    const ids = JSON.parse(sessionStorage.getItem('ids'));
+    if (!ids) {
       history.push('/menus');
     } else {
-      this.props.getAMealAction(data[0]);
+      this.props.getAMealAction(ids[0]);
     }
   }
 
   /**
    * Handles quantity change
-   * 
+   *
    * @method handleDelete
-   * 
+   *
    * @param {event} event
-   * 
+   *
    * @return {void}
   */
   handleQuantityChange = (event) => {
     event.preventDefault();
-    const data = JSON.parse(sessionStorage.getItem('ids'));
     const quantity = parseInt(event.currentTarget.value, 10);
-    const { meal } = this.state;
-    const mealId = meal.id;
-    const menuId = parseInt(data[1], 10);
     this.setState(state => (
-      { 
-        orderDetail: { mealId, quantity, menuId } 
+      {
+        orderDetail: { quantity }
       }));
   }
 
   /**
    * Handles quantity change
-   * 
+   *
    * @method handleMakeOrder
-   * 
+   *
    * @param {event} event
-   * 
+   *
    * @return {void}
   */
   handleMakeOrder = (event) => {
@@ -133,19 +131,18 @@ class ConfirmOrder extends React.Component {
 
     return !!meal && (
       <div className='container'>
-        { 
-          userToken.userType === 'customer' ? 
+        {
+          userToken.userType === 'customer' ?
           <CustomerHeader/> : <CatererHeader/>
         }
           <div className='wrapper'>
-            <ToastContainer />
             <div className='reduced-container'>
               <div className='row'>
               <div className='c-medium-6 c-small-12 c-xsmall-12' id='pd-0'>
                 <h3>CART</h3>
               </div>
               <div
-                className='c-medium-6 c-small-12 c-xsmall-12 amount' 
+                className='c-medium-6 c-small-12 c-xsmall-12 amount'
                 id='pd-0'
               >
                 <button className='button default'>
@@ -183,7 +180,7 @@ class ConfirmOrder extends React.Component {
                   <td>
                     <strong>
                       {
-                        meal ? (meal.price) * 
+                        meal ? (meal.price) *
                         (this.state.orderDetail.quantity) : null
                       }
                     </strong>
@@ -196,8 +193,8 @@ class ConfirmOrder extends React.Component {
               <div className='c-medium-6 c-small-12 c-xsmall-12' id='pd-0'>
 
               </div>
-              <div 
-                className='c-medium-6 c-small-12 c-xsmall-12 amount' 
+              <div
+                className='c-medium-6 c-small-12 c-xsmall-12 amount'
                 id='pd-0'
               >
                 <button
@@ -211,6 +208,7 @@ class ConfirmOrder extends React.Component {
 
             </div>
           </div>
+          <ToastContainer />
       </div>
     );
   }
