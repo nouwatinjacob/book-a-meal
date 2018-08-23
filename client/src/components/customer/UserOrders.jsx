@@ -99,7 +99,8 @@ class UserOrder extends React.Component {
         }
         <div className='wrapper'>
         <ToastContainer/>
-        { this.props.orderState.success && orders.length > 0 ?
+        { this.props.orderState.success &&
+          orders.length > 0 && orders !== undefined ?
         <table className='order-table'>
         <tbody>
           <tr>
