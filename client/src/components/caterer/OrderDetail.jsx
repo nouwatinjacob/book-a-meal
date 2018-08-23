@@ -44,7 +44,8 @@ class OrderDetail extends React.Component {
             </h6>
             <h5>Order No: <strong>{order.order.orderId}</strong></h5>
             <h5>Name: <strong>
-                {order.order.User.firstName} {order.order.User.lastName}
+                {`${order.order.User.firstName} ${order.order.User.lastName}` ||
+                    order.order.User.ownerName}
               </strong>
             </h5>
           </div>
