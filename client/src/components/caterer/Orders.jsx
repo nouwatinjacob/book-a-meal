@@ -111,7 +111,8 @@ class Orders extends React.Component {
                   orderDetails.map((order, index) =>
                   <tr key={index}>
                   <td>{order.orderId}</td>
-                  <td>{order.User.firstName} {order.User.lastName}</td>
+                  <td>{`${order.User.firstName} ${order.User.lastName}` ||
+                    order.User.ownerName}</td>
                   <td>{order.Meal.price * order.quantity}</td>
                   <td>
                     <button className='button default'>
