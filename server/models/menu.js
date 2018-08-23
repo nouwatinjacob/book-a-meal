@@ -16,6 +16,10 @@ const menuModel = (sequelize, DataTypes) => {
       through: 'MenuMeals',
       foreignKey: 'menuId',
     });
+
+    Menu.belongsTo(models.User, {
+      foreignKey: 'userId',
+    });
   };
 
   return Menu;

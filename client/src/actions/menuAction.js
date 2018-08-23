@@ -25,7 +25,7 @@ const getMenuUnsuccess = error => ({
   error
 });
 
-const setMenuAction = menuDetail => dispatch => 
+const setMenuAction = menuDetail => dispatch =>
   axios.post('/menu', menuDetail, authorization())
     .then((res) => {
       dispatch(setMenuSuccess({

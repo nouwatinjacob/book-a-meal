@@ -32,9 +32,9 @@ class ConfirmOrder extends React.Component {
     this.state = {
       meal: {},
       orderDetail: {
-        mealId: ids[1],
+        mealId: ids[0],
         quantity: 1,
-        menuId: ids[0]
+        menuId: ids[1]
       }
     };
     this.handleQuantityChange = this.handleQuantityChange.bind(this);
@@ -87,7 +87,7 @@ class ConfirmOrder extends React.Component {
     const quantity = parseInt(event.currentTarget.value, 10);
     this.setState(state => (
       {
-        orderDetail: { quantity }
+        orderDetail: { ...state.orderDetail, quantity }
       }));
   }
 

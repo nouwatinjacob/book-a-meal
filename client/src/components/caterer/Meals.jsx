@@ -13,11 +13,11 @@ import swal from 'sweetalert';
 class Meals extends React.Component {
   /**
    * Handles meal deletion
-   * 
+   *
    * @method handleDelete
-   * 
+   *
    * @param { object } mealId
-   * 
+   *
    * @return {void}
      */
   handleDelete = () => {
@@ -36,7 +36,7 @@ class Meals extends React.Component {
       }
     });
   }
-  
+
 
   /**
    * Renders Meals component
@@ -45,10 +45,10 @@ class Meals extends React.Component {
    */
   render() {
     const { meals } = this.props;
-    return ( 
+    return (
         <tr>
           <td>{meals.name}</td>
-          <td><img src={meals.image} 
+          <td><img src={meals.image}
           width='60' height='50' /></td>
           <td>{meals.price}</td>
           <td>

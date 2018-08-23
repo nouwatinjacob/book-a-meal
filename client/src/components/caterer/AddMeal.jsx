@@ -65,7 +65,7 @@ class AddMeal extends React.Component {
      formData.append('name', name);
      formData.append('price', price);
      formData.append('image', image);
-     
+
      this.props.addMeal(formData).then(() => {
        if (this.props.mealState.success) {
          swal("Meal Added Successfully!");
@@ -97,9 +97,9 @@ class AddMeal extends React.Component {
             <div className='login'>
               <div className='login-form'>
                 <h3>Add New Meal</h3>
-                { 
-                  this.props.isLoading ? 
-                  <Loader 
+                {
+                  this.props.isLoading ?
+                  <Loader
                     type="Rings"
                     color="#ff9600"
                     height="50"
@@ -119,7 +119,7 @@ class AddMeal extends React.Component {
                     placeholder='Meal Name'
                     onChange={this.onInputChange}
                   /><br/>
-                  { 
+                  {
                     this.state.errors.name ?
                     <span>{this.state.errors.name[0]}</span>
                     : ''
@@ -130,7 +130,7 @@ class AddMeal extends React.Component {
                     placeholder='Meal Price'
                     onChange={this.onInputChange}
                   /><br/>
-                  { 
+                  {
                     this.state.errors.price ?
                     <span>{this.state.errors.price[0]}</span>
                     : ''
@@ -142,7 +142,7 @@ class AddMeal extends React.Component {
                     placeholder='Meal Image'
                     onChange={this.onInputChange}
                   /><br/>
-                  { 
+                  {
                     this.state.errors.image ?
                     <span>{this.state.errors.image[0]}</span>
                     : ''

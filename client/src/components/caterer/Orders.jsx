@@ -18,37 +18,86 @@ class Orders extends React.Component {
   /**
    *
    * @returns {XML} XML/JSX
-   * 
+   *
    * @memberof MyMeals
    */
-  componentDidMount() {    
-    this.props.getAllCatererOrderAction();        
+  componentDidMount() {
+    const todayDate = new Date().toISOString().slice(0, 10);
+    this.props.getAllCatererOrderAction(todayDate);
   }
+
+  /**
+   * Handles makeOrder button
+   *
+   * @method onClickOrder
+   *
+   * @param { event } event
+   *
+   * @return {void}
+  */
+ handleDateChange = (event) => {
+   const searchDate = event.target.value;
+   this.props.getAllCatererOrderAction(searchDate);
+ }
+
+ /**
+   * Handles makeOrder button
+   *
+   * @method onClickOrder
+   *
+   * @param { orders } orders
+   *
+   * @return {void}
+  */
+ getOrderPrices = orders =>
+   orders.map(order => order.Meal.price * order.quantity);
+
+   /**
+   * Handles makeOrder button
+   *
+   * @method onClickOrder
+   *
+   * @param { prices } prices
+   *
+   * @return {void}
+  */
+ totalPrice = prices => prices.reduce((a, b) => a + b);
+
   /**
    * Renders Orders component
    *
    * @returns {XML} XML/JSX
    */
-  render() {
-    const { orderState: { orders } } = this.props;
-    return (
+ render() {
+   const { orderState: { orderDetails } } = this.props;
+   return (
       <div className='container'>
         <CatererHeader/>
         <div className='wrapper'>
         <div className='row'>
           <div className='c-medium-6 c-small-12' id='pd-0'>
             <h5>Sort By Date:
-              <input type='date' 
-              style={{ width: '150px' }}
+              <input type='date'
+                style={{ width: '150px' }}
+                onChange={this.handleDateChange}
               />
             </h5>
           </div>
           <div className='c-medium-6 c-small-12 revenue' id='pd-0'>
-            <h5>{`Today's Revenue: `}<strong>&#8358;145,985</strong></h5>
+            <h5>{`Today's Revenue: `}<strong>&#8358;
+              {
+                orderDetails.length > 0 ?
+                this.totalPrice(this.getOrderPrices(orderDetails)) : 0
+              }
+            </strong>
+            </h5>
           </div>
         </div>
       </div>
+
           <div className='wrapper'>
+          {
+            orderDetails.length > 0 ?
             <table className='order-table'>
             <tbody>
               <tr>
@@ -58,10 +107,10 @@ class Orders extends React.Component {
                 <th>View details</th>
               </tr>
               {
-                  orders.length > 0 ?
-                  orders.map((order, index) => 
+                  orderDetails.length > 0 ?
+                  orderDetails.map((order, index) =>
                   <tr key={index}>
-                  <td>{order.id}</td>
+                  <td>{order.orderId}</td>
                   <td>{order.User.firstName} {order.User.lastName}</td>
                   <td>{order.Meal.price * order.quantity}</td>
                   <td>
@@ -69,17 +118,19 @@ class Orders extends React.Component {
                       <Link to={`/order-detail/${order.id}`}>View details</Link>
                     </button>
                   </td>
-                </tr>) : 
-                <tr></tr>  
+                </tr>) :
+                <tr></tr>
               }
-              
+
               </tbody>
-            </table>
+            </table> :
+              <h3 className='text-center'>No Order Found for this date</h3>
+            }
           </div><br/>
-        <Pagination/><br/>
+        {/* <Pagination/><br/> */}
       </div>
-    );
-  }
+   );
+ }
 }
 
 Orders.propTypes = {
@@ -91,7 +142,7 @@ const mapStateToProps = state => ({
   orderState: state.orderReducer
 });
 
-const mapDispatchToProps = dispatch => 
+const mapDispatchToProps = dispatch =>
   bindActionCreators({ getAllCatererOrderAction }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Orders);

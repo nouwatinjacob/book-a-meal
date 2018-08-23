@@ -6,7 +6,7 @@ import validations from '../middleware/validations';
 
 const { Op } = Sequelize;
 
-const { Meal, Menu } = db;
+const { Meal, Menu, User } = db;
 
 /**
  * MenusController class declaration
@@ -92,10 +92,16 @@ export default class MenusController {
       if ((moment(menuDate, 'YYYY-MM-DD', true).isValid())) {
         const dateMenu = await Menu.findAll({
           where: { menuDate },
-          include: [{
-            model: Meal,
-            through: { attributes: [] }
-          }] });
+          include: [
+            {
+              model: Meal,
+              through: { attributes: [] }
+            },
+            {
+              model: User,
+              attributes: ['businessName', 'ownerName']
+            },
+          ] });
         return res.status(200).json({
           message: 'Menu for this Date',
           dateMenu

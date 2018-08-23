@@ -22,7 +22,6 @@ vendor know what the customers want to eat.
 - Authenticated users (customers) should be able to see their order history
 - Admin (Caterer) should be able to see order history
 - The application should be able to host more than one caterer.
-- Authenticated users (customers) should be able to get notifications when the menu for the day has been set
 
 ## Technologies
 
@@ -36,7 +35,6 @@ vendor know what the customers want to eat.
 - [Mocha](https://mochajs.org/) Mocha is a feature-rich JavaScript test framework running on [NodeJS](nodejs.org/en) for testing [Javascript](javascript.com) applications.
 
 ### Frontend
-- [Bootstrap](https://getbootstrap.com/) makes styling responsive web pages faster and easier.
 - [React](https://facebook.github.io/react/) A JavaScript library for building user interfaces.
 - [Redux](http://redux.js.org/) A predictable state container for JavaScript apps.
 - [Webpack](https://webpack.js.org/) A JavaScript tool for bundling scripts, images, styles and other assets
@@ -94,4 +92,4 @@ vendor know what the customers want to eat.
 
 &copy; Nouwatin Jacob
 
-Licensed under the [MIT License](LICENSE).
+Licensed under the [MIT License](https://opensource.org/licenses/MIT).

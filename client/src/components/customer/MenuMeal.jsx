@@ -24,7 +24,7 @@ class MenuMeal extends React.Component {
   /**
    *
    * @returns {XML} XML/JSX
-   * 
+   *
    * @memberof MenuMeal
    */
   componentDidMount() {
@@ -34,11 +34,11 @@ class MenuMeal extends React.Component {
 
   /**
    * Handles makeOrder button
-   * 
+   *
    * @method onClickOrder
-   * 
+   *
    * @param { event } event
-   * 
+   *
    * @return {void}
   */
   handleDateChange = (event) => {
@@ -48,15 +48,15 @@ class MenuMeal extends React.Component {
 
   /**
    * Handles makeOrder button
-   * 
+   *
    * @method onClickOrder
-   * 
+   *
    * @param { object } mealId
-   * 
+   *
    * @param { object } menuId
-   * 
+   *
    * @param { event } event
-   * 
+   *
    * @return {void}
   */
   onClickOrder = (mealId, menuId, event) => {
@@ -73,19 +73,18 @@ class MenuMeal extends React.Component {
    */
   render() {
     const { menuState: { menus: { dateMenu } } } = this.props;
-    const menuMeals = dateMenu.reduce(((acc, menu) => {
-      return acc.concat(menu.Meals);
-    }), []);
+    const menuMeals = dateMenu.reduce(((acc, menu) =>
+      acc.concat(menu.Meals)), []);
     const token = localStorage.getItem('token');
     const userToken = decodeToken(token);
     return (
       <div>
         <div className='container'>
-        { 
-          userToken.userType === 'customer' ? 
+        {
+          userToken.userType === 'customer' ?
           <CustomerHeader/> : <CatererHeader/>
         }
-          
+
           <div className='wrapper'>
             <div className='wrapper search'>
               <label>Search by date</label>
@@ -94,50 +93,51 @@ class MenuMeal extends React.Component {
                 onChange={this.handleDateChange}
               />
             </div>
-            
+
               <div className='row'>
               { dateMenu.length > 0 ?
-                menuMeals.map((meal, index) => 
+                menuMeals.map((meal, index) =>
               <div className='c-medium-3 c-xsmall-12 c-3' id='pd-0' key={index}>
               <div className='box'>
                 <div id='menu-image'>
-                  <img 
-                    src={meal.image} 
+                  <img
+                    src={meal.image}
                     alt='Avatar'
                   />
                 </div>
                 <div className='box-body'>
                   <div className='row'>
                     <div
-                      className='c-medium-12 c-xsmall-12 text-center' 
+                      className='c-medium-12 c-xsmall-12 text-center'
                       id='pd-0'
                     >
+                      <p><i>{dateMenu[0].User.businessName}</i></p>
                       <p><b>{meal.name}</b></p>
                       <p>Price {meal.price}</p>
                     </div>
                   </div>
                   <div className='row'>
                     <div
-                      className='c-medium-12 c-xsmall-12 text-center' 
+                      className='c-medium-12 c-xsmall-12 text-center'
                       id='pd-0'
                     >
-                      <button 
+                      <button
                         className='button warning'
                         onClick={
-                          event => 
+                          event =>
                           this.onClickOrder(meal.id, dateMenu[0].id, event)
                         }
-                      >Order Meal 
+                      >Order Meal
                       </button>
                     </div>
                   </div>
                 </div>
               </div>
-              </div>) : 
+              </div>) :
               <div className='wrapper'>
-                <h6
-                  className='text-center mt-10'>No Menu to display for this date
-                </h6>
+                <h3 className='text-center mt-10'>
+                  No Menu to display for this date
+                </h3>
               </div> }
               </div>
             <br/>
