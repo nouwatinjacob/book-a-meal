@@ -34,15 +34,15 @@ class SetMenu extends React.Component {
   /**
    *
    * @param  {object} props
-   * 
+   *
    * @param  {object} state
-   * 
+   *
    * @returns {XML} XML/JSX
-   * 
+   *
    * @memberof SetMenu
    */
   static getDerivedStateFromProps(props, state) {
-    if (props.mealState.success) {      
+    if (props.mealState.success) {
       state.meals = props.mealState.meals;
       state.loading = false;
     }
@@ -52,11 +52,11 @@ class SetMenu extends React.Component {
   /**
    *
    * @returns {XML} XML/JSX
-   * 
+   *
    * @memberof SetMenu
    */
-  componentDidMount() {    
-    this.props.getMeals();        
+  componentDidMount() {
+    this.props.getMeals();
   }
 
   /**
@@ -71,7 +71,7 @@ class SetMenu extends React.Component {
    const menuData = this.state.menuData;
    const date = event.target.value;
    menuData.menuDate = date;
-   
+
    this.setState(menuData);
  }
 
@@ -146,13 +146,13 @@ class SetMenu extends React.Component {
                     onChange={this.onDateChange}
                   />
                   <br/>
-                  { 
+                  {
                     this.state.errors.menuDate ?
                     <span>Pick a date for your menu</span>
                     : ''
                   }
                   <h6>Pick meals to be added to your Menu</h6>
-                  { 
+                  {
                     this.state.errors.mealId ?
                     <span>Pick meals to be added to the menu</span>
                     : ''

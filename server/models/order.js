@@ -1,6 +1,10 @@
 
 const orderModel = (sequelize, DataTypes) => {
   const Order = sequelize.define('Order', {
+    orderId: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     mealId: {
       type: DataTypes.INTEGER,
       allowNull: false

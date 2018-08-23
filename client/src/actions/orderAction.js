@@ -121,8 +121,8 @@ const modifyOrderAction = (orderId, newOrderDetail) => dispatch =>
       dispatch(modifyOrderUnsuccess(err));
     });
 
-const getAllCatererOrderAction = () => (dispatch) => {
-  axios.get('/orders', authorization())
+const getAllCatererOrderAction = orderDate => (dispatch) => {
+  axios.get(`/orders?orderDate=${orderDate}`, authorization())
     .then((res) => {
       dispatch(getAllCatererOrderSuccess({
         orders: res.data.orders

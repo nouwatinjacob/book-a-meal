@@ -25,7 +25,7 @@ class HomePage extends React.Component {
                 ordering your favourite meals
               </h2>
               <button className='button warning' id='visit'>
-                <Link to='/menus'>Visit Store</Link>
+                <Link to='/menus'>Browse Menu</Link>
               </button>
             </div>
         </div>
@@ -44,7 +44,7 @@ class HomePage extends React.Component {
               />
               <div className='box-body'>
                 <p className='text'>
-                  Browse menus and <strong>your order</strong> 
+                  Browse menus and <strong>your order</strong>
                   in seconds without any delay
                 </p>
               </div>
@@ -60,7 +60,7 @@ class HomePage extends React.Component {
               />
               <div className='box-body'>
                 <p className='text'>
-                  <strong>Explore restaurants </strong> 
+                  <strong>Explore restaurants </strong>
                   that deliver to your doorstep
                 </p>
               </div>
@@ -68,13 +68,13 @@ class HomePage extends React.Component {
           </div>
           <div className='c-medium-4' id='pd-0'>
             <div className='box'>
-              <img 
-                src='http://res.cloudinary.com/sansaristic/image/upload/v1533140467/BookMeal/Default%20images/24-hrs.png' 
-                alt='Real Time' 
+              <img
+                src='http://res.cloudinary.com/sansaristic/image/upload/v1533140467/BookMeal/Default%20images/24-hrs.png'
+                alt='Real Time'
                 style={{ width: '100%' }} />
               <div className='box-body'>
                 <p className='text'>
-                  Follow the status of your order with 
+                  Follow the status of your order with
                   <strong>real-time alerts</strong>
                 </p>
               </div>

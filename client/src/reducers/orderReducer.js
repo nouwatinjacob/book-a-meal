@@ -13,6 +13,7 @@ const initialState = {
   loading: true,
   order: [],
   orders: [],
+  orderDetails: [],
   passes: null
 };
 
@@ -70,7 +71,7 @@ const orderReducer = (state = initialState, action) => {
     case GET_ALL_CATERER_ORDER_SUCCESSFUL:
       return {
         ...state,
-        orders: action.data.orders,
+        orderDetails: action.data.orders,
         success: true
       };
     case GET_ALL_CATERER_ORDER_UNSUCCESSFUL:

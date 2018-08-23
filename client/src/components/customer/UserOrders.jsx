@@ -71,6 +71,7 @@ class UserOrder extends React.Component {
         swal("Order successfully Cancelled!", {
           icon: "success",
         });
+        window.location.reload();
       } else if (
         !this.props.orderState.success && this.props.orderState.error
       ) {
@@ -98,11 +99,12 @@ class UserOrder extends React.Component {
         }
         <div className='wrapper'>
         <ToastContainer/>
-        { orders ?
+        { this.props.orderState.success && orders.length > 0 ?
         <table className='order-table'>
         <tbody>
           <tr>
             <th>Date</th>
+            <th>Order No</th>
             <th>Meal</th>
             <th>Price(&#8358;)</th>
             <th>Details</th>
@@ -110,6 +112,7 @@ class UserOrder extends React.Component {
           {orders.map((order, index) =>
           <tr key={index}>
           <td>{order.createdAt.slice(0, 10)}</td>
+          <td>{order.orderId}</td>
           <td>{order.Meal.name}</td>
           <td>{(order.Meal.price) * order.quantity}</td>
           <td>
@@ -131,10 +134,10 @@ class UserOrder extends React.Component {
         </tr>)}
           </tbody>
         </table> :
-        <p>You have no Order</p>
+        <h3 className='text-center'>You have no Order</h3>
         }
       </div><br/>
-      <Pagination/><br/>
+      {/* <Pagination/><br/> */}
       </div>
     );
   }

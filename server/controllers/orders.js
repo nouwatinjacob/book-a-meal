@@ -1,4 +1,7 @@
 import Validator from 'validatorjs';
+import Sequelize from 'sequelize';
+import uuidv1 from 'uuid/v1';
+import moment from 'moment';
 import db from '../models/index';
 import { checkTimeToOrder, checkTimeToModifyOrder } from '../util/helpers';
 import validations from '../middleware/validations';
@@ -37,7 +40,6 @@ export default class OrdersContoller {
             },
           ]
         });
-
         if (menuMeal) {
           if (userId === menuMeal.Meal.userId) {
             return res.status(400).json({
@@ -48,6 +50,7 @@ export default class OrdersContoller {
             return res.status(400).json({ message: 'Time to order elapse' });
           }
           const order = await Order.create({
+            orderId: uuidv1(),
             mealId,
             userId,
             menuId,
@@ -158,8 +161,15 @@ export default class OrdersContoller {
    */
   static async getCatererOrder(req, res) {
     try {
+      const { orderDate } = req.query;
+      const startDate = moment(orderDate).format();
+      const endDate = moment(orderDate).clone().add(24, 'hour').format();
       const userId = req.decoded.id;
+      const Op = Sequelize.Op;
       const queryBuilder = {
+        where: {
+          createdAt: { [Op.gt]: startDate, [Op.lte]: endDate }
+        },
         include: [
           {
             model: Meal,
@@ -276,7 +286,7 @@ export default class OrdersContoller {
             message: 'Time elapse for order to be canceled'
           });
         }
-        if (order.userId === req.decoded.id) {
+        if (order.userId !== req.decoded.id) {
           return res.status(400).json({
             message: 'This Order does not belong to you'
           });
