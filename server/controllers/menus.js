@@ -99,7 +99,7 @@ export default class MenusController {
             },
             {
               model: User,
-              attributes: ['businessName', 'ownerName']
+              attributes: ['id', 'businessName', 'ownerName']
             },
           ] });
         return res.status(200).json({
