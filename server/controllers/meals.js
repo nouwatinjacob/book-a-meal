@@ -180,7 +180,11 @@ export default class MealsController {
             message: 'You have no access to edit this meal'
           });
         }
-        await meal.destroy();
+        await meal.destroy({
+          force: false,
+          cascade: true
+        });
+        // await meal.destroy();
         return res.status(200).json({
           message: 'Meal successfully deleted'
         });

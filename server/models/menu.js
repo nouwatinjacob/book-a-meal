@@ -15,6 +15,7 @@ const menuModel = (sequelize, DataTypes) => {
     Menu.belongsToMany(models.Meal, {
       through: 'MenuMeals',
       foreignKey: 'menuId',
+      otherKey: 'mealId',
     });
 
     Menu.belongsTo(models.User, {

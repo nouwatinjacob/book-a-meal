@@ -137,7 +137,7 @@ class MenuMeal extends React.Component {
                         className='button warning'
                         onClick={
                           event =>
-                          this.onClickOrder(meal.id, meal.userId, event)
+                          this.onClickOrder(meal.id, meal.menuId, event)
                         }
                       >Order Meal
                       </button>

@@ -14,6 +14,7 @@ module.exports = {
         model: 'Meals',
         key: 'id'
       },
+      onDelete: 'cascade'
     },
     menuId: {
       allowNull: true,
@@ -22,6 +23,7 @@ module.exports = {
         model: 'Menus',
         key: 'id'
       },
+      onDelete: 'cascade',
     },
     createdAt: Sequelize.DATE,
     updatedAt: Sequelize.DATE,

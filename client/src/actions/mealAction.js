@@ -64,7 +64,7 @@ const notify = () => {
   toast("Meal Deleted Successfully");
 };
 
-const getMeals = () => (dispatch => ( 
+const getMeals = () => (dispatch => (
   axios.get('/meals', authorization())
     .then((res) => {
       dispatch(getMealSuccess({
@@ -98,7 +98,7 @@ const addMeal = mealDetail => (dispatch) => {
   );
 };
 
-const getAMealAction = id => (dispatch => ( 
+const getAMealAction = id => (dispatch => (
   axios.get(`/meals/${id}`, authorization())
     .then((res) => {
       dispatch(getAMealSuccess({
@@ -128,7 +128,6 @@ const deleteMealAction = mealId => (dispatch) => {
   axios.delete(`/meals/${mealId}`, authorization())
     .then((res) => {
       dispatch(deleteMealSuccess(res.data.message));
-      this.notify();
     })
     .catch(error => dispatch(deleteMealUnsuccess(error)));
 };
