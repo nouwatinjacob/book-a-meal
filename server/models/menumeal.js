@@ -14,6 +14,8 @@ const menuMealModel = (sequelize, DataTypes) => {
   MenuMeal.associate = (models) => {
     MenuMeal.belongsTo(models.Meal, {
       foreignKey: 'mealId',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
     });
   };
 

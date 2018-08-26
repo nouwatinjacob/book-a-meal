@@ -34,7 +34,9 @@ export default class MealsController {
         const image = req.file ? req.file.secure_url : req.body.image;
         const user = await User.findById(req.decoded.id);
         if (user) {
-          const foundMeal = await Meal.findOne({ where: { name } });
+          const foundMeal = await Meal.findOne({
+            where: { name, userId: req.decoded.id }
+          });
           if (!foundMeal) {
             const meal = {
               name, price, image, userId: req.decoded.id
@@ -178,7 +180,11 @@ export default class MealsController {
             message: 'You have no access to edit this meal'
           });
         }
-        await meal.destroy();
+        await meal.destroy({
+          force: false,
+          cascade: true
+        });
+        // await meal.destroy();
         return res.status(200).json({
           message: 'Meal successfully deleted'
         });

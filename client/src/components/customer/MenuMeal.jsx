@@ -73,8 +73,15 @@ class MenuMeal extends React.Component {
    */
   render() {
     const { menuState: { menus: { dateMenu } } } = this.props;
-    const menuMeals = dateMenu.reduce(((acc, menu) =>
-      acc.concat(menu.Meals)), []);
+    // const menuMeals = dateMenu.reduce(((acc, menu) =>
+    //   acc.concat(menu.Meals)), []);
+    const menuMeals = dateMenu.reduce((acc, menu) =>
+      acc.concat(menu.Meals.map(meal => ({
+        ...meal,
+        menuId: menu.id
+      }))), []);
+    const caterers = dateMenu.reduce(((acc, user) =>
+      acc.concat(user.User)), []);
     const token = localStorage.getItem('token');
     const userToken = decodeToken(token);
     return (
@@ -111,7 +118,12 @@ class MenuMeal extends React.Component {
                       className='c-medium-12 c-xsmall-12 text-center'
                       id='pd-0'
                     >
-                      <p><i>{dateMenu[0].User.businessName}</i></p>
+                      <p><i>
+                        {
+                          caterers.find(caterer =>
+                            caterer.id === meal.userId).businessName
+                        }
+                      </i></p>
                       <p><b>{meal.name}</b></p>
                       <p>Price {meal.price}</p>
                     </div>
@@ -125,7 +137,7 @@ class MenuMeal extends React.Component {
                         className='button warning'
                         onClick={
                           event =>
-                          this.onClickOrder(meal.id, dateMenu[0].id, event)
+                          this.onClickOrder(meal.id, meal.menuId, event)
                         }
                       >Order Meal
                       </button>
