@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route, Link, NavLink, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import history from '../utils/history';
 import Header from './partials/Header.jsx';
 import Footer from './partials/Footer.jsx';
@@ -32,21 +32,6 @@ import PublicRoute from '../route-type/PublicRoute.jsx';
  */
 class App extends React.Component {
   /**
-   * Component constructor
-   * @param {object} props
-   * @memberOf App
-   */
-  constructor(props) {
-    super(props);
-
-    history.listen((location, action) => {
-      console.log(`The current URL is 
-      ${location.pathname}${location.search}${location.hash}`);
-      console.log(`The last navigation action was ${action}`);
-    });
-  }
-
-  /**
    * Renders Login component
    *
    * @returns {XML} XML/JSX
@@ -61,8 +46,8 @@ class App extends React.Component {
               <Route path='/' component={HomePage} exact={true}/>
               <PublicRoute exact path='/login' component={Login}/>
               <PublicRoute exact path='/signup' component={CustomerSignup}/>
-              <PublicRoute 
-                exact 
+              <PublicRoute
+                exact
                 path='/caterer-signup'
                 component={CatererSignup}
               />

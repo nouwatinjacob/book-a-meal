@@ -1,9 +1,10 @@
-import { 
+import {
   LOGIN_SUCCESSFUL,
   LOG_OUT_SUCCESS } from '../constants/actionTypes';
 
 const initialState = {
   success: false,
+  user: {}
 };
 
 const loginReducer = (state = initialState, action) => {
@@ -12,7 +13,7 @@ const loginReducer = (state = initialState, action) => {
       state = {
         ...state,
         success: true,
-        fail: null
+        user: action.data.user
       };
       break;
     case LOG_OUT_SUCCESS:
@@ -20,7 +21,7 @@ const loginReducer = (state = initialState, action) => {
         ...state,
         success: false
       };
-      break; 
+      break;
     default:
       return state;
   }

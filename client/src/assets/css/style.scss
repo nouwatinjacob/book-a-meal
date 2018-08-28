@@ -497,3 +497,15 @@ footer {
     }
   }
 }
+
+.header-right a.logout {
+  background-color: #ff9600;
+  color: white;
+  margin-top: 5px;
+  padding: 0.275rem 0.5rem;
+  font-size: 1em;
+} /* Orange */
+.header-right a.logout:hover {
+  background: #f57301;
+  color: white;
+}

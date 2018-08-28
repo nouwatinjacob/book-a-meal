@@ -38,7 +38,7 @@ class HomePage extends React.Component {
             <div className='box'>
               <img
                 className='article-img'
-                src='http://res.cloudinary.com/sansaristic/image/upload/v1533140471/BookMeal/Default%20images/Meal-menu.png'
+                src='https://res.cloudinary.com/sansaristic/image/upload/v1533140471/BookMeal/Default%20images/Meal-menu.png'
                 alt='Menu Meals'
                 style={{ width: '100%' }}
               />
@@ -54,7 +54,7 @@ class HomePage extends React.Component {
             <div className="box">
               <img
                 className='article-img'
-                src='http://res.cloudinary.com/sansaristic/image/upload/v1533140467/BookMeal/Default%20images/fast-delivery.png'
+                src='https://res.cloudinary.com/sansaristic/image/upload/v1533140467/BookMeal/Default%20images/fast-delivery.png'
                 alt='Fast Delivery'
                 style={{ width: '100%' }}
               />
@@ -69,7 +69,7 @@ class HomePage extends React.Component {
           <div className='c-medium-4' id='pd-0'>
             <div className='box'>
               <img
-                src='http://res.cloudinary.com/sansaristic/image/upload/v1533140467/BookMeal/Default%20images/24-hrs.png'
+                src='https://res.cloudinary.com/sansaristic/image/upload/v1533140467/BookMeal/Default%20images/24-hrs.png'
                 alt='Real Time'
                 style={{ width: '100%' }} />
               <div className='box-body'>
