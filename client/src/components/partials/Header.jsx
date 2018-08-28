@@ -1,8 +1,10 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import PropTypes from 'react-proptypes';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { decodeToken } from '../../utils/helper';
-import logo from '../../assets/img/bookameal-logo.png';
-
+import { logoutAction } from '../../actions/loginAction';
 
 /**
  * Header class declaration
@@ -12,6 +14,9 @@ import logo from '../../assets/img/bookameal-logo.png';
  * @extends {React.Component}
  */
 class Header extends React.Component {
+  handleLogout = () => {
+    this.props.logoutAction();
+  }
   /**
    * Renders Header component
    *
@@ -22,20 +27,25 @@ class Header extends React.Component {
       <div className='header'>
         <div className='wrapper'>
           <Link to='/'>
-            <img 
-            src='http://res.cloudinary.com/sansaristic/image/upload/v1533140463/BookMeal/Default%20images/bookameal-logo.png' 
+            <img
+            src='https://res.cloudinary.com/sansaristic/image/upload/v1533140463/BookMeal/Default%20images/bookameal-logo.png'
             alt='Logo' />
           </Link>
           {
-            localStorage.getItem('token') ? 
+            this.props.isLoggedIn ?
             <div className='header-right' id='myTopnav'>
-              <Link className='logo' to=''>WELCOME &nbsp; 
+              <Link className='logo' to=''>WELCOME &nbsp;
               {
                 decodeToken(localStorage.getItem('token')).email
               }
               </Link>
+              <Link
+                className='button logout'
+                to='#'
+                onClick={this.handleLogout}
+              >logout</Link>
             </div>
-          : 
+          :
             <div className='header-right' id='myTopnav'>
             <Link className='logo' to='/login'>SIGN IN</Link>
             <button className='button' id='header_button'>
@@ -48,5 +58,16 @@ class Header extends React.Component {
     );
   }
 }
+Header.propTypes = {
+  logoutAction: PropTypes.func,
+  isLoggedIn: PropTypes.bool,
+};
 
-export default withRouter(Header);
+const mapStateToProps = state => ({
+  isLoggedIn: state.loginReducer.success
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ logoutAction }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

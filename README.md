@@ -11,17 +11,17 @@
 Book-A-Meal is an application that allows customers to make food orders and helps the food
 vendor know what the customers want to eat.
 
-- Caterer to add a new meal
-- Caterer to Modify and update meal
-- Caterer to Delete a meal
-- Caterer to set menu for a specific day by selecting from the meal options available on the system
-- Users can see the menu for a specific day and select an option from the menu
-- Caterer can see the summary of the orders for a specific day.
-- Caterer can see the details for all the orders
-- Caterer can see the amount of money made by end of day
-- Authenticated users (customers) should be able to see their order history
-- Admin (Caterer) should be able to see order history
-- The application should be able to host more than one caterer.
+### Caterer Profile
+- A Caterer can add new meal to the meal option
+- A Caterer can Modify and update meal he/she added to the meal option
+- A Caterer can Delete a meal he/she added to the meal option
+- A Caterer can set menu for a specific day by selecting from the meal options available on the system
+- A Caterer can see the summary of the orders for a specific day.
+- A Caterer can see the details for all the orders placed on his/her meals on the menu
+- A Caterer can see the amount of money made by end of day
+### Customer Profile
+- A Customer can see the menu for a specific day set by the caterer and order for a meal
+- A Customer can see his/her order history
 
 ## Technologies
 
@@ -43,8 +43,8 @@ vendor know what the customers want to eat.
 ## Installation
 
 - Install [NodeJS](http://nodejs.org/en) and [PostgreSQL](https://www.postgresql.org/) on your computer
-- Clone this repository
-- Navigate to the directoty
+- Clone this repository ```git clone https://github.com/nouwatinjacob/book-a-meal.git```
+- Navigate to the directoty ```cd book-a-meal```
 - Install all depencies with ```yarn install```
 - Globally install ```sequelize-cli```
 - Using ```sequelize db:migrate``` migrate the database
@@ -78,13 +78,11 @@ vendor know what the customers want to eat.
 * Is the application licensed ?
   - Yes, the application and its contents is under MIT license
 
-  ## Book A Meal Documentation is available on
+## API Documentation is available on
 
-  - [Documentation](https://nouwatinjacob.github.io/slate)
+- [Documentation](https://nouwatinjacob.github.io/slate)
 
-
-
-## User template is available on
+## UI template is available on
 
 - [Book-A-Meal](https://nouwatinjacob.github.io/book-a-meal)
 
