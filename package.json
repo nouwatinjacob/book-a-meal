@@ -7,7 +7,7 @@
   "author": "Nouwatin Jacob <jaysansa@gmail.com>",
   "license": "MIT",
   "engines": {
-    "node": "8.11.1"
+  "node":"8.11.1"    
   },
   "nyc": {
     "include": [
@@ -23,7 +23,7 @@
     "heroku-postbuild": "webpack --config webpack.prod.js --mode production",
     "migrate": "sequelize db:migrate:undo:all && sequelize db:migrate",
     "build:server": "npx babel server/ --out-dir dist/ --ignore server/test",
-    "test:endpoint": "sequelize db:migrate:undo:all && sequelize db:migrate && nyc --reporter=html mocha --require babel-core/register server/test/**/*.test.js --exit",
+    "test:endpoint": "sequelize db:migrate:undo:all && sequelize db:migrate && nyc --reporter=html mocha --require babel-core/register server/test/*.test.js --exit",
     "test": "cross-env-shell NODE_ENV=test yarn test:endpoint && nyc report",
     "db:migrate": "node_modules/.bin/sequelize db:migrate",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
@@ -86,6 +86,7 @@
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-loader-spinner": "^2.1.0",
+    "react-paginate": "^5.2.4",
     "react-proptypes": "^1.0.0",
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",

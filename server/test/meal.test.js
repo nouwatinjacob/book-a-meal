@@ -62,7 +62,7 @@ describe('Test cases for all meals actions', () => {
   });
 
   describe('POST /api/v1/meals when creating a meal', () => {
-    describe('Test for valid user before carrying out recipe actions', () => {
+    describe('Test for valid user before carrying out meal actions', () => {
       it(
         'should return a status code of 403 if user is not authorized',
         (done) => {
@@ -105,7 +105,7 @@ describe('Test cases for all meals actions', () => {
   });
   describe('Test for valid authorization token but unauthorized user', () => {
     it('should return a status code of 403 when an valid authorization' +
-      'token but unauthurized user access this', (done) => {
+      'token but unauthorized user access this', (done) => {
       request(app)
         .post('/api/v1/meals')
         .set({ 'x-access-token': customerToken })
@@ -207,18 +207,6 @@ describe('Test cases for all meals actions', () => {
   // Test for lists of meal
   describe('test for GET api/v1/meals when viewing ' +
     'meals belonging to a caterer', () => {
-    it('should return status code 400 when user have' +
-      ' no meal added', (done) => {
-      request(app)
-        .get('/api/v1/meals')
-        .set({ 'x-access-token': caterer1Token })
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
-          expect(res.body.message)
-            .to.deep.equal('No meal found');
-          done();
-        });
-    });
     it('should return status code 200 when user view' +
       ' all meals available', (done) => {
       request(app)

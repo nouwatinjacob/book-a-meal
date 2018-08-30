@@ -3,7 +3,10 @@ import Sequelize from 'sequelize';
 import uuidv1 from 'uuid/v1';
 import moment from 'moment';
 import db from '../models/index';
-import { checkTimeToOrder, checkTimeToModifyOrder } from '../util/helpers';
+import {
+  checkTimeToOrder,
+  checkTimeToModifyOrder,
+  generatePagination } from '../util/helpers';
 import validations from '../middleware/validations';
 
 const { Order, Meal, MenuMeal, User } = db;
@@ -161,7 +164,7 @@ export default class OrdersContoller {
    */
   static async getCatererOrder(req, res) {
     try {
-      const { orderDate } = req.query;
+      const { orderDate, limit, offset } = req.query;
       const startDate = moment(orderDate).format();
       const endDate = moment(orderDate).clone().add(24, 'hour').format();
       const userId = req.decoded.id;
@@ -170,6 +173,9 @@ export default class OrdersContoller {
         where: {
           createdAt: { [Op.gt]: startDate, [Op.lte]: endDate }
         },
+        order: [['createdAt', 'DESC']],
+        limit: limit || 10,
+        offset: offset || 0,
         include: [
           {
             model: Meal,
@@ -177,13 +183,15 @@ export default class OrdersContoller {
           },
           {
             model: User,
+            attributes: ['id', 'firstName', 'lastName', 'ownerName']
           },
         ],
       };
-      const orders = await Order.findAll(queryBuilder);
+      const orders = await Order.findAndCountAll(queryBuilder);
       return res.status(200).json({
         message: 'All Orders',
-        orders
+        paginate: generatePagination(limit, offset, orders),
+        orders: orders.rows
       });
     } catch (error) {
       return res.status(400).json({
@@ -202,9 +210,13 @@ export default class OrdersContoller {
    */
   static async getCustomerOrders(req, res) {
     try {
+      const { limit, offset } = req.query;
       const userId = req.decoded.id;
-      const orders = await Order.findAll({
+      const orders = await Order.findAndCountAll({
         where: { userId },
+        order: [['createdAt', 'DESC']],
+        limit: limit || 10,
+        offset: offset || 0,
         include: [
           {
             model: Meal
@@ -213,7 +225,8 @@ export default class OrdersContoller {
       });
       return res.status(200).json({
         message: 'Orders gotten successfully',
-        orders
+        paginate: generatePagination(limit, offset, orders),
+        orders: orders.rows
       });
     } catch (error) {
       return res.status(400).json({

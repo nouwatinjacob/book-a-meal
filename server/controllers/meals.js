@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import Validator from 'validatorjs';
 import db from '../models';
 import validations from '../middleware/validations';
+import { generatePagination } from '../util/helpers';
 
 dotenv.config();
 
@@ -120,13 +121,19 @@ export default class MealsController {
    */
   static async getMeals(req, res) {
     try {
-      const meals = await Meal.findAll({ where: { userId: req.decoded.id } });
+      const { limit, offset } = req.query;
+      const meals = await Meal.findAndCountAll({
+        where: { userId: req.decoded.id },
+        limit: limit || 10,
+        offset: offset || 0
+      });
       if (meals.length < 1) {
         return res.status(400).json({ message: 'No meal found' });
       }
       return res.status(200).json({
         message: 'All meals displayed',
-        meals
+        paginate: generatePagination(limit, offset, meals),
+        meals: meals.rows
       });
     } catch (error) {
       return res.status(400).json({

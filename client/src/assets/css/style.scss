@@ -301,7 +301,8 @@ h3.text-center {
 }
  
 .search {  
-  text-align: center; 
+  text-align: center;
+  color: #fff;
 }
 
 .search input {
@@ -399,21 +400,32 @@ td input[type="number"] {
 /* Pagination links */
 
 .pagination a {
-  color: black;
+  color: #ff9600;
   /* float: left; */
   padding: 8px 16px;
   text-decoration: none;
   transition: background-color .3s;
+  cursor: pointer;
 }
 
 /* Style the active/current link */
 .pagination a.active {
   background-color: #ff9600;
   color: white;
+  outline: none;
 }
 
 /* Add a grey background color on mouse-over */
-.pagination a:hover:not(.active) {background-color: #ddd;}
+.pagination a:hover:not(.active) {
+  background-color: #ff9600;
+  color: #FFFFFF;
+  outline: none !important;
+}
+
+.pagination a:focus {
+  outline: none !important;
+}
+
 
 
 .loading {
@@ -507,5 +519,29 @@ footer {
 } /* Orange */
 .header-right a.logout:hover {
   background: #f57301;
+  color: white;
+}
+
+.search ul {
+  display: inline-block;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.search li {
+  display: inline-block;
+}
+
+.search .break a {
+  cursor: default;
+  color: #ff9600;
+  /* float: left; */
+  padding: 4px 8px;
+  text-decoration: none;
+  transition: background-color .3s;
+}
+
+.search .break a.active {
+  background-color: #ff9600;
   color: white;
 }

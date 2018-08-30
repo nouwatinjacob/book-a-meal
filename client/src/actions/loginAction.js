@@ -4,7 +4,9 @@ import { reDirect, logout, decodeToken } from '../utils/helper';
 
 import {
   LOGIN_SUCCESSFUL,
-  CLEAR_STATE } from '../constants/actionTypes';
+  CLEAR_STATE,
+  SET_LOADING_STATE
+} from '../constants/actionTypes';
 
 const notify = () => toast.info('Invalid Credentials');
 
@@ -13,6 +15,10 @@ export const loginSucessful = data => ({
   data
 });
 const loginAction = loginData => (dispatch) => {
+  dispatch({
+    type: SET_LOADING_STATE,
+    payload: true
+  });
   axios.post('/auth/login', loginData)
     .then((res) => {
       const { token } = res.data; // get the token

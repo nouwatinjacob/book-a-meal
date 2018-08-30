@@ -139,41 +139,6 @@ describe('TEST ORDER ROUTES', () => {
   });
 
   describe('test for POST /order when Adding a meal to order', () => {
-    it('should return status code 403 when no token is provided', (done) => {
-      request(app)
-        .post('/api/v1/orders')
-        .send(orderSeeder.setOrderData(mealId1, customerId, 5, menuId))
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(403);
-          expect(res.body.message).to.deep.equal('Token not provided');
-          done();
-        });
-    });
-    it('should return status code 401 when invalid ' +
-    'authorization token is entered', (done) => {
-      request(app)
-        .post('/api/v1/orders')
-        .set({ 'x-access-token': 'nonsense' })
-        .send(orderSeeder.setOrderData(mealId1, customerId, 5, menuId))
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(401);
-          expect(res.body.message).to.deep.equal('Invalid authorization token');
-          done();
-        });
-    });
-    it('should return a status code of 403 when an valid authorization' +
-    'token but unauthurized user access this', (done) => {
-      request(app)
-        .post('/api/v1/orders')
-        .set({ 'x-access-token': catererToken })
-        .send(orderSeeder.setOrderData(mealId1, customerId, 5, menuId))
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(403);
-          expect(res.body.message)
-            .to.deep.equal('You must be registered to perform this operation');
-          done();
-        });
-    });
     it('should return status code 400 when token valid ' +
     'and authorised but with no order inputs', (done) => {
       request(app)
@@ -238,7 +203,7 @@ describe('TEST ORDER ROUTES', () => {
   });
 
   describe('PUT api/v1/orders/:orderId when updating order', () => {
-    it('should return a status code of 400 ' + 
+    it('should return a status code of 400 ' +
     'if user is not the owner of the order', (done) => {
       request(app)
         .put(`/api/v1/orders/${orderId}`)
@@ -262,7 +227,7 @@ describe('TEST ORDER ROUTES', () => {
           done();
         });
     });
-    it('should return a status code of 400 if meal ' + 
+    it('should return a status code of 400 if meal ' +
     'picked does not belong to the menu', (done) => {
       request(app)
         .put(`/api/v1/orders/${orderId}`)

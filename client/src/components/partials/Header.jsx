@@ -32,7 +32,7 @@ class Header extends React.Component {
             alt='Logo' />
           </Link>
           {
-            this.props.isLoggedIn ?
+            this.props.isLoggedIn || this.props.isSignedup ?
             <div className='header-right' id='myTopnav'>
               <Link className='logo' to=''>WELCOME &nbsp;
               {
@@ -61,10 +61,12 @@ class Header extends React.Component {
 Header.propTypes = {
   logoutAction: PropTypes.func,
   isLoggedIn: PropTypes.bool,
+  isSignedup: PropTypes.bool
 };
 
 const mapStateToProps = state => ({
-  isLoggedIn: state.loginReducer.success
+  isLoggedIn: state.loginReducer.success,
+  isSignedup: state.signupReducer.success
 });
 
 const mapDispatchToProps = dispatch =>

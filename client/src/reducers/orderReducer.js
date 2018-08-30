@@ -72,6 +72,7 @@ const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         orderDetails: action.data.orders,
+        paginate: action.data.paginate,
         success: true
       };
     case GET_ALL_CATERER_ORDER_UNSUCCESSFUL:

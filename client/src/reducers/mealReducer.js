@@ -23,8 +23,9 @@ const mealReducer = (state = initialState, action) => {
         ...state,
         success: true,
         meals: action.data.meals,
+        paginate: action.data.paginate,
         loading: false
-      };    
+      };
     case GET_MEAL_UNSUCCESSFUL:
       return {
         ...state,

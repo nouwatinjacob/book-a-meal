@@ -36,14 +36,14 @@ const setMenuAction = menuDetail => dispatch =>
       dispatch(setMenuUnsuccess(err));
     });
 
-const getMenuAction = todayDate => (dispatch) => {
+const getMenuAction = ({ todayDate, limit, offset }) => (dispatch) => {
   axios.get(
-    `/menu?menuDate=${todayDate}`,
+    `/menu?menuDate=${todayDate}&limit=${limit}&offset=${offset}`,
     authorization()
   )
     .then((res) => {
       dispatch(getMenuSuccess({
-        menus: res.data
+        menus: res.data,
       }));
     })
     .catch((err) => {

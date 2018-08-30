@@ -3,6 +3,7 @@ import moment from 'moment';
 import Sequelize from 'sequelize';
 import db from '../models/index';
 import validations from '../middleware/validations';
+import { generatePagination } from '../util/helpers';
 
 const { Op } = Sequelize;
 
@@ -88,23 +89,30 @@ export default class MenusController {
    */
   static async getMenu(req, res) {
     try {
-      const { menuDate } = req.query;
+      const { menuDate, limit, offset } = req.query;
       if ((moment(menuDate, 'YYYY-MM-DD', true).isValid())) {
-        const dateMenu = await Menu.findAll({
+        const dateMenu = await Menu.findAndCountAll({
           where: { menuDate },
           include: [
             {
               model: Meal,
-              through: { attributes: [] }
+              through: { attributes: [] },
             },
             {
               model: User,
               attributes: ['id', 'businessName', 'ownerName']
             },
-          ] });
+          ],
+          subQuery: false,
+          limit: limit || 10,
+          offset: offset || 0
+        });
+
+        const { count, rows } = dateMenu;
         return res.status(200).json({
           message: 'Menu for this Date',
-          dateMenu
+          paginate: generatePagination(limit, offset, dateMenu),
+          dateMenu: rows
         });
       }
       return res.status(400).json({
