@@ -3,10 +3,10 @@ import PropTypes from 'react-proptypes';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import Loader from 'react-loader-spinner';
 import { ToastContainer, toast } from 'react-toastify';
 import signupAction from '../../actions/signupAction';
 import customerValidation from '../../utils/customerValidation';
-import Errors from '../partials/ValidationErrors.jsx';
 
 /**
  * CustomerSignup class declaration
@@ -80,6 +80,17 @@ class CustomerSignup extends Component {
         <div className='wrapper'>
           <div className='login'>
             <div className='login-form'>
+            {
+              this.props.isLoading ?
+                <Loader
+                  type='Rings'
+                  color='#ff9600'
+                  height='50'
+                  width='100'
+                  margin='2px'
+                />
+                : ''
+            }
               <h3>User Registration</h3>
               <form onSubmit={this.onFormSubmit}>
                   <input
@@ -89,7 +100,7 @@ class CustomerSignup extends Component {
                     value={this.state.customerData.firstName}
                     onChange={this.onInputChange}
                   /><br/>
-                  { 
+                  {
                     this.state.errors.firstName ?
                     <span>The First Name field is required.</span>
                     : ''
@@ -101,7 +112,7 @@ class CustomerSignup extends Component {
                     value={this.state.customerData.lastName}
                     onChange={this.onInputChange}
                   /><br/>
-                  { 
+                  {
                     this.state.errors.lastName ?
                     <span>The Last Name field is required.</span>
                     : ''
@@ -113,7 +124,7 @@ class CustomerSignup extends Component {
                     value={this.state.customerData.email}
                     onChange={this.onInputChange}
                   /><br/>
-                  { 
+                  {
                     this.state.errors.email ?
                     <span>{this.state.errors.email[0]}</span>
                     : ''
@@ -125,7 +136,7 @@ class CustomerSignup extends Component {
                     value={this.state.customerData.password}
                     onChange={this.onInputChange}
                   /><br/>
-                  { 
+                  {
                     this.state.errors.password ?
                     <span>{this.state.errors.password[0]}</span>
                     : ''
@@ -154,12 +165,14 @@ class CustomerSignup extends Component {
 CustomerSignup.propTypes = {
   signupAction: PropTypes.func.isRequired,
   signupState: PropTypes.object.isRequired,
-  errorResponse: PropTypes.object
+  errorResponse: PropTypes.object,
+  isLoading: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
   signupState: state.signupReducer,
-  errorResponse: state.signupReducer.errors
+  errorResponse: state.signupReducer.errors,
+  isLoading: state.signupReducer.loading
 });
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ signupAction }, dispatch);

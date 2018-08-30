@@ -1,32 +1,38 @@
 import {
   SIGNUP_SUCCESSFUL,
-  SIGNUP_UNSUCCESSFUL } from '../constants/actionTypes';
+  SIGNUP_UNSUCCESSFUL,
+  SET_LOADING_STATE
+} from '../constants/actionTypes';
 
 const initialState = {
   success: false,
-  errors: null
+  errors: null,
+  loading: false
 };
 
 const signupReducer = (state = initialState, action) => {
   switch (action.type) {
     case SIGNUP_SUCCESSFUL:
-      state = {
+      return {
         ...state,
         success: true,
         errors: null,
+        loading: false
       };
-      break;
     case SIGNUP_UNSUCCESSFUL:
-      state = {
+      return {
         ...state,
         success: false,
         errors: action.error
       };
-      break;
+    case SET_LOADING_STATE:
+      return {
+        ...state,
+        loading: true,
+      };
     default:
       return state;
   }
-  return state;
 };
 
 export default signupReducer;

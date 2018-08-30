@@ -83,8 +83,8 @@ const makeOrderAction = orderDetail => dispatch =>
       dispatch(makeOrderUnsuccess(err));
     });
 
-const getUserOrderAction = () => (dispatch) => {
-  axios.get('/user-orders', authorization())
+const getUserOrderAction = ({ limit, offset }) => (dispatch) => {
+  axios.get(`/user-orders?limit=${limit}&offset=${offset}`, authorization())
     .then((res) => {
       dispatch(getUserOrderSuccess({
         orders: res.data
@@ -121,17 +121,22 @@ const modifyOrderAction = (orderId, newOrderDetail) => dispatch =>
       dispatch(modifyOrderUnsuccess(err));
     });
 
-const getAllCatererOrderAction = orderDate => (dispatch) => {
-  axios.get(`/orders?orderDate=${orderDate}`, authorization())
-    .then((res) => {
-      dispatch(getAllCatererOrderSuccess({
-        orders: res.data.orders
-      }));
-    })
-    .catch((err) => {
-      dispatch(getAllCatererOrderUnuccess(err));
-    });
-};
+const getAllCatererOrderAction = ({ orderDate, limit, offset }) =>
+  (dispatch) => {
+    axios.get(
+      `/orders?orderDate=${orderDate}&limit=${limit}&offset=${offset}`,
+      authorization()
+    )
+      .then((res) => {
+        dispatch(getAllCatererOrderSuccess({
+          orders: res.data.orders,
+          paginate: res.data.paginate
+        }));
+      })
+      .catch((err) => {
+        dispatch(getAllCatererOrderUnuccess(err));
+      });
+  };
 
 const cancelOrderAction = orderId => dispatch =>
   axios.delete(`/orders/${orderId}`, authorization())

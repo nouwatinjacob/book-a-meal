@@ -1,31 +1,39 @@
 import {
   LOGIN_SUCCESSFUL,
-  LOG_OUT_SUCCESS } from '../constants/actionTypes';
+  LOG_OUT_SUCCESS,
+  SET_LOADING_STATE
+} from '../constants/actionTypes';
 
 const initialState = {
   success: false,
-  user: {}
+  user: {},
+  loading: false
 };
 
 const loginReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_SUCCESSFUL:
-      state = {
+      return {
         ...state,
         success: true,
-        user: action.data.user
+        user: action.data.user,
+        loading: false
       };
-      break;
+    case SET_LOADING_STATE:
+      return {
+        ...state,
+        loading: true,
+      };
     case LOG_OUT_SUCCESS:
-      state = {
+      return {
         ...state,
         success: false
       };
-      break;
     default:
-      return state;
+      return {
+        ...state
+      };
   }
-  return state;
 };
 
 export default loginReducer;

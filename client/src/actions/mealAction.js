@@ -64,11 +64,12 @@ const notify = () => {
   toast("Meal Deleted Successfully");
 };
 
-const getMeals = () => (dispatch => (
-  axios.get('/meals', authorization())
+const getMeals = ({ limit, offset }) => (dispatch => (
+  axios.get(`/meals?limit=${limit}&offset=${offset}`, authorization())
     .then((res) => {
       dispatch(getMealSuccess({
-        meals: res.data.meals
+        meals: res.data.meals,
+        paginate: res.data.paginate
       }));
     })
     .catch((err) => {

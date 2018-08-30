@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactPaginate from 'react-paginate';
 import PropTypes from 'react-proptypes';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -19,15 +20,26 @@ import Errors from '../partials/ValidationErrors.jsx';
  * @extends {React.Component}
  */
 class SetMenu extends React.Component {
-  state = {
-    menuData: {
-      menuDate: '',
-      mealId: []
-    },
-    errors: [],
-    meals: [],
-    check: false,
-    loading: true
+  /**
+   * Component constructor
+   * @param {object} props
+   * @memberOf App
+   */
+  constructor(props) {
+    super(props);
+    this.state = {
+      menuData: {
+        menuDate: '',
+        mealId: []
+      },
+      errors: [],
+      meals: [],
+      check: false,
+      loading: true
+    };
+    this.handlePageClick = this.handlePageClick.bind(this);
+    this.onDateChange = this.onDateChange.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
   }
 
 
@@ -56,7 +68,7 @@ class SetMenu extends React.Component {
    * @memberof SetMenu
    */
   componentDidMount() {
-    this.props.getMeals();
+    this.props.getMeals({ limit: 5, offset: 0 });
   }
 
   /**
@@ -121,6 +133,22 @@ class SetMenu extends React.Component {
    }
  }
 
+ /**
+   * Handles pagination click
+   *
+   * @method handlePageClick
+   *
+   * @param { object } data
+   *
+   * @return {void}
+  */
+ handlePageClick(data) {
+   const { limit } = this.props.mealState.paginate;
+   const nextOffset = (data.selected) * limit;
+
+   this.props.getMeals({ limit, offset: nextOffset });
+ }
+
   /**
    * Renders SetMenu component
    *
@@ -128,6 +156,7 @@ class SetMenu extends React.Component {
    */
  render() {
    const { meals, loading } = this.state;
+   const { paginate } = this.props.mealState;
    const yesterday = moment().toISOString().slice(0, 10);
    return (
       <div className='container'>
@@ -166,6 +195,26 @@ class SetMenu extends React.Component {
                     />
                     <label htmlFor="test1">{meal.name}</label>
                   </p>)}
+                  {
+                    paginate && paginate.itemCount > 5 ?
+                    <div className='wrapper search'>
+                      <ReactPaginate
+                        previousLabel={'<<'}
+                        nextLabel={'>>'}
+                        breakLabel={<a href=''>...</a>}
+                        breakClassName={'break-me'}
+                        pageCount={paginate ? paginate.page : 1}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={5}
+                        onPageChange={this.handlePageClick}
+                        containerClassName={'pagination'}
+                        subContainerClassName={'pages pagination'}
+                        activeClassName={'active'}
+                      />
+                    </div>
+                    :
+                    ''
+                  }
                   <button
                     className='button warning'
                     id='long-button'

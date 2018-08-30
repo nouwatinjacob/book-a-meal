@@ -1,10 +1,10 @@
 import React from 'react';
+import ReactPaginate from "react-paginate";
 import PropTypes from 'react-proptypes';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CatererHeader from '../partials/CatererHeader.jsx';
-import Pagination from '../partials/Pagination.jsx';
 import { getAllCatererOrderAction } from '../../actions/orderAction';
 
 /**
@@ -16,20 +16,35 @@ import { getAllCatererOrderAction } from '../../actions/orderAction';
  */
 class Orders extends React.Component {
   /**
+   * Component constructor
+   * @param {object} props
+   * @memberOf App
+   */
+  constructor(props) {
+    super(props);
+    this.handlePageClick = this.handlePageClick.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this);
+    this.getOrderPrices = this.getOrderPrices.bind(this);
+    this.totalPrice = this.totalPrice.bind(this);
+  }
+
+  /**
    *
    * @returns {XML} XML/JSX
    *
    * @memberof MyMeals
    */
   componentDidMount() {
-    const todayDate = new Date().toISOString().slice(0, 10);
-    this.props.getAllCatererOrderAction(todayDate);
+    const orderDate = new Date().toISOString().slice(0, 10);
+    this.props.getAllCatererOrderAction({
+      orderDate, limit: 10, offset: 0
+    });
   }
 
   /**
-   * Handles makeOrder button
+   * Handles pagination click
    *
-   * @method onClickOrder
+   * @method handleDateChange
    *
    * @param { event } event
    *
@@ -37,13 +52,15 @@ class Orders extends React.Component {
   */
  handleDateChange = (event) => {
    const searchDate = event.target.value;
-   this.props.getAllCatererOrderAction(searchDate);
+   this.props.getAllCatererOrderAction({
+     orderDate: searchDate, limit: 10, offset: 0
+   });
  }
 
  /**
-   * Handles makeOrder button
+   * Calculate order Price
    *
-   * @method onClickOrder
+   * @method getOrderPrices
    *
    * @param { orders } orders
    *
@@ -53,15 +70,35 @@ class Orders extends React.Component {
    orders.map(order => order.Meal.price * order.quantity);
 
    /**
-   * Handles makeOrder button
+   * Calculate Total Revenue
    *
-   * @method onClickOrder
+   * @method totalPrice
    *
    * @param { prices } prices
    *
    * @return {void}
   */
  totalPrice = prices => prices.reduce((a, b) => a + b);
+
+ /**
+   * Handles pagination click
+   *
+   * @method handlePageClick
+   *
+   * @param { object } data
+   *
+   * @return {void}
+   */
+ handlePageClick(data) {
+   const { limit } = this.props.orderState.paginate;
+   const nextOffset = data.selected * limit;
+   const currentDate = this.props.orderState
+     .orderDetails[0].createdAt.slice(0, 10);
+
+   this.props.getAllCatererOrderAction({
+     orderDate: currentDate, limit, offset: nextOffset
+   });
+ }
 
   /**
    * Renders Orders component
@@ -70,6 +107,7 @@ class Orders extends React.Component {
    */
  render() {
    const { orderState: { orderDetails } } = this.props;
+   const { orderState: { paginate } } = this.props;
    return (
       <div className='container'>
         <CatererHeader/>
@@ -128,7 +166,27 @@ class Orders extends React.Component {
               <h3 className='text-center'>No Order Found for this date</h3>
             }
           </div><br/>
-        {/* <Pagination/><br/> */}
+          {
+                paginate && paginate.itemCount > 10 ?
+                <div className="wrapper search">
+                  <ReactPaginate
+                    previousLabel={"<<"}
+                    nextLabel={">>"}
+                    breakLabel={<a href="">...</a>}
+                    breakClassName={"break-me"}
+                    pageCount={paginate.page}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={this.handlePageClick}
+                    containerClassName={"pagination"}
+                    subContainerClassName={"pages pagination"}
+                    activeClassName={"active"}
+                  />
+                </div>
+                :
+                ''
+              }
+        <br/>
       </div>
    );
  }

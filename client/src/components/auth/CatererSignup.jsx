@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'react-proptypes';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import Loader from 'react-loader-spinner';
 import { ToastContainer, toast } from 'react-toastify';
 import signupAction from '../../actions/signupAction';
 import catererValidation from '../../utils/catererValidation';
@@ -80,6 +81,17 @@ class CatererSignup extends React.Component {
         <div className='wrapper'>
           <div className='login'>
             <div className='login-form'>
+            {
+              this.props.isLoading ?
+                <Loader
+                  type='Rings'
+                  color='#ff9600'
+                  height='50'
+                  width='100'
+                  margin='2px'
+                />
+                : ''
+            }
               <h3>Caterer Registration</h3>
               <form onSubmit={this.onFormSubmit}>
                   <input
@@ -89,7 +101,7 @@ class CatererSignup extends React.Component {
                     value={this.state.catererData.businessName}
                     onChange={this.onInputChange}
                   /><br/>
-                  { 
+                  {
                     this.state.errors.businessName ?
                     <span>The Business Name field is required.</span>
                     : ''
@@ -101,7 +113,7 @@ class CatererSignup extends React.Component {
                     value={this.state.catererData.ownerName}
                     onChange={this.onInputChange}
                   /><br/>
-                  { 
+                  {
                     this.state.errors.ownerName ?
                     <span>The Owner Name field is required.</span>
                     : ''
@@ -113,7 +125,7 @@ class CatererSignup extends React.Component {
                     value={this.state.catererData.businessAddress}
                     onChange={this.onInputChange}
                   /><br/>
-                  { 
+                  {
                     this.state.errors.businessAddress ?
                     <span>The Business Address field is required.</span>
                     : ''
@@ -125,7 +137,7 @@ class CatererSignup extends React.Component {
                     value={this.state.catererData.email}
                     onChange={this.onInputChange}
                   /><br/>
-                  { 
+                  {
                     this.state.errors.email ?
                     <span>{this.state.errors.email[0]}</span>
                     : ''
@@ -137,7 +149,7 @@ class CatererSignup extends React.Component {
                     value={this.state.catererData.password}
                     onChange={this.onInputChange}
                   /><br/>
-                  { 
+                  {
                     this.state.errors.password ?
                     <span>{this.state.errors.password[0]}</span>
                     : ''
@@ -166,12 +178,14 @@ class CatererSignup extends React.Component {
 CatererSignup.propTypes = {
   signupAction: PropTypes.func.isRequired,
   signupState: PropTypes.object.isRequired,
-  errorResponse: PropTypes.object
+  errorResponse: PropTypes.object,
+  isLoading: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
   signupState: state.signupReducer,
-  errorResponse: state.signupReducer.errors
+  errorResponse: state.signupReducer.errors,
+  isLoading: state.signupReducer.loading
 });
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ signupAction }, dispatch);
