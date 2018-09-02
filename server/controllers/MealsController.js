@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import Validator from 'validatorjs';
 import db from '../models';
-import Validations from '../middleware/Validations';
+import Validations from '../middleware/validations';
 import { generatePagination } from '../util/helpers';
 
 dotenv.config();

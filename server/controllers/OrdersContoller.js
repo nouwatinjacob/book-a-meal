@@ -7,7 +7,7 @@ import {
   checkTimeToOrder,
   checkTimeToModifyOrder,
   generatePagination } from '../util/helpers';
-import Validations from '../middleware/Validations';
+import Validations from '../middleware/validations';
 
 const { Order, Meal, MenuMeal, User } = db;
 

@@ -2,8 +2,8 @@ import Validator from 'validatorjs';
 import moment from 'moment';
 import Sequelize from 'sequelize';
 import db from '../models';
-import Validations from '../middleware/Validations';
 import { generatePagination } from '../util/helpers';
+import Validations from '../middleware/validations';
 
 const { Op } = Sequelize;
 

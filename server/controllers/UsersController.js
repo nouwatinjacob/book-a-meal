@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import lodash from 'lodash';
 import Validator from 'validatorjs';
 import db from '../models';
-import Validations from '../middleware/Validations';
+import Validations from '../middleware/validations';
 
 dotenv.config();
 
