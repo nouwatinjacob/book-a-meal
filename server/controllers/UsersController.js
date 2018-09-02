@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import lodash from 'lodash';
 import Validator from 'validatorjs';
 import db from '../models';
-import validations from '../middleware/validations';
+import Validations from '../middleware/Validations';
 
 dotenv.config();
 
@@ -17,7 +17,7 @@ const { User } = db;
  * @class UserController
  *
  */
-export default class UserController {
+export default class UsersController {
   /**
    * @description - Create new User
    *
@@ -35,12 +35,12 @@ export default class UserController {
       );
       if (userDetails.userType === 'customer') {
         const customerDetails = lodash.pick(
-          obj, 
+          obj,
           ['firstName', 'lastName']
-        );      
+        );
         const customerValidation = new Validator(
           { ...customerDetails, ...userDetails },
-          validations().customerValidation
+          Validations().customerValidation
         );
         if (customerValidation.passes()) {
           const { email } = userDetails;
@@ -68,12 +68,12 @@ export default class UserController {
         });
       } else if (userDetails.userType === 'caterer') {
         const catererDetails = lodash.pick(
-          obj, 
+          obj,
           ['businessName', 'businessAddress', 'ownerName']
-        );       
+        );
         const catererValidation = new Validator(
           { ...catererDetails, ...userDetails },
-          validations().catererValidation
+          Validations().catererValidation
         );
         if (catererValidation.passes()) {
           const { email } = userDetails;
@@ -121,7 +121,7 @@ export default class UserController {
   static async userSignin(req, res) {
     try {
       const { email, password } = req.body;
-      const validation = new Validator(req.body, validations().signinRules);
+      const validation = new Validator(req.body, Validations().signinRules);
       if (validation.passes()) {
         const userExist = await User.findOne({ where: { email } });
         if (userExist) {
@@ -143,7 +143,7 @@ export default class UserController {
       }
       return res.status(400).json({ message: validation.errors.all() });
     } catch (error) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         message: 'Error processing request', error: error.toString()
       });
     }

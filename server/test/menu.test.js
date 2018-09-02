@@ -105,41 +105,6 @@ describe('TEST MENU ROUTES', () => {
   });
 
   describe('test for POST /meals when Adding a meal option', () => {
-    it('should return status code 403 when no token is provided', (done) => {
-      request(app)
-        .post('/api/v1/menu')
-        .send(menuSeeder.setMenuData([mealId, mealId1], '2018-05-12'))
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(403);
-          expect(res.body.message).to.deep.equal('Token not provided');
-          done();
-        });
-    });
-    it('should return status code 401 when ' +
-    'invalid authorization token is entered', (done) => {
-      request(app)
-        .post('/api/v1/menu')
-        .set({ 'x-access-token': 'nonsense' })
-        .send(menuSeeder.setMenuData([mealId, mealId1], '2018-05-12'))
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(401);
-          expect(res.body.message).to.deep.equal('Invalid authorization token');
-          done();
-        });
-    });
-    it('should return a status code of 403 when an valid authorization' +
-    'token but unauthurized user access this', (done) => {
-      request(app)
-        .post('/api/v1/menu')
-        .set({ 'x-access-token': customerToken })
-        .send(menuSeeder.setMenuData([mealId, mealId1], '2018-05-12'))
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(403);
-          expect(res.body.message)
-            .to.deep.equal('You must be caterer to perform this operation');
-          done();
-        });
-    });
     it('should return status code 400 when token valid ' +
     'and authorised but with no menu inputs', (done) => {
       request(app)
@@ -191,14 +156,14 @@ describe('TEST MENU ROUTES', () => {
           done();
         });
     });
-    it('should return a status code of 400 when an valid authorization' +
+    it('should return a status code of 409 when an valid authorization' +
     'token with authorized token already set menu for that date', (done) => {
       request(app)
         .post('/api/v1/menu')
         .set({ 'x-access-token': catererToken })
         .send(menuSeeder.setMenuData([mealId, mealId1], '2018-05-12'))
         .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
+          expect(res.statusCode).to.equal(409);
           expect(res.body.message)
             .to.deep.equal('You already have menu for this date');
           done();
@@ -206,8 +171,9 @@ describe('TEST MENU ROUTES', () => {
     });
   });
 
+  // Get Menu
   describe('test for GET api/v1/menu when ' +
-  'viewing menu meals to a caterer', () => {
+  'viewing menu meals of a caterer', () => {
     it('should return a status code of 400 when an valid authorization' +
     'token enter invalid time format', (done) => {
       request(app)

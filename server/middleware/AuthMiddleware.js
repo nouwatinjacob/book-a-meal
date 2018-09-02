@@ -12,7 +12,7 @@ const { User } = db;
  * @class Auth
  *
  */
-export default class Auth {
+export default class AuthMiddleware {
   /**
    * @description - Verify User Token
    *

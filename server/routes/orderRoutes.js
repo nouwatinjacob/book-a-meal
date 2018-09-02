@@ -1,33 +1,33 @@
-import OrdersController from '../controllers/orders';
-import authMiddleware from '../middleware/authentication';
+import OrdersController from '../controllers/OrdersContoller';
+import AuthMiddleware from '../middleware/AuthMiddleware';
 
 const orderRoutes = (router) => {
   router.route('/orders')
     .post(
-      authMiddleware.verifyToken,
+      AuthMiddleware.verifyToken,
       OrdersController.makeOrder
     )
     .get(
-      authMiddleware.verifyToken, authMiddleware.isCaterer,
+      AuthMiddleware.verifyToken, AuthMiddleware.isCaterer,
       OrdersController.getCatererOrder
     );
   router.route('/user-orders')
     .get(
-      authMiddleware.verifyToken,
+      AuthMiddleware.verifyToken,
       OrdersController.getCustomerOrders
     );
   router.route('/order/:id')
     .get(
-      authMiddleware.verifyToken,
+      AuthMiddleware.verifyToken,
       OrdersController.getAnOrder
     );
   router.route('/orders/:id')
     .put(
-      authMiddleware.verifyToken,
+      AuthMiddleware.verifyToken,
       OrdersController.modifyOrder
     )
     .delete(
-      authMiddleware.verifyToken,
+      AuthMiddleware.verifyToken,
       OrdersController.cancelOrder
     );
 };
