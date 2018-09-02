@@ -1,5 +1,5 @@
 
-const validations = () => ({
+const Validations = () => ({
   customerValidation: {
     email: 'required|email',
     password: 'required|min:6|confirmed',
@@ -43,4 +43,4 @@ const validations = () => ({
 
 });
 
-export default validations;
+export default Validations;

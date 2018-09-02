@@ -1,8 +1,8 @@
 import Validator from 'validatorjs';
 import moment from 'moment';
 import Sequelize from 'sequelize';
-import db from '../models/index';
-import validations from '../middleware/validations';
+import db from '../models';
+import Validations from '../middleware/Validations';
 import { generatePagination } from '../util/helpers';
 
 const { Op } = Sequelize;
@@ -27,7 +27,7 @@ export default class MenusController {
   static async setMenu(req, res) {
     try {
       const { mealId, menuDate } = req.body;
-      const validation = new Validator(req.body, validations().menuRules);
+      const validation = new Validator(req.body, Validations().menuRules);
       if (validation.passes()) {
         if ((moment(menuDate, 'YYYY-MM-DD', true).isValid())) {
           const userId = req.decoded.id;
@@ -38,7 +38,7 @@ export default class MenusController {
             }
           });
           if (checkMenu) {
-            return res.status(400).json({
+            return res.status(409).json({
               message: 'You already have menu for this date'
             });
           }
@@ -73,7 +73,7 @@ export default class MenusController {
       }
       return res.status(400).json({ message: validation.errors.all() });
     } catch (error) {
-      return res.status(400).json({
+      return res.status(500).json({
         message: 'Error processing request', error
       });
     }
@@ -119,7 +119,7 @@ export default class MenusController {
         message: 'The Date must be of format YYYY-MM-DD'
       });
     } catch (error) {
-      return res.status(400).json({
+      return res.status(500).json({
         message: 'Error processing request', error: error.toString()
       });
     }

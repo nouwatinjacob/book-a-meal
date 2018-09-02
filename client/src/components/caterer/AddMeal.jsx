@@ -68,6 +68,9 @@ class AddMeal extends React.Component {
 
      this.props.addMeal(formData).then(() => {
        if (this.props.mealState.success) {
+         this.setState(state => ({
+           mealData: { name: '', price: '', image: '' }
+         }));
          swal("Meal Added Successfully!");
        } else if (!this.props.mealState.success && this.props.mealState.error) {
          const message = this.props.mealState.error.message;
@@ -89,6 +92,7 @@ class AddMeal extends React.Component {
    * @returns {XML} XML/JSX
    */
  render() {
+   const { name, price, image } = this.state.mealData;
    return (
       <div className='container'>
         <CatererHeader/>
@@ -110,6 +114,7 @@ class AddMeal extends React.Component {
                   ''
                 }
                 <form
+                  name='add-meal'
                   encType='multipart/form-data'
                   onSubmit={this.onFormSubmit}
                 >
@@ -117,6 +122,7 @@ class AddMeal extends React.Component {
                     type='text'
                     name='name'
                     placeholder='Meal Name'
+                    value={name}
                     onChange={this.onInputChange}
                   /><br/>
                   {
@@ -128,6 +134,7 @@ class AddMeal extends React.Component {
                     type='text'
                     name='price'
                     placeholder='Meal Price'
+                    value={price}
                     onChange={this.onInputChange}
                   /><br/>
                   {

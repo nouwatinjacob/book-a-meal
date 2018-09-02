@@ -63,4 +63,4 @@ export {
   reDirect,
   logout,
   authorization
-}; 
+};

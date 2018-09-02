@@ -141,7 +141,7 @@ const getAllCatererOrderAction = ({ orderDate, limit, offset }) =>
 const cancelOrderAction = orderId => dispatch =>
   axios.delete(`/orders/${orderId}`, authorization())
     .then((res) => {
-      dispatch(cancelOrderSuccess(res.data.message));
+      dispatch(cancelOrderSuccess(orderId));
     })
     .catch(error => dispatch(cancelOrderUnSuccess(error)));
 

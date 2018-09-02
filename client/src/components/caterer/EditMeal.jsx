@@ -110,6 +110,7 @@ class EditMeal extends React.Component {
    * @returns {XML} XML/JSX
    */
  render() {
+   const meal = this.state.meal;
    return (
       <div className='container'>
         <CatererHeader/>
@@ -137,13 +138,13 @@ class EditMeal extends React.Component {
                 <input
                     type='text'
                     name='name'
-                    placeholder={this.state.meal.name}
+                    placeholder={meal ? meal.name : ''}
                     onChange={this.onInputChange}
                   /><br/>
                   <input
                     type='text'
                     name='price'
-                    placeholder={this.state.meal.price}
+                    placeholder={meal ? meal.price : ''}
                     onChange={this.onInputChange}
                   /><br/>
                   <input

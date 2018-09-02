@@ -62,145 +62,89 @@ describe('Test cases for all meals actions', () => {
   });
 
   describe('POST /api/v1/meals when creating a meal', () => {
-    describe('Test for valid user before carrying out meal actions', () => {
-      it(
-        'should return a status code of 403 if user is not authorized',
-        (done) => {
-          request(app)
-            .post('/api/v1/meals')
-            .send(mealSeeder.setMealData(
-              'Koko and Akara',
-              '3000', 'akara.png',
-              2
-            ))
-            .end((err, res) => {
-              expect(res.statusCode).to.equal(403);
-              expect(res.body.message).to.deep.equal('Token not provided');
-              done();
-            });
-        }
-      );
-    });
-  });
-  describe('Test for invalid authorization token', () => {
-    it(
-      'should return a status code of 401 when' +
-       'an invalid authorization token is entered',
-      (done) => {
+    describe('Test for invalid inputs', () => {
+      it('should return status code 400 when token valid ' +
+      'and authorised but with no meal inputs', (done) => {
         request(app)
           .post('/api/v1/meals')
-          .set({ 'x-access-token': 'nonsense' })
-          .send(mealSeeder.setMealData(
-            'Koko and Akara',
-            '3000', 'akara.png', 2
-          ))
+          .set({ 'x-access-token': catererToken })
+          .send(mealSeeder.setMealData('', '', ''))
           .end((err, res) => {
-            expect(res.statusCode).to.equal(401);
-            expect(res.body.message)
-              .to.deep.equal('Invalid authorization token');
+            expect(res.statusCode).to.equal(400);
+            expect(res.body.message.name[0])
+              .to.deep.equal('The name field is required.');
+            expect(res.body.message.price[0])
+              .to.deep.equal('The price field is required.');
             done();
           });
-      }
-    );
-  });
-  describe('Test for valid authorization token but unauthorized user', () => {
-    it('should return a status code of 403 when an valid authorization' +
-      'token but unauthorized user access this', (done) => {
-      request(app)
-        .post('/api/v1/meals')
-        .set({ 'x-access-token': customerToken })
-        .send(mealSeeder.setMealData('Koko and Akara', '3000', 'akara.png', 2))
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(403);
-          expect(res.body.message)
-            .to.deep.equal('You must be caterer to perform this operation');
-          done();
-        });
-    });
-  });
-
-  describe('Test for invalid inputs', () => {
-    it('should return status code 400 when token valid ' +
-    'and authorised but with no meal inputs', (done) => {
-      request(app)
-        .post('/api/v1/meals')
-        .set({ 'x-access-token': catererToken })
-        .send(mealSeeder.setMealData('', '', ''))
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
-          expect(res.body.message.name[0])
-            .to.deep.equal('The name field is required.');
-          expect(res.body.message.price[0])
-            .to.deep.equal('The price field is required.');
-          done();
-        });
-    });
-    it('should return status code 201 a message when meal' +
-    ' created successfully', (done) => {
-      request(app)
-        .post('/api/v1/meals')
-        .set({ 'x-access-token': catererToken })
-        .send(mealSeeder.setMealData(
-          'Fried Rice and chicken',
-          2000,
-          'https://res.cloudinary.com/sansaristic/image/upload/v1530028015' +
-          '/BookMeal/1530027983498pexels-photo-247685.png.png',
-          catererId
-        ))
-        .end((err, res) => {
-          mealId = res.body.newMeal.id;
-          expect(res.statusCode).to.equal(201);
-          expect(res.body.message)
-            .to.deep.equal('Meal Created Successfully');
-          done();
-        });
-    });
-    it('should return status code 400 when meal name' +
-    'already exist', (done) => {
-      request(app)
-        .post('/api/v1/meals')
-        .set({ 'x-access-token': catererToken })
-        .send(mealSeeder.setMealData(
-          'Fried Rice and chicken',
-          2000,
-          'gdhdhdh.jpg'
-        ))
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
-          expect(res.body.message)
-            .to.deep.equal('You have this meal already, please edit it');
-          done();
-        });
-    });
-    it('should return status code 400 when price' +
-    ' not a number', (done) => {
-      request(app)
-        .post('/api/v1/meals')
-        .set({ 'x-access-token': catererToken })
-        .send(mealSeeder.setMealData(
-          'Ofada Rice with beef',
-          'a',
-          'gdhdhdh.jpg'
-        ))
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
-          expect(res.body.message.price[0])
-            .to.deep.equal('The price must be a number.');
-          done();
-        });
-    });
-    it('should return status code 400 a message when meal name' +
-    ' is less than 3 character', (done) => {
-      request(app)
-        .post('/api/v1/meals')
-        .set({ 'x-access-token': catererToken })
-        .send(mealSeeder.setMealData('Of', 300, 'gdhdhdh.jpg'))
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
-          expect(res.body.message.name[0])
-            .to.deep.equal('The name must be at least 3 characters.');
-          done();
-        });
+      });
+      it('should return status code 201 a message when meal' +
+      ' created successfully', (done) => {
+        request(app)
+          .post('/api/v1/meals')
+          .set({ 'x-access-token': catererToken })
+          .send(mealSeeder.setMealData(
+            'Fried Rice and chicken',
+            2000,
+            'https://res.cloudinary.com/sansaristic/image/upload/v1530028015' +
+            '/BookMeal/1530027983498pexels-photo-247685.png.png',
+            catererId
+          ))
+          .end((err, res) => {
+            mealId = res.body.newMeal.id;
+            expect(res.statusCode).to.equal(201);
+            expect(res.body.message)
+              .to.deep.equal('Meal Created Successfully');
+            done();
+          });
+      });
+      it('should return status code 400 when meal name' +
+      'already exist', (done) => {
+        request(app)
+          .post('/api/v1/meals')
+          .set({ 'x-access-token': catererToken })
+          .send(mealSeeder.setMealData(
+            'Fried Rice and chicken',
+            2000,
+            'gdhdhdh.jpg'
+          ))
+          .end((err, res) => {
+            expect(res.statusCode).to.equal(409);
+            expect(res.body.message)
+              .to.deep.equal('You have an already exiting meal with this name');
+            done();
+          });
+      });
+      it('should return status code 400 when price' +
+      ' not a number', (done) => {
+        request(app)
+          .post('/api/v1/meals')
+          .set({ 'x-access-token': catererToken })
+          .send(mealSeeder.setMealData(
+            'Ofada Rice with beef',
+            'a',
+            'gdhdhdh.jpg'
+          ))
+          .end((err, res) => {
+            expect(res.statusCode).to.equal(400);
+            expect(res.body.message.price[0])
+              .to.deep.equal('The price must be a number.');
+            done();
+          });
+      });
+      it('should return status code 400 a message when meal name' +
+      ' is less than 3 character', (done) => {
+        request(app)
+          .post('/api/v1/meals')
+          .set({ 'x-access-token': catererToken })
+          .send(mealSeeder.setMealData('Of', 300, 'gdhdhdh.jpg'))
+          .end((err, res) => {
+            expect(res.statusCode).to.equal(400);
+            expect(res.body.message.name[0])
+              .to.deep.equal('The name must be at least 3 characters.');
+            done();
+          });
+      });
     });
   });
 
@@ -247,20 +191,20 @@ describe('Test cases for all meals actions', () => {
         .set({ 'x-access-token': caterer1Token })
         .send(mealSeeder.setMealData('gheteg', 300, 'gdhdhdh.jpg'))
         .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
+          expect(res.statusCode).to.equal(403);
           expect(res.body.message)
-            .to.deep.equal('You have no access to edit this recipe');
+            .to.deep.equal('You have no access to edit this meal');
           done();
         });
     });
-    it('should return status code 400 a message when meal' +
+    it('should return status code 404 a message when meal' +
     ' is not found', (done) => {
       request(app)
         .put('/api/v1/meals/1123')
         .set({ 'x-access-token': catererToken })
         .send(mealSeeder.setUpdateMeal('Ata gungun', 300, 'gdhdhdh.jpg'))
         .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
+          expect(res.statusCode).to.equal(404);
           expect(res.body.message)
             .to.deep.equal('Meal Not Found');
           done();
@@ -312,25 +256,25 @@ describe('Test cases for all meals actions', () => {
           done();
         });
     });
-    it('should return status code 400 a message when meal' +
+    it('should return status code 404 a message when meal' +
     ' is not found', (done) => {
       request(app)
         .delete('/api/v1/meals/1123')
         .set({ 'x-access-token': catererToken })
         .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
+          expect(res.statusCode).to.equal(404);
           expect(res.body.message)
             .to.deep.equal('Meal not found');
           done();
         });
     });
-    it('should return status code 400 a message when meal' +
-        ' is to be deleted with different caterer token', (done) => {
+    it('should return status code 403 a message when meal' +
+        ' is to be deleted by different caterer', (done) => {
       request(app)
         .delete(`/api/v1/meals/${mealId}`)
         .set({ 'x-access-token': caterer1Token })
         .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
+          expect(res.statusCode).to.equal(403);
           expect(res.body.message)
             .to.deep.equal('You have no access to edit this meal');
           done();
