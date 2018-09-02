@@ -7,11 +7,11 @@ const rules = {
 
 const menuValidation = (data) => {
   const validation = new Validator(data, rules);
-  const obj = { isValid: () => validation.passes() };
+  const validationObj = { isValid: () => validation.passes() };
   if (validation.fails()) {
-    obj.errors = validation.errors.all();
+    validationObj.errors = validation.errors.all();
   }
-  return Object.freeze(obj);
+  return Object.freeze(validationObj);
 };
 
 export default menuValidation;

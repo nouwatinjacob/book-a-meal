@@ -83,8 +83,9 @@ const orderReducer = (state = initialState, action) => {
     case CANCEL_ORDER_SUCCESSFUL:
       return {
         ...state,
-        success: true,
-        passes: action.data
+        orders: {
+          orders: state.orders.orders.filter(order => order.id !== action.data)
+        }
       };
     case CANCEL_ORDER_UNSUCCESSFUL:
       return {

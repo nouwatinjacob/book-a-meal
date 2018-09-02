@@ -1,7 +1,7 @@
-import menuRoutes from './menu';
-import mealRoutes from './meal';
-import userRoutes from './user';
-import orderRoutes from './order';
+import menuRoutes from './menuRoutes';
+import mealRoutes from './mealRoutes';
+import userRoutes from './userRoutes';
+import orderRoutes from './orderRoutes';
 
 const routes = (router) => {
   router.route('/')

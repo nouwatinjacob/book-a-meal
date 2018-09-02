@@ -141,13 +141,13 @@ class ModifyOrder extends React.Component {
                 </tr>
                 <tr>
                   <td>
-                    <img src={order.order.Meal.image}
+                    <img src={order && order.order.Meal.image}
                     alt=''
                     width='50'
                     height='50'
                   />
                   </td>
-                  <td>{order.order.Meal.name}</td>
+                  <td>{order && order.order.Meal.name}</td>
                   <td>
                     <input
                       type='number'
@@ -159,7 +159,7 @@ class ModifyOrder extends React.Component {
                       onChange={this.handleQuantityChange}
                     />
                   </td>
-                  <td>{order.order.Meal.price}</td>
+                  <td>{order && order.order.Meal.price}</td>
                   <td>
                     <strong>
                     {

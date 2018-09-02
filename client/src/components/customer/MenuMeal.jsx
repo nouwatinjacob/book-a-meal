@@ -3,6 +3,7 @@ import ReactPaginate from "react-paginate";
 import PropTypes from "react-proptypes";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import swal from 'sweetalert';
 import history from "../../utils/history";
 import { getMenuAction } from "../../actions/menuAction";
 import CustomerHeader from "../partials/CustomerHeader.jsx";
@@ -45,6 +46,16 @@ class MenuMeal extends React.Component {
   }
 
   /**
+   *
+   * @returns {XML} XML/JSX
+   *
+   * @memberof MenuMeal
+   */
+  componentWillUnmount() {
+    this.isCancelled = true;
+  }
+
+  /**
    * Handles makeOrder button
    *
    * @method onClickOrder
@@ -67,15 +78,25 @@ class MenuMeal extends React.Component {
    *
    * @param { object } menuId
    *
+   * @param { array } mealUserId
+   *
+   * @param { int } userId
+   *
    * @param { event } event
    *
    * @return {void}
    */
-  onClickOrder = (mealId, menuId, event) => {
-    const idsArray = [];
-    idsArray.push(mealId, menuId);
-    sessionStorage.setItem("ids", JSON.stringify(idsArray));
-    history.push("/confirm-order");
+  onClickOrder = (mealId, menuId, mealUserId, userId, event) => {
+    const user1 = this.props.menuState.menus.dateMenu.filter(caterer =>
+      (caterer.userId === mealUserId));
+    if (user1[0].userId === userId) {
+      swal("You can not order this meal");
+    } else {
+      const idsArray = [];
+      idsArray.push(mealId, menuId);
+      sessionStorage.setItem("ids", JSON.stringify(idsArray));
+      history.push("/confirm-order");
+    }
   };
 
   /**
@@ -90,7 +111,7 @@ class MenuMeal extends React.Component {
   handlePageClick(data) {
     const { limit } = this.props.menuState.menus.paginate;
     const currentMenuDate = this.props.menuState.menus
-      .dateMenu[0].createdAt.slice(0, 10);
+      .dateMenu[0].menuDate.slice(0, 10);
     const nextOffset = data.selected * limit;
 
     this.props.getMenuAction({
@@ -98,6 +119,39 @@ class MenuMeal extends React.Component {
       limit,
       offset: nextOffset
     });
+  }
+
+  /**
+   * Check if the menu is of Yesterday
+   *
+   * @method checkYesterdayMenu
+   *
+   * @return {void}
+   */
+  checkYesterdayMenu() {
+    const menuDate = this.props.menuState.menus
+      .dateMenu[0].createdAt.slice(0, 10);
+    const todayDate = new Date().toISOString().slice(0, 10);
+    if (menuDate === todayDate) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Check if a meal belong to the logged in Caterer
+   *
+   * @method checkCatererMeal
+   *
+   * @param { Array } caterers
+   *
+   * @param { int } userId
+   *
+   * @return {void}
+   */
+  getCatererIds(caterers) {
+    const ids = caterers.reduce((acc, caterer) => acc.concat(caterer.id), []);
+    return ids;
   }
 
   /**
@@ -116,6 +170,8 @@ class MenuMeal extends React.Component {
         menus: { paginate }
       }
     } = this.props;
+
+    // get the meals details and the menu id
     const menuMeals = dateMenu.reduce(
       (acc, menu) =>
         acc.concat(menu.Meals.map(meal => ({
@@ -124,6 +180,7 @@ class MenuMeal extends React.Component {
         }))),
       []
     );
+    // get the caterers in an array
     const caterers = dateMenu.reduce((acc, user) => acc.concat(user.User), []);
     const token = localStorage.getItem("token");
     const userToken = decodeToken(token);
@@ -135,7 +192,6 @@ class MenuMeal extends React.Component {
           ) : (
             <CatererHeader />
           )}
-
           <div className="wrapper">
             <div className="wrapper search">
               <label>Search by date</label>
@@ -179,14 +235,23 @@ class MenuMeal extends React.Component {
                             className="c-medium-12 c-xsmall-12 text-center"
                             id="pd-0"
                           >
+                          {
+                            this.checkYesterdayMenu() ?
                             <button
-                              className="button warning"
-                              onClick={event =>
-                                this.onClickOrder(meal.id, meal.menuId, event)
-                              }
-                            >
-                              Order Meal
-                            </button>
+                            className='button warning'
+                            onClick={event =>
+                              this.onClickOrder(
+                                meal.id,
+                                meal.menuId,
+                                meal.userId,
+                                userToken.id,
+                                event
+                              )
+                            }
+                          >
+                            Order Meal
+                          </button> : ''
+                          }
                           </div>
                         </div>
                       </div>
