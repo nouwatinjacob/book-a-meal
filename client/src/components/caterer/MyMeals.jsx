@@ -60,7 +60,7 @@ class MyMeals extends React.Component {
    * @memberof MyMeals
    */
   componentDidMount() {
-    this.props.getMeals({ limit: 2, offset: 0 });
+    this.props.getMeals({ limit: 10, offset: 0 });
   }
 
   /**

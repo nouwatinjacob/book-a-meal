@@ -149,7 +149,7 @@ class UserOrder extends React.Component {
                   <th>Price(&#8358;)</th>
                   <th>Actions</th>
                 </tr>
-                {orders.map((order, index) => {
+                {orders && orders.map((order, index) => {
                   const expiredTime = moment(order.createdAt).add(1, "hour");
                   return (
                     <tr key={index}>

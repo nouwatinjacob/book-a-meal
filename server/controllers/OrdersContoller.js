@@ -2,12 +2,12 @@ import Validator from 'validatorjs';
 import Sequelize from 'sequelize';
 import uuidv1 from 'uuid/v1';
 import moment from 'moment';
-import db from '../models/index';
+import db from '../models';
 import {
   checkTimeToOrder,
   checkTimeToModifyOrder,
   generatePagination } from '../util/helpers';
-import validations from '../middleware/validations';
+import Validations from '../middleware/validations';
 
 const { Order, Meal, MenuMeal, User } = db;
 
@@ -29,7 +29,7 @@ export default class OrdersContoller {
   static async makeOrder(req, res) {
     try {
       const { mealId, quantity, menuId } = req.body;
-      const validation = new Validator(req.body, validations().orderRules);
+      const validation = new Validator(req.body, Validations().orderRules);
       if (validation.passes()) {
         const userId = req.decoded.id;
         const menuMeal = await MenuMeal.findOne({
@@ -44,11 +44,6 @@ export default class OrdersContoller {
           ]
         });
         if (menuMeal) {
-          if (userId === menuMeal.Meal.userId) {
-            return res.status(400).json({
-              message: 'You cant order your meal'
-            });
-          }
           if (checkTimeToOrder()) {
             return res.status(400).json({ message: 'Time to order elapse' });
           }
@@ -71,7 +66,7 @@ export default class OrdersContoller {
       }
       return res.status(400).json({ message: validation.errors.all() });
     } catch (error) {
-      return res.status(400).json({
+      return res.status(500).json({
         message: 'Error processing request', error: error.toString()
       });
     }
@@ -97,7 +92,7 @@ export default class OrdersContoller {
 
       if (orderExist) {
         if (orderExist.userId !== req.decoded.id) {
-          return res.status(400).json({
+          return res.status(403).json({
             message: 'This Order does not belong to this user'
           });
         }
@@ -109,7 +104,7 @@ export default class OrdersContoller {
         } = req.body;
         const validation = new Validator({
           mealId, quantity, menuId
-        }, validations().orderRules);
+        }, Validations().orderRules);
         if (!validation.passes()) {
           return res.status(400).json({ message: validation.errors.all() });
         }
@@ -148,7 +143,7 @@ export default class OrdersContoller {
       }
       return res.status(404).json({ message: 'Order not found' });
     } catch (error) {
-      return res.status(400).json({
+      return res.status(500).json({
         message: 'Error processing request', error: error.toString()
       });
     }
@@ -300,7 +295,7 @@ export default class OrdersContoller {
           });
         }
         if (order.userId !== req.decoded.id) {
-          return res.status(400).json({
+          return res.status(403).json({
             message: 'This Order does not belong to you'
           });
         }
@@ -311,7 +306,7 @@ export default class OrdersContoller {
       }
       return res.status(404).json({ message: 'Order not found' });
     } catch (error) {
-      return res.status(400).json({
+      return res.status(500).json({
         message: 'Error processing request', error: error.toString()
       });
     }
