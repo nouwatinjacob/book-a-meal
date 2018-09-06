@@ -45,8 +45,8 @@ class ModifyOrder extends React.Component {
    * @memberof MyMeals
    */
   static getDerivedStateFromProps(props, state) {
-    const { orderState: { order: { order } } } = props;
-    const quantity = (order && order.order && order.order.quantity);
+    const { order } = props.orderDetails;
+    const quantity = (order && order.quantity);
     return { ...state, quantity: state.quantity || quantity };
   }
 
@@ -111,7 +111,7 @@ class ModifyOrder extends React.Component {
    * @returns {XML} XML/JSX
    */
   render() {
-    const { orderState: { order: { order } } } = this.props;
+    const { orderDetails: { order } } = this.props;
     const { quantity } = this.state;
     const token = localStorage.getItem('token');
     const userToken = decodeToken(token);
@@ -141,13 +141,13 @@ class ModifyOrder extends React.Component {
                 </tr>
                 <tr>
                   <td>
-                    <img src={order && order.order.Meal.image}
+                    <img src={order.Meal ? order.Meal.image : ''}
                     alt=''
                     width='50'
                     height='50'
                   />
                   </td>
-                  <td>{order && order.order.Meal.name}</td>
+                  <td>{order.Meal ? order.Meal.name : ''}</td>
                   <td>
                     <input
                       type='number'
@@ -159,13 +159,15 @@ class ModifyOrder extends React.Component {
                       onChange={this.handleQuantityChange}
                     />
                   </td>
-                  <td>{order && order.order.Meal.price}</td>
+                  <td>{order.Meal ? order.Meal.price : ''}</td>
                   <td>
                     <strong>
                     {
-                      (order.order.Meal.price) *
-                      (quantity || order.order.quantity)
-                      }
+                      order.Meal ?
+                      order.Meal.price *
+                      quantity || order.quantity
+                      : ''
+                    }
                     </strong>
                   </td>
                 </tr>
@@ -201,10 +203,12 @@ class ModifyOrder extends React.Component {
 ModifyOrder.propTypes = {
   getAnOrderAction: PropTypes.func.isRequired,
   modifyOrderAction: PropTypes.func.isRequired,
-  orderState: PropTypes.object
+  orderState: PropTypes.object,
+  orderDetails: PropTypes.object
 };
 
 const mapStateToProps = state => ({
+  orderDetails: state.orderReducer.order,
   orderState: state.orderReducer
 });
 

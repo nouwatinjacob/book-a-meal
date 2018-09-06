@@ -19,7 +19,8 @@ const config = {
     host: '127.0.0.1',
     port: 5432,
     dialect: 'postgres',
-    operatorsAliases: false
+    operatorsAliases: false,
+    logging: false
   },
   production: {
     use_env_variable: 'DATABASE_URL',

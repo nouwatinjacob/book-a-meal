@@ -8,12 +8,11 @@ import {
 } from '../constants/actionTypes';
 
 const initialState = {
-  meals: [],
-  meal: null,
+  meals: {},
+  meal: {},
   error: null,
   success: false,
   loading: false,
-  passes: null,
 };
 
 const mealReducer = (state = initialState, action) => {
@@ -42,7 +41,7 @@ const mealReducer = (state = initialState, action) => {
         ...state,
         success: true,
         loading: false,
-        passes: action.data.message
+        meal: action.data.meal
       };
     case ADD_MEAL_UNSUCCESSFUL:
       return {
@@ -69,7 +68,10 @@ const mealReducer = (state = initialState, action) => {
         ...state,
         success: true,
         loading: false,
-        passes: action.data.message
+        meal: action.data.meal,
+        meals: {
+          meals: state.meals.filter(meal => meal.id !== action.data.meal.id)
+        }
       };
     case EDIT_MEAL_UNSUCCESSFUL:
       return {
@@ -83,7 +85,9 @@ const mealReducer = (state = initialState, action) => {
         ...state,
         success: true,
         loading: false,
-        passes: action.data.message
+        meals: {
+          meals: state.meals.filter(meal => meal.id !== action.data)
+        }
       };
     case DELETE_MEAL_UNSUCCESSFUL:
       return {

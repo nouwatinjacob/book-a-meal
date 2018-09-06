@@ -8,6 +8,7 @@ import {
   checkTimeToModifyOrder,
   generatePagination } from '../util/helpers';
 import Validations from '../middleware/validations';
+import errorMap from '../middleware/errorMap';
 
 const { Order, Meal, MenuMeal, User } = db;
 
@@ -106,7 +107,14 @@ export default class OrdersContoller {
           mealId, quantity, menuId
         }, Validations().orderRules);
         if (!validation.passes()) {
-          return res.status(400).json({ message: validation.errors.all() });
+          return res.status(400).json({
+            message: errorMap(validation.errors.all())
+          });
+        }
+        if (!checkTimeToModifyOrder(orderExist.createdAt)) {
+          return res.status(400).json({
+            message: 'Time to update order elapse'
+          });
         }
 
         const menuMeal = await MenuMeal.findOne({
@@ -121,11 +129,6 @@ export default class OrdersContoller {
           ]
         });
         if (menuMeal) {
-          if (!checkTimeToModifyOrder(menuMeal.createdAt)) {
-            return res.status(400).json({
-              message: 'Time to update order elapse'
-            });
-          }
           const modifiedOrder = await orderExist.update({
             mealId,
             menuId,
@@ -174,6 +177,7 @@ export default class OrdersContoller {
         include: [
           {
             model: Meal,
+            paranoid: false,
             where: { userId }
           },
           {
@@ -214,7 +218,8 @@ export default class OrdersContoller {
         offset: offset || 0,
         include: [
           {
-            model: Meal
+            model: Meal,
+            paranoid: false,
           },
         ]
       });
@@ -251,9 +256,11 @@ export default class OrdersContoller {
         include: [
           {
             model: Meal,
+            paranoid: false,
           },
           {
             model: User,
+            attributes: ['id', 'firstName', 'lastName', 'ownerName', 'email']
           },
         ]
       });

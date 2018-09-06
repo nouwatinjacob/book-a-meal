@@ -17,6 +17,9 @@ class PageNotFound extends React.Component {
     return (
       <React.Fragment>
         <div className='pageNotFound'>
+          <h5 className='text-center'>
+          Click <a href='/menus'>here</a> to go to the menus page
+          </h5>
         </div>
       </React.Fragment>
     );

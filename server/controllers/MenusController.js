@@ -4,6 +4,7 @@ import Sequelize from 'sequelize';
 import db from '../models';
 import { generatePagination } from '../util/helpers';
 import Validations from '../middleware/validations';
+import errorMap from '../middleware/errorMap';
 
 const { Op } = Sequelize;
 
@@ -71,7 +72,9 @@ export default class MenusController {
           message: 'The Date must be of format YYYY-MM-DD'
         });
       }
-      return res.status(400).json({ message: validation.errors.all() });
+      return res.status(400).json({
+        message: errorMap(validation.errors.all())
+      });
     } catch (error) {
       return res.status(500).json({
         message: 'Error processing request', error

@@ -40,12 +40,12 @@ class OrderDetail extends React.Component {
           <div className='row'>
           <div className='c-medium-12 c-small-12' id='pd-0'>
             <h6>
-              {moment(order.order.createdAt).format('MMMM Do YYYY, h:mm:ss a')}
+              {moment(order.createdAt).format('MMMM Do YYYY, h:mm:ss a')}
             </h6>
-            <h5>Order No: <strong>{order.order.orderId}</strong></h5>
+            <h5>Order No: <strong>{order.orderId}</strong></h5>
             <h5>Name: <strong>
-                {`${order.order.User.firstName} ${order.order.User.lastName}` ||
-                    order.order.User.ownerName}
+                {`${order.User.firstName} ${order.User.lastName}` ||
+                    order.User.ownerName}
               </strong>
             </h5>
           </div>
@@ -60,10 +60,10 @@ class OrderDetail extends React.Component {
                 <th>Total</th>
               </tr>
               <tr>
-                <td>{order.order.Meal.name}</td>
-                <td>{order.order.quantity}</td>
-                <td>{order.order.Meal.price}</td>
-                <td>{order.order.quantity * order.order.Meal.price}</td>
+                <td>{order.Meal.name}</td>
+                <td>{order.quantity}</td>
+                <td>{order.Meal.price}</td>
+                <td>{order.quantity * order.Meal.price}</td>
               </tr>
             </tbody>
           </table>

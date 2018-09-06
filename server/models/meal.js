@@ -16,7 +16,7 @@ const mealModel = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-  });
+  }, { paranoid: true });
 
   Meal.associate = (models) => {
     Meal.belongsTo(models.User, {

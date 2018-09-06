@@ -169,7 +169,7 @@ class ConfirmOrder extends React.Component {
                   <input
                       type='number'
                       name='quantity'
-                      value={this.state.orderDetail.quantity}
+                      value={quantity}
                       style={{ width: '100px' }}
                       min='1'
                       max='20'
@@ -180,8 +180,7 @@ class ConfirmOrder extends React.Component {
                   <td>
                     <strong>
                       {
-                        meal ? (meal.price) *
-                        (this.state.orderDetail.quantity) : null
+                        meal.price ? (meal.price * quantity) : null
                       }
                     </strong>
                   </td>

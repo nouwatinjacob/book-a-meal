@@ -23,14 +23,14 @@ describe('TEST ORDER ROUTES', () => {
   before(authSeeder.addCatererToDb);
   before(authSeeder.addCatererToDb1);
 
-  let customerToken;
-  let customer1Token;
-  let catererToken;
-  let caterer1Token;
-  let customerId;
-  let customerId1;
-  let catererId;
-  let caterer1Id;
+  let customerEmmaToken;
+  let customerJohnToken;
+  let catererEbenezerToken;
+  let catererTopeToken;
+  let customerEmmaId;
+  let customerJohnId;
+  let catererEbenezerId;
+  let catererTopeId;
   let orderId;
 
   before((done) => {
@@ -40,8 +40,8 @@ describe('TEST ORDER ROUTES', () => {
       .expect(200)
       .end((err, res) => {
         if (err) return done(err);
-        customerToken = res.body.token;
-        customerId = jwtDecode(customerToken).id;
+        customerEmmaToken = res.body.token;
+        customerEmmaId = jwtDecode(customerEmmaToken).id;
         done();
       });
   });
@@ -53,8 +53,8 @@ describe('TEST ORDER ROUTES', () => {
       .expect(200)
       .end((err, res) => {
         if (err) return done(err);
-        customer1Token = res.body.token;
-        customerId1 = jwtDecode(customer1Token).id;
+        customerJohnToken = res.body.token;
+        customerJohnId = jwtDecode(customerJohnToken).id;
         done();
       });
   });
@@ -66,8 +66,8 @@ describe('TEST ORDER ROUTES', () => {
       .expect(200)
       .end((err, res) => {
         if (err) return done(err);
-        catererToken = res.body.token;
-        catererId = jwtDecode(catererToken).id;
+        catererEbenezerToken = res.body.token;
+        catererEbenezerId = jwtDecode(catererEbenezerToken).id;
         done();
       });
   });
@@ -79,8 +79,8 @@ describe('TEST ORDER ROUTES', () => {
       .expect(200)
       .end((err, res) => {
         if (err) return done(err);
-        caterer1Token = res.body.token;
-        caterer1Id = jwtDecode(caterer1Token).id;
+        catererTopeToken = res.body.token;
+        catererTopeId = jwtDecode(catererTopeToken).id;
         done();
       });
   });
@@ -91,12 +91,12 @@ describe('TEST ORDER ROUTES', () => {
   before((done) => {
     request(app)
       .post('/api/v1/meals')
-      .set({ 'x-access-token': catererToken })
+      .set({ 'x-access-token': catererEbenezerToken })
       .send(mealSeeder.setMealData(
         'Ofada ati Dodo',
         2500,
         'ofada.jpg',
-        catererId
+        catererEbenezerId
       ))
       .expect(201)
       .end((err, res) => {
@@ -109,12 +109,12 @@ describe('TEST ORDER ROUTES', () => {
   before((done) => {
     request(app)
       .post('/api/v1/meals')
-      .set({ 'x-access-token': catererToken })
+      .set({ 'x-access-token': catererEbenezerToken })
       .send(mealSeeder.setMealData(
         'Eba and Egusi Soup',
         2000,
         'eba.jpg',
-        catererId
+        catererEbenezerId
       ))
       .expect(201)
       .end((err, res) => {
@@ -128,7 +128,7 @@ describe('TEST ORDER ROUTES', () => {
   before((done) => {
     request(app)
       .post('/api/v1/menu')
-      .set({ 'x-access-token': catererToken })
+      .set({ 'x-access-token': catererEbenezerToken })
       .send(menuSeeder.setMenuData([mealId, mealId1], '2018-05-14'))
       .expect(201)
       .end((err, res) => {
@@ -138,12 +138,13 @@ describe('TEST ORDER ROUTES', () => {
       });
   });
 
-  describe('test for POST /api/v1/orders when Adding a meal to order', () => {
-    it('should return status code 400 when' +
-    ' no order inputs', (done) => {
+  // Order Placement
+  describe('POST /api/v1/orders', () => {
+    it(`should return status code 400 when
+     no order inputs`, (done) => {
       request(app)
         .post('/api/v1/orders')
-        .set({ 'x-access-token': customerToken })
+        .set({ 'x-access-token': customerEmmaToken })
         .send(orderSeeder.setOrderData('', '', ''))
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
@@ -156,11 +157,11 @@ describe('TEST ORDER ROUTES', () => {
           done();
         });
     });
-    it('should return status code 400 ' +
-    ' order inputs are invalid', (done) => {
+    it(`should return status code 400
+     order inputs are invalid`, (done) => {
       request(app)
         .post('/api/v1/orders')
-        .set({ 'x-access-token': customerToken })
+        .set({ 'x-access-token': customerEmmaToken })
         .send(orderSeeder.setOrderData('a', 'a', 'a'))
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
@@ -173,11 +174,11 @@ describe('TEST ORDER ROUTES', () => {
           done();
         });
     });
-    it('should return status code 404 when  ' +
-    'invalid meal id inputs are entered', (done) => {
+    it(`should return status code 404 when 
+    invalid meal id inputs are entered`, (done) => {
       request(app)
         .post('/api/v1/orders')
-        .set({ 'x-access-token': customerToken })
+        .set({ 'x-access-token': customerEmmaToken })
         .send(orderSeeder.setOrderData(1234, 2, 5, menuId))
         .end((err, res) => {
           expect(res.statusCode).to.equal(404);
@@ -186,12 +187,12 @@ describe('TEST ORDER ROUTES', () => {
           done();
         });
     });
-    it('should return status code 201 when ' +
-    'an order is placed', (done) => {
+    it(`should return status code 201 when
+    an order is placed`, (done) => {
       request(app)
         .post('/api/v1/orders')
-        .set({ 'x-access-token': customerToken })
-        .send(orderSeeder.setOrderData(mealId, 5, menuId, customerId))
+        .set({ 'x-access-token': customerEmmaToken })
+        .send(orderSeeder.setOrderData(mealId, 5, menuId, customerEmmaId))
         .end((err, res) => {
           orderId = res.body.order.id;
           expect(res.statusCode).to.equal(201);
@@ -203,12 +204,12 @@ describe('TEST ORDER ROUTES', () => {
   });
 
   // Order update
-  describe('PUT api/v1/orders/:orderId when updating order', () => {
-    it('should return a status code of 403 ' +
-    'if user is not the owner of the order', (done) => {
+  describe('PUT api/v1/orders/:orderId', () => {
+    it(`should return a status code of 403 
+    when user is not the owner of the order`, (done) => {
       request(app)
         .put(`/api/v1/orders/${orderId}`)
-        .set({ 'x-access-token': customer1Token })
+        .set({ 'x-access-token': customerJohnToken })
         .send(orderSeeder.setUpdateOrder(mealId1, 8, menuId))
         .end((err, res) => {
           expect(res.statusCode).to.equal(403);
@@ -217,10 +218,11 @@ describe('TEST ORDER ROUTES', () => {
           done();
         });
     });
-    it('should return a status code of 404 if order does not exist', (done) => {
+    it(`should return a status code of 404 
+    if order does not exist`, (done) => {
       request(app)
         .put('/api/v1/orders/03451')
-        .set({ 'x-access-token': customerToken })
+        .set({ 'x-access-token': customerEmmaToken })
         .send(orderSeeder.setUpdateOrder(mealId1, 8, menuId))
         .end((err, res) => {
           expect(res.statusCode).to.equal(404);
@@ -228,11 +230,11 @@ describe('TEST ORDER ROUTES', () => {
           done();
         });
     });
-    it('should return a status code of 404 if meal ' +
-    'picked does not belong to the menu', (done) => {
+    it(`should return a status code of 404 if meal
+    picked does not belong to the menu`, (done) => {
       request(app)
         .put(`/api/v1/orders/${orderId}`)
-        .set({ 'x-access-token': customerToken })
+        .set({ 'x-access-token': customerEmmaToken })
         .send(orderSeeder.setUpdateOrder(800, 8, menuId))
         .end((err, res) => {
           expect(res.statusCode).to.equal(404);
@@ -241,11 +243,11 @@ describe('TEST ORDER ROUTES', () => {
           done();
         });
     });
-    it('should return status code 200 when token valid ' +
-    'and authorised valid order inputs', (done) => {
+    it(`should return status code 200 when 
+    valid order inputs and order placed`, (done) => {
       request(app)
         .put(`/api/v1/orders/${orderId}`)
-        .set({ 'x-access-token': customerToken })
+        .set({ 'x-access-token': customerEmmaToken })
         .send(orderSeeder.setUpdateOrder(mealId1, 8, menuId))
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
@@ -259,24 +261,12 @@ describe('TEST ORDER ROUTES', () => {
   });
 
   // get order
-  describe('GET api/v1/orders when getting order', () => {
-    it('should return a status code of 400 when ' +
-    'customer token is provided', (done) => {
+  describe('GET api/v1/orders', () => {
+    it(`should return a status code of 200 when 
+    Orders are listed`, (done) => {
       request(app)
         .get('/api/v1/orders')
-        .set({ 'x-access-token': customerToken })
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(403);
-          expect(res.body.message)
-            .to.deep.equal('You must be caterer to perform this operation');
-          done();
-        });
-    });
-    it('should return a status code of 200 when ' +
-    'Orders are listed', (done) => {
-      request(app)
-        .get('/api/v1/orders')
-        .set({ 'x-access-token': catererToken })
+        .set({ 'x-access-token': catererEbenezerToken })
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body.message).to.deep.equal('All Orders');
@@ -286,12 +276,12 @@ describe('TEST ORDER ROUTES', () => {
   });
 
   // Get an order
-  describe('GET api/v1/order/:id when getting an order', () => {
-    it('should return a status code of 400 when ' +
-    'invalid order id is provided', (done) => {
+  describe('GET api/v1/order/:id', () => {
+    it(`should return a status code of 400 when
+    invalid order id is provided`, (done) => {
       request(app)
         .get('/api/v1/order/a')
-        .set({ 'x-access-token': customerToken })
+        .set({ 'x-access-token': customerEmmaToken })
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body.message)
@@ -299,11 +289,11 @@ describe('TEST ORDER ROUTES', () => {
           done();
         });
     });
-    it('should return a status code of 404 when ' +
-    'order is not found', (done) => {
+    it(`should return a status code of 404 when 
+    order is not found`, (done) => {
       request(app)
         .get('/api/v1/order/10')
-        .set({ 'x-access-token': customerToken })
+        .set({ 'x-access-token': customerEmmaToken })
         .end((err, res) => {
           expect(res.statusCode).to.equal(404);
           expect(res.body.message)
@@ -311,11 +301,11 @@ describe('TEST ORDER ROUTES', () => {
           done();
         });
     });
-    it('should return a status code of 200 when ' +
-    'Orders are listed', (done) => {
+    it(`should return a status code of 200 when 
+    Orders are listed`, (done) => {
       request(app)
         .get(`/api/v1/order/${orderId}`)
-        .set({ 'x-access-token': catererToken })
+        .set({ 'x-access-token': catererEbenezerToken })
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body.message).to.deep.equal('Order details');
@@ -327,12 +317,12 @@ describe('TEST ORDER ROUTES', () => {
   });
 
   // Cancel order
-  describe('DELETE api/v1/order/:id when deleting an order', () => {
-    it('should return a status code of 400 when ' +
-    'invalid order id is provided', (done) => {
+  describe('DELETE api/v1/order/:id', () => {
+    it(`should return a status code of 400 when 
+    invalid order id is provided`, (done) => {
       request(app)
         .delete(`/api/v1/orders/asd`)
-        .set({ 'x-access-token': customerToken })
+        .set({ 'x-access-token': customerEmmaToken })
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body.message)
@@ -340,11 +330,11 @@ describe('TEST ORDER ROUTES', () => {
           done();
         });
     });
-    it('should return a status code of 403 when ' +
-    'an order is to be deleted by different customer', (done) => {
+    it(`should return a status code of 403 when 
+    an order is to be deleted by different customer`, (done) => {
       request(app)
         .delete(`/api/v1/orders/${orderId}`)
-        .set({ 'x-access-token': customer1Token })
+        .set({ 'x-access-token': customerJohnToken })
         .end((err, res) => {
           expect(res.statusCode).to.equal(403);
           expect(res.body.message)
@@ -352,11 +342,11 @@ describe('TEST ORDER ROUTES', () => {
           done();
         });
     });
-    it('should return a status code of 404 when ' +
-    'an order is not found', (done) => {
+    it(`should return a status code of 404 when 
+    an order is not found`, (done) => {
       request(app)
         .delete(`/api/v1/orders/10`)
-        .set({ 'x-access-token': customerToken })
+        .set({ 'x-access-token': customerEmmaToken })
         .end((err, res) => {
           expect(res.statusCode).to.equal(404);
           expect(res.body.message)
@@ -364,11 +354,11 @@ describe('TEST ORDER ROUTES', () => {
           done();
         });
     });
-    it('should return a status code of 200 when ' +
-    'an order is cancelled', (done) => {
+    it(`should return a status code of 200 when 
+    an order is cancelled`, (done) => {
       request(app)
         .delete(`/api/v1/orders/${orderId}`)
-        .set({ 'x-access-token': customerToken })
+        .set({ 'x-access-token': customerEmmaToken })
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body.message)
