@@ -2,12 +2,18 @@ import dotenv from 'dotenv';
 import Validator from 'validatorjs';
 import db from '../models';
 import Validations from '../middleware/validations';
-import { generatePagination } from '../util/helpers';
+import errorMap from '../middleware/errorMap';
+import {
+  generatePagination
+} from '../util/helpers';
 
 dotenv.config();
 
 
-const { Meal, User } = db;
+const {
+  Meal,
+  User
+} = db;
 
 
 /**
@@ -34,11 +40,17 @@ export default class MealsController {
         const name = req.body.name.trim();
         const image = req.file ? req.file.secure_url : req.body.image;
         const foundMeal = await Meal.findOne({
-          where: { name, userId: req.decoded.id }
+          where: {
+            name,
+            userId: req.decoded.id
+          }
         });
         if (!foundMeal) {
           const meal = {
-            name, price, image, userId: req.decoded.id
+            name,
+            price,
+            image,
+            userId: req.decoded.id
           };
           const newMeal = await Meal.create(meal);
           return res.status(201).json({
@@ -50,10 +62,13 @@ export default class MealsController {
           message: 'You have an already exiting meal with this name'
         });
       }
-      return res.status(400).json({ message: validation.errors.all() });
+      return res.status(400).json({
+        message: errorMap(validation.errors.all())
+      });
     } catch (error) {
       return res.status(500).json({
-        message: 'Error processing request', error: error.toString()
+        message: 'Error processing request',
+        error: error.toString()
       });
     }
   }
@@ -69,7 +84,7 @@ export default class MealsController {
   static async modifyMeal(req, res) {
     try {
       const validation =
-      new Validator(req.body, Validations().updateMealRules);
+        new Validator(req.body, Validations().updateMealRules);
       if (validation.passes()) {
         const mealId = parseInt(req.params.id, 10);
         if (!(Number.isInteger(mealId)) && (Number.isNaN(mealId))) {
@@ -95,12 +110,17 @@ export default class MealsController {
             meal
           });
         }
-        return res.status(404).send({ message: 'Meal Not Found' });
+        return res.status(404).send({
+          message: 'Meal Not Found'
+        });
       }
-      return res.status(400).json({ message: validation.errors.all() });
+      return res.status(400).json({
+        message: errorMap(validation.errors.all())
+      });
     } catch (error) {
       return res.status(500).json({
-        message: 'Error processing request', error: error.toString()
+        message: 'Error processing request',
+        error: error.toString()
       });
     }
   }
@@ -115,14 +135,24 @@ export default class MealsController {
    */
   static async getMeals(req, res) {
     try {
-      const { limit, offset } = req.query;
+      const {
+        limit,
+        offset
+      } = req.query;
       const meals = await Meal.findAndCountAll({
-        where: { userId: req.decoded.id },
+        where: {
+          userId: req.decoded.id
+        },
         limit: limit || 10,
-        offset: offset || 0
+        offset: offset || 0,
+        order: [
+          ['createdAt', 'DESC']
+        ]
       });
       if (!meals) {
-        return res.status(404).json({ message: 'No meal found' });
+        return res.status(404).json({
+          message: 'No meal found'
+        });
       }
       return res.status(200).json({
         message: 'All meals displayed',
@@ -131,7 +161,8 @@ export default class MealsController {
       });
     } catch (error) {
       return res.status(500).json({
-        message: 'Error processing request', error: error.toString()
+        message: 'Error processing request',
+        error: error.toString()
       });
     }
   }
@@ -152,6 +183,11 @@ export default class MealsController {
       });
     }
     const meal = await Meal.findById(mealId);
+    if (!meal) {
+      return res.status(404).json({
+        message: 'Meal not found'
+      });
+    }
     return res.status(200).json({
       message: 'Meal Details',
       meal
@@ -189,10 +225,13 @@ export default class MealsController {
           message: 'Meal successfully deleted'
         });
       }
-      return res.status(404).json({ message: 'Meal not found' });
+      return res.status(404).json({
+        message: 'Meal not found'
+      });
     } catch (error) {
       return res.status(500).json({
-        message: 'Error processing request', error: error.toString()
+        message: 'Error processing request',
+        error: error.toString()
       });
     }
   }

@@ -90,7 +90,7 @@ const addMeal = mealDetail => (dispatch) => {
     )
       .then((res) => {
         dispatch(addMealSuccess({
-          passes: res.data
+          meal: res.data
         }));
       })
       .catch((err) => {
@@ -118,7 +118,7 @@ const editMealAction = (mealDetail, id) => dispatch => axios.put(
 )
   .then((res) => {
     dispatch(editMealSuccess({
-      passes: res.data
+      meal: res.data.meal
     }));
   })
   .catch((err) => {
@@ -128,7 +128,7 @@ const editMealAction = (mealDetail, id) => dispatch => axios.put(
 const deleteMealAction = mealId => (dispatch) => {
   axios.delete(`/meals/${mealId}`, authorization())
     .then((res) => {
-      dispatch(deleteMealSuccess(res.data.message));
+      dispatch(deleteMealSuccess(mealId));
     })
     .catch(error => dispatch(deleteMealUnsuccess(error)));
 };

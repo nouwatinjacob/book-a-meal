@@ -12,8 +12,8 @@ const Validations = () => ({
     password: 'required|min:6|confirmed',
     password_confirmation: 'required',
     businessName: 'required|string|max:30',
-    ownerName: 'required|string|min:6|max:20',
-    businessAddress: 'required|max:30'
+    ownerName: 'required|string|min:6|max:50',
+    businessAddress: 'required|max:50'
   },
   signinRules: {
     email: 'required|email',
@@ -37,7 +37,7 @@ const Validations = () => ({
     price: 'required|numeric'
   },
   updateMealRules: {
-    name: 'min:3|max:20',
+    name: 'min:3|max:50',
     price: 'numeric'
   }
 

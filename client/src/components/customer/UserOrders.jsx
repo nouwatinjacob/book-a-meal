@@ -115,16 +115,8 @@ class UserOrder extends React.Component {
    * @returns {XML} XML/JSX
    */
   render() {
-    const {
-      orderState: {
-        orders: { orders }
-      }
-    } = this.props;
-    const {
-      orderState: {
-        orders: { paginate }
-      }
-    } = this.props;
+    const { orderState: { orders: { orders } } } = this.props;
+    const { orderState: { orders: { paginate } } } = this.props;
     const token = localStorage.getItem("token");
     const userToken = decodeToken(token);
     return (
@@ -150,14 +142,15 @@ class UserOrder extends React.Component {
                   <th>Actions</th>
                 </tr>
                 {orders && orders.map((order, index) => {
-                  const expiredTime = moment(order.createdAt).add(1, "hour");
+                  const expiredTime = moment(order.createdAt)
+                    .add(5, "minutes") > moment();
                   return (
                     <tr key={index}>
                       <td>{order.createdAt.slice(0, 10)}</td>
                       <td>{order.orderId}</td>
                       <td>{order.Meal.name}</td>
                       <td>{order.Meal.price * order.quantity}</td>
-                      {moment().isBefore(expiredTime) ? (
+                      {expiredTime ? (
                         <td>
                           <button
                             className="button warning"

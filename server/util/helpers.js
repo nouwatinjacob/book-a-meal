@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 const checkTimeToModifyOrder = (menuDate) => {
-  const timeCheck = moment(menuDate).clone().add(1, 'hour') > moment();
+  const timeCheck = moment(menuDate).add(5, "minutes") > moment();
   return timeCheck;
 };
 

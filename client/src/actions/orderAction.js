@@ -83,7 +83,7 @@ const makeOrderAction = orderDetail => dispatch =>
       dispatch(makeOrderUnsuccess(err));
     });
 
-const getUserOrderAction = ({ limit, offset }) => (dispatch) => {
+const getUserOrderAction = ({ limit, offset }) => dispatch =>
   axios.get(`/user-orders?limit=${limit}&offset=${offset}`, authorization())
     .then((res) => {
       dispatch(getUserOrderSuccess({
@@ -93,9 +93,8 @@ const getUserOrderAction = ({ limit, offset }) => (dispatch) => {
     .catch((err) => {
       dispatch(getUserOrderUnsuccess(err));
     });
-};
 
-const getAnOrderAction = orderId => (dispatch) => {
+const getAnOrderAction = orderId => dispatch =>
   axios.get(`/order/${orderId}`, authorization())
     .then((res) => {
       dispatch(getAnOrderSuccess({
@@ -105,7 +104,6 @@ const getAnOrderAction = orderId => (dispatch) => {
     .catch((err) => {
       dispatch(getAnOrderUnsuccess(err));
     });
-};
 
 const modifyOrderAction = (orderId, newOrderDetail) => dispatch =>
   axios.put(

@@ -11,9 +11,9 @@ const initialState = {
   error: null,
   success: false,
   loading: true,
-  order: [],
-  orders: [],
-  orderDetails: [],
+  order: {},
+  orders: {},
+  orderDetails: {},
   passes: null
 };
 
@@ -47,7 +47,7 @@ const orderReducer = (state = initialState, action) => {
     case GET_AN_ORDER_SUCCESSFUL:
       return {
         ...state,
-        order: action.data,
+        order: action.data.order,
         loading: false,
         success: true,
       };
