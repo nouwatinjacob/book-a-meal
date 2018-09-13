@@ -16,13 +16,12 @@ const loginReducer = (state = initialState, action) => {
       return {
         ...state,
         success: true,
-        user: action.data.user,
         loading: false
       };
     case SET_LOADING_STATE:
       return {
         ...state,
-        loading: true,
+        loading: action.payload,
       };
     case LOG_OUT_SUCCESS:
       return {

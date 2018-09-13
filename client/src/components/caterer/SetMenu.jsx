@@ -123,7 +123,7 @@ class SetMenu extends React.Component {
        if (this.props.menuState.success) {
          swal("Menu set Successfully!", "", "success");
        } else if (!this.props.menuState.success && this.props.menuState.error) {
-         const message = this.props.menuState.error.message;
+         const message = this.props.menuState.error.response.data.message;
          const notify = () => toast.info(message);
          notify();
        }

@@ -77,7 +77,7 @@ describe('Test cases for all meals actions', () => {
           done();
         });
     });
-    it(`should return status code 201 a message when meal is
+    it(`should return status code 201 and message when meal is
       created successfully`, (done) => {
       request(app)
         .post('/api/v1/meals')

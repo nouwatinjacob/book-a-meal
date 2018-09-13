@@ -6,9 +6,6 @@
   "repository": "https://github.com/nouwatinjacob/book-a-meal",
   "author": "Nouwatin Jacob <jaysansa@gmail.com>",
   "license": "MIT",
-  "engines": {
-  "node":"8.11.1"    
-  },
   "nyc": {
     "include": [
       "server/controllers/*.js",
@@ -25,11 +22,45 @@
     "build:server": "npx babel server/ --out-dir dist/ --ignore server/test",
     "test:endpoint": "sequelize db:migrate:undo:all && sequelize db:migrate && nyc --reporter=html mocha --require babel-core/register server/test/*.test.js --exit",
     "test": "cross-env-shell NODE_ENV=test yarn test:endpoint && nyc report",
+    "client:test": "jest /client",
     "db:migrate": "node_modules/.bin/sequelize db:migrate",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "build:web": "webpack"
   },
+  "jest": {
+    "collectCoverage": true,
+    "verbose": true,
+    "coverageDirectory": "<rootDir>/client/coverage/",
+    "collectCoverageFrom": [
+      "<rootDir>/client/src/**/*.{js,jsx}"
+    ],
+    "testEnvironment": "jsdom",
+    "setupFiles": [
+      "jest-localstorage-mock",
+      "<rootDir>client/__tests__/setup.js"
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less|scss)$": "<rootDir>/__tests__/__mockData__/style.js"
+    },
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "testMatch": [
+      "**/?(*.)(spec|test).js?(x)",
+      "**/client/__tests__/?(*.)(spec|test).js?(x)"
+    ],
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/client/src/__tests__",
+      "<rootDir>/client/src/index.js",
+      "<rootDir>/client/src/store.js",
+      "<rootDir>/client/src/component/App.jsx",
+      "<rootDir>/client/src/route-type",
+      "<rootDir>/client/src/reducers/index.js"
+    ],
+    "setupTestFrameworkScriptFile": "<rootDir>client/__tests__/setup.js"
+  },
   "devDependencies": {
+    "axios-mock-adapter": "^1.15.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.3",
@@ -44,14 +75,21 @@
     "chai-http": "^4.0.0",
     "coveralls": "^3.0.0",
     "cross-env": "^5.1.5",
+    "enzyme": "^3.6.0",
+    "enzyme-adapter-react-16": "^1.5.0",
+    "enzyme-to-json": "^3.3.4",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.11.0",
+    "jest-localstorage-mock": "^2.2.0",
+    "jsdom": "^12.0.0",
     "mocha": "^5.1.1",
     "mocha-lcov-reporter": "^1.3.0",
+    "moxios": "^0.4.0",
     "nodemon": "^1.17.3",
     "nyc": "^11.7.1",
     "redux-devtools": "^3.4.1",
+    "redux-mock-store": "^1.5.3",
     "supertest": "^3.0.0"
   },
   "dependencies": {
@@ -70,6 +108,7 @@
     "history": "^4.7.2",
     "html-webpack-plugin": "^3.2.0",
     "image-webpack-loader": "^4.2.0",
+    "jest": "^23.5.0",
     "jsonwebtoken": "^8.2.1",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.10",

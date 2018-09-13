@@ -54,7 +54,7 @@ const getAllCatererOrderSuccess = data => ({
   data
 });
 
-const getAllCatererOrderUnuccess = error => ({
+const getAllCatererOrderUnsuccess = error => ({
   type: GET_ALL_CATERER_ORDER_UNSUCCESSFUL,
   error
 });
@@ -120,21 +120,19 @@ const modifyOrderAction = (orderId, newOrderDetail) => dispatch =>
     });
 
 const getAllCatererOrderAction = ({ orderDate, limit, offset }) =>
-  (dispatch) => {
-    axios.get(
-      `/orders?orderDate=${orderDate}&limit=${limit}&offset=${offset}`,
-      authorization()
-    )
-      .then((res) => {
-        dispatch(getAllCatererOrderSuccess({
-          orders: res.data.orders,
-          paginate: res.data.paginate
-        }));
-      })
-      .catch((err) => {
-        dispatch(getAllCatererOrderUnuccess(err));
-      });
-  };
+  dispatch => axios.get(
+    `/orders?orderDate=${orderDate}&limit=${limit}&offset=${offset}`,
+    authorization()
+  )
+    .then((res) => {
+      dispatch(getAllCatererOrderSuccess({
+        orders: res.data.orders,
+        paginate: res.data.paginate
+      }));
+    })
+    .catch((err) => {
+      dispatch(getAllCatererOrderUnsuccess(err));
+    });
 
 const cancelOrderAction = orderId => dispatch =>
   axios.delete(`/orders/${orderId}`, authorization())
@@ -149,5 +147,17 @@ export {
   getAnOrderAction,
   modifyOrderAction,
   getAllCatererOrderAction,
-  cancelOrderAction
+  cancelOrderAction,
+  makeOrderSuccess,
+  makeOrderUnsuccess,
+  getUserOrderSuccess,
+  getUserOrderUnsuccess,
+  getAnOrderSuccess,
+  getAnOrderUnsuccess,
+  modifyOrderSuccess,
+  modifyOrderUnsuccess,
+  getAllCatererOrderSuccess,
+  getAllCatererOrderUnsuccess,
+  cancelOrderSuccess,
+  cancelOrderUnSuccess
 };
