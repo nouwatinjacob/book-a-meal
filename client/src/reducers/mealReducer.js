@@ -1,9 +1,14 @@
 import {
-  GET_MEAL_SUCCESSFUL, GET_MEAL_UNSUCCESSFUL,
-  ADD_MEAL_SUCCESSFUL, ADD_MEAL_UNSUCCESSFUL,
-  GET_A_MEAL_SUCCESSFUL, GET_A_MEAL_UNSUCCESSFUL,
-  EDIT_MEAL_SUCCESSFUL, EDIT_MEAL_UNSUCCESSFUL,
-  DELETE_MEAL_SUCCESSFUL, DELETE_MEAL_UNSUCCESSFUL,
+  GET_MEAL_SUCCESSFUL,
+  GET_MEAL_UNSUCCESSFUL,
+  ADD_MEAL_SUCCESSFUL,
+  ADD_MEAL_UNSUCCESSFUL,
+  GET_A_MEAL_SUCCESSFUL,
+  GET_A_MEAL_UNSUCCESSFUL,
+  EDIT_MEAL_SUCCESSFUL,
+  EDIT_MEAL_UNSUCCESSFUL,
+  DELETE_MEAL_SUCCESSFUL,
+  DELETE_MEAL_UNSUCCESSFUL,
   SET_LOADING_STATE
 } from '../constants/actionTypes';
 
@@ -34,7 +39,7 @@ const mealReducer = (state = initialState, action) => {
     case SET_LOADING_STATE:
       return {
         ...state,
-        loading: true,
+        loading: action.payload,
       };
     case ADD_MEAL_SUCCESSFUL:
       return {
@@ -48,7 +53,7 @@ const mealReducer = (state = initialState, action) => {
         ...state,
         success: false,
         loading: false,
-        error: action.error.response.data
+        error: action.error
       };
     case GET_A_MEAL_SUCCESSFUL:
       return {
@@ -70,7 +75,15 @@ const mealReducer = (state = initialState, action) => {
         loading: false,
         meal: action.data.meal,
         meals: {
-          meals: state.meals.filter(meal => meal.id !== action.data.meal.id)
+          meals: state.meals.map((meal) => {
+            if (meal.id === action.data.meal.id) {
+              return {
+                ...meal,
+                ...action.data.meal
+              };
+            }
+            return meal;
+          })
         }
       };
     case EDIT_MEAL_UNSUCCESSFUL:
@@ -78,7 +91,7 @@ const mealReducer = (state = initialState, action) => {
         ...state,
         success: false,
         loading: false,
-        error: action.error.response.data
+        error: action.error
       };
     case DELETE_MEAL_SUCCESSFUL:
       return {

@@ -111,7 +111,7 @@ class ConfirmOrder extends React.Component {
       } else if (
         !this.props.orderState.success && this.props.orderState.error
       ) {
-        const message = this.props.orderState.error.message;
+        const message = this.props.orderState.error.response.data.message;
         const notify = () => toast.info(message);
         notify();
       }

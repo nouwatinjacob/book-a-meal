@@ -96,7 +96,7 @@ class EditMeal extends React.Component {
      if (this.props.mealState.success) {
        swal("Meal Modified!", "Your Update is successful!", "success");
      } else {
-       const message = this.props.mealState.error.message;
+       const message = this.props.mealState.error.response.data.message;
        const notify = () => toast.info(message);
        notify();
      }

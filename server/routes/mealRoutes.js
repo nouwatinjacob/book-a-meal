@@ -1,6 +1,7 @@
 import MealsController from '../controllers/MealsController';
 import AuthMiddleware from '../middleware/AuthMiddleware';
 import cloudinaryUpload from '../middleware/cloudinaryUpload';
+import checkImage from '../middleware/checkImage';
 
 
 const mealRoutes = (router) => {
@@ -30,6 +31,7 @@ const mealRoutes = (router) => {
     .post(
       AuthMiddleware.verifyToken,
       AuthMiddleware.isCaterer,
+      checkImage,
       cloudinaryUpload.single('image'),
       MealsController.addMeal
     );

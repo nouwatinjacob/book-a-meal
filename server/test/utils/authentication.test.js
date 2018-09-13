@@ -2,7 +2,7 @@ import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import { mockReq, mockRes } from 'sinon-express-mock';
-import authentication from '../../middleware/authentication';
+import AuthMiddleware from '../../middleware/AuthMiddleware';
 
 chai.use(sinonChai);
 
@@ -16,7 +16,7 @@ describe('Test User Authentication', () => {
     const next = sinon.spy();
     const req = mockReq(request);
     const res = mockRes();
-    authentication.isCaterer(req, res, next);
+    AuthMiddleware.isCaterer(req, res, next);
     expect(next.called).to.equal(true);
   });
   it('should return message if the user is not caterer', () => {
@@ -28,10 +28,10 @@ describe('Test User Authentication', () => {
     const next = sinon.spy();
     const req = mockReq(request);
     const res = mockRes();
-    authentication.isCaterer(req, res, next);
+    AuthMiddleware.isCaterer(req, res, next);
     expect(res.json).to.be
-      .calledWith({ 
-        message: 'You must be caterer to perform this operation' 
+      .calledWith({
+        message: 'You must be caterer to perform this operation'
       });
   });
   it('should return next function if the user is a caterer', () => {
@@ -43,7 +43,7 @@ describe('Test User Authentication', () => {
     const next = sinon.spy();
     const req = mockReq(request);
     const res = mockRes();
-    authentication.isCustomer(req, res, next);
+    AuthMiddleware.isCustomer(req, res, next);
     expect(next.called).to.equal(true);
   });
   it('should return message if the user is not customer', () => {
@@ -55,10 +55,10 @@ describe('Test User Authentication', () => {
     const next = sinon.spy();
     const req = mockReq(request);
     const res = mockRes();
-    authentication.isCustomer(req, res, next);
+    AuthMiddleware.isCustomer(req, res, next);
     expect(res.json).to.be
-      .calledWith({ 
-        message: 'You must be registered to perform this operation' 
+      .calledWith({
+        message: 'You must be registered to perform this operation'
       });
   });
 });

@@ -73,7 +73,7 @@ class AddMeal extends React.Component {
          }));
          swal("Meal Added Successfully!");
        } else if (!this.props.mealState.success && this.props.mealState.error) {
-         const message = this.props.mealState.error.message;
+         const message = this.props.mealState.error.response.data.message;
          const notify = () => toast.info(message);
          notify();
        } else {

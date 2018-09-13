@@ -27,7 +27,7 @@ const menuReducer = (state = initialState, action) => {
       return {
         ...state,
         success: false,
-        error: action.error.response.data
+        error: action.error
       };
     case GET_MENU_SUCCESSFUL:
       return {
@@ -39,7 +39,7 @@ const menuReducer = (state = initialState, action) => {
     case GET_MENU_UNSUCCESSFUL:
       return {
         ...state,
-        error: action.error.response.data
+        error: action.error
       };
     default:
       return {

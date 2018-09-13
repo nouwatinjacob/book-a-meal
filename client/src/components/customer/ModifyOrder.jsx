@@ -98,7 +98,7 @@ class ModifyOrder extends React.Component {
       if (this.props.orderState.success) {
         swal("Order Modified Successfully!", "", "success");
       } else {
-        const message = this.props.orderState.error.message;
+        const message = this.props.orderState.error.response.data.message;
         const notify = () => toast.info(message);
         notify();
       }

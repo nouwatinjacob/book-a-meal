@@ -30,7 +30,7 @@ const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         success: false,
-        error: action.error.response.data
+        error: action.error
       };
     case GET_USER_ORDER_SUCCESSFUL:
       return {
@@ -60,13 +60,24 @@ const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         modifiedOrder: action.data,
-        success: true
+        success: true,
+        orders: {
+          orders: state.orders.orders.map((order) => {
+            if (order.id === action.data.order.id) {
+              return {
+                ...order,
+                ...action.data.order
+              };
+            }
+            return order;
+          })
+        }
       };
     case MODIFY_ORDER_UNSUCCESSFUL:
       return {
         ...state,
         success: false,
-        error: action.error.response.data
+        error: action.error
       };
     case GET_ALL_CATERER_ORDER_SUCCESSFUL:
       return {
@@ -91,7 +102,7 @@ const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         success: false,
-        error: action.error.response.data
+        error: action.error
       };
     default:
       return {

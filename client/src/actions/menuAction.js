@@ -36,7 +36,7 @@ const setMenuAction = menuDetail => dispatch =>
       dispatch(setMenuUnsuccess(err));
     });
 
-const getMenuAction = ({ todayDate, limit, offset }) => (dispatch) => {
+const getMenuAction = ({ todayDate, limit, offset }) => dispatch =>
   axios.get(
     `/menu?menuDate=${todayDate}&limit=${limit}&offset=${offset}`,
     authorization()
@@ -47,11 +47,14 @@ const getMenuAction = ({ todayDate, limit, offset }) => (dispatch) => {
       }));
     })
     .catch((err) => {
-      dispatch(getMenuUnsuccess(err));
+      dispatch(getMenuUnsuccess(err.response.data));
     });
-};
 
 export {
   setMenuAction,
-  getMenuAction
+  getMenuAction,
+  setMenuSuccess,
+  setMenuUnsuccess,
+  getMenuSuccess,
+  getMenuUnsuccess
 };

@@ -28,7 +28,7 @@ const signupReducer = (state = initialState, action) => {
     case SET_LOADING_STATE:
       return {
         ...state,
-        loading: true,
+        loading: action.payload,
       };
     default:
       return state;

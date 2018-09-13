@@ -60,10 +60,6 @@ const deleteMealUnsuccess = error => ({
   error
 });
 
-const notify = () => {
-  toast("Meal Deleted Successfully");
-};
-
 const getMeals = ({ limit, offset }) => (dispatch => (
   axios.get(`/meals?limit=${limit}&offset=${offset}`, authorization())
     .then((res) => {
@@ -106,9 +102,7 @@ const getAMealAction = id => (dispatch => (
         meal: res.data.meal
       }));
     })
-    .catch((err) => {
-      dispatch(getAMealUnsuccess(err));
-    })
+    .catch(err => dispatch(getAMealUnsuccess(err)))
 )
 );
 
@@ -125,13 +119,12 @@ const editMealAction = (mealDetail, id) => dispatch => axios.put(
     dispatch(editMealUnsuccess(err));
   });
 
-const deleteMealAction = mealId => (dispatch) => {
+const deleteMealAction = mealId => dispatch =>
   axios.delete(`/meals/${mealId}`, authorization())
     .then((res) => {
       dispatch(deleteMealSuccess(mealId));
     })
-    .catch(error => dispatch(deleteMealUnsuccess(error)));
-};
+    .catch(err => dispatch(deleteMealUnsuccess(err)));
 
 
 export {
@@ -139,5 +132,15 @@ export {
   addMeal,
   getAMealAction,
   editMealAction,
-  deleteMealAction
+  deleteMealAction,
+  getMealSuccess,
+  getMealUnsuccess,
+  addMealSuccess,
+  addMealUnsuccess,
+  getAMealSuccess,
+  getAMealUnsuccess,
+  editMealSuccess,
+  editMealUnsuccess,
+  deleteMealSuccess,
+  deleteMealUnsuccess
 };
