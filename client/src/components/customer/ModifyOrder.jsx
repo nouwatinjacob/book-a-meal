@@ -16,7 +16,7 @@ import { decodeToken } from '../../utils/helper';
  *
  * @extends {React.Component}
  */
-class ModifyOrder extends React.Component {
+export class ModifyOrder extends React.Component {
   /**
    * Component constructor
    * @param {object} props
@@ -57,9 +57,9 @@ class ModifyOrder extends React.Component {
    * @memberof ModifyOrder
    */
   componentDidMount() {
-    const data = JSON.parse(sessionStorage.getItem('ids'));
-    if (data) {
-      this.props.getAnOrderAction(data[2]);
+    const ids = JSON.parse(sessionStorage.getItem('ids'));
+    if (ids) {
+      this.props.getAnOrderAction(parseInt(ids[2], 10));
     }
   }
 
@@ -91,13 +91,14 @@ class ModifyOrder extends React.Component {
   */
   handleSubmit(event) {
     event.preventDefault();
-    const data = JSON.parse(sessionStorage.getItem('ids'));
-    const orderId = parseInt(data[2], 10);
+    const ids = JSON.parse(sessionStorage.getItem('ids'));
+    const orderId = parseInt(ids[2], 10);
     const { newOrderDetail } = this.state;
     this.props.modifyOrderAction(orderId, newOrderDetail).then(() => {
       if (this.props.orderState.success) {
         swal("Order Modified Successfully!", "", "success");
-      } else {
+      } else if (!this.props.orderState.success &&
+        this.props.orderState.error.response) {
         const message = this.props.orderState.error.response.data.message;
         const notify = () => toast.info(message);
         notify();
@@ -207,11 +208,12 @@ ModifyOrder.propTypes = {
   orderDetails: PropTypes.object
 };
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   orderDetails: state.orderReducer.order,
   orderState: state.orderReducer
 });
 
+/* istanbul ignore next */
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ getAnOrderAction, modifyOrderAction }, dispatch);
 

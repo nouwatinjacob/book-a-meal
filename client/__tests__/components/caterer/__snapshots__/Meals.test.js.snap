@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Meals component should render Meals component correctly 1`] = `
+<tr>
+  <td>
+    Fried Rice and chicken Lap
+  </td>
+  <td>
+    <img
+      height="50"
+      src="https://res.cloudinary.com/sansaristic/image/upload/v1536197477/BookMeal/1536197474332pexels-photo-247685.png.png"
+      width="60"
+    />
+  </td>
+  <td>
+    3000
+  </td>
+  <td>
+    <button
+      className="button warning"
+      style={
+        Object {
+          "marginRight": "5px",
+        }
+      }
+    >
+      <Link
+        replace={false}
+        to="/edit-meal/1"
+      >
+        <i
+          className="fa fa-pencil"
+        />
+      </Link>
+    </button>
+    <button
+      className="button danger"
+      onClick={[Function]}
+    >
+      <i
+        className="fa fa-trash"
+      />
+    </button>
+  </td>
+</tr>
+`;

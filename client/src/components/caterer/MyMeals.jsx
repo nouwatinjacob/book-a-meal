@@ -17,7 +17,7 @@ import Meals from "./Meals.jsx";
  *
  * @extends {React.Component}
  */
-class MyMeals extends React.Component {
+export class MyMeals extends React.Component {
   /**
    * Component constructor
    * @param {object} props
@@ -176,9 +176,11 @@ MyMeals.propTypes = {
   paginate: PropTypes.object
 };
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   mealState: state.mealReducer
 });
+
+/* istanbul ignore next */
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ getMeals, deleteMealAction }, dispatch);
 

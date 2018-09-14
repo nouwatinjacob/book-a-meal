@@ -1,3 +1,4 @@
+/* eslint max-len: ["error", { "ignoreUrls": true }] */
 import React from 'react';
 import PropTypes from 'react-proptypes';
 import { bindActionCreators } from 'redux';
@@ -13,7 +14,7 @@ import { logoutAction } from '../../actions/loginAction';
  *
  * @extends {React.Component}
  */
-class Header extends React.Component {
+export class Header extends React.Component {
   handleLogout = () => {
     this.props.logoutAction();
   }
@@ -64,11 +65,12 @@ Header.propTypes = {
   isSignedup: PropTypes.bool
 };
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   isLoggedIn: state.loginReducer.success,
   isSignedup: state.signupReducer.success
 });
 
+/* istanbul ignore next */
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ logoutAction }, dispatch);
 

@@ -67,7 +67,11 @@ describe('Test cases for all meals actions', () => {
       request(app)
         .post('/api/v1/meals')
         .set({ 'x-access-token': catererEbenezerToken })
-        .send(mealSeeder.setMealData('', '', ''))
+        .send(mealSeeder.setMealData(
+          '', '',
+          `https://res.cloudinary.com/sansaristic/image/upload/v1530028015
+            /BookMeal/1530027983498pexels-photo-247685.png.png`
+        ))
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body.message.name)

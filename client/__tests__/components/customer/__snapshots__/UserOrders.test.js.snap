@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserOrder component should render ModifyOrder component correctly 1`] = `
+<div
+  className="container"
+>
+  <CatererHeader />
+  <ToastContainer
+    autoClose={5000}
+    bodyClassName={null}
+    className={null}
+    closeButton={
+      <CloseButton
+        ariaLabel="close"
+      />
+    }
+    closeOnClick={true}
+    draggable={true}
+    draggablePercent={80}
+    hideProgressBar={false}
+    newestOnTop={false}
+    pauseOnHover={true}
+    pauseOnVisibilityChange={true}
+    position="top-right"
+    progressClassName={null}
+    rtl={false}
+    style={null}
+    toastClassName={null}
+    transition={[Function]}
+  />
+  <div
+    className="wrapper"
+  >
+    <h1
+      className="text-center"
+    >
+      Order List
+    </h1>
+    <h3
+      className="text-center"
+    >
+      You have no Order
+    </h3>
+  </div>
+  <br />
+  <br />
+</div>
+`;

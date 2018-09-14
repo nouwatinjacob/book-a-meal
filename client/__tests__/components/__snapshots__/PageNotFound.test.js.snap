@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PageNotFound component should render PageNotFound component correctly 1`] = `
+<Fragment>
+  <div
+    className="pageNotFound"
+  >
+    <h5
+      className="text-center"
+    >
+      Click 
+      <a
+        href="/menus"
+      >
+        here
+      </a>
+       to go to the menus page
+    </h5>
+  </div>
+</Fragment>
+`;

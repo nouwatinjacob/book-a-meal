@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddMeal component should render AddMeal component correctly 1`] = `
+<div
+  className="container"
+>
+  <CatererHeader />
+  <div
+    className="wrapper"
+  >
+    <ToastContainer
+      autoClose={5000}
+      bodyClassName={null}
+      className={null}
+      closeButton={
+        <CloseButton
+          ariaLabel="close"
+        />
+      }
+      closeOnClick={true}
+      draggable={true}
+      draggablePercent={80}
+      hideProgressBar={false}
+      newestOnTop={false}
+      pauseOnHover={true}
+      pauseOnVisibilityChange={true}
+      position="top-right"
+      progressClassName={null}
+      rtl={false}
+      style={null}
+      toastClassName={null}
+      transition={[Function]}
+    />
+    <div
+      className="login"
+    >
+      <div
+        className="login-form"
+      >
+        <h3>
+          Add New Meal
+        </h3>
+        <Loader
+          color="#ff9600"
+          height="50"
+          margin="2px"
+          type="Rings"
+          visible={true}
+          width="100"
+        />
+        <form
+          encType="multipart/form-data"
+          name="add-meal"
+          onSubmit={[Function]}
+        >
+          <input
+            name="name"
+            onChange={[Function]}
+            placeholder="Meal Name"
+            type="text"
+            value=""
+          />
+          <br />
+          <input
+            name="price"
+            onChange={[Function]}
+            placeholder="Meal Price"
+            type="text"
+            value=""
+          />
+          <br />
+          <input
+            accept="image/*"
+            name="image"
+            onChange={[Function]}
+            placeholder="Meal Image"
+            type="file"
+          />
+          <br />
+          <br />
+          <button
+            className="button warning"
+          >
+            Add Meal
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OrderDetail component should render OrderDetail component correctly 1`] = `
+<div
+  className="container"
+>
+  <CatererHeader />
+  <div
+    className="wrapper"
+  >
+    <div
+      className="reduced-container"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="c-medium-12 c-small-12"
+          id="pd-0"
+        >
+          <h6>
+            September 6th 2018, 2:32:06 am
+          </h6>
+          <h5>
+            Order No: 
+            <strong>
+              aa604a40-b174-11e8-bb0f-15bfecd2c56e
+            </strong>
+          </h5>
+          <h5>
+            Name: 
+            <strong>
+              Jacob Nouwatin
+            </strong>
+          </h5>
+        </div>
+      </div>
+      <br />
+      <table>
+        <tbody>
+          <tr>
+            <th>
+              Meal
+            </th>
+            <th>
+              Quantity
+            </th>
+            <th>
+              Unit Price
+            </th>
+            <th>
+              Total
+            </th>
+          </tr>
+          <tr>
+            <td>
+              Fried Rice and chicken Lap
+            </td>
+            <td>
+              4
+            </td>
+            <td>
+              3000
+            </td>
+            <td>
+              12000
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;

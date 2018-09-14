@@ -19,7 +19,7 @@ import { decodeToken } from '../../utils/helper';
  *
  * @extends {React.Component}
  */
-class ConfirmOrder extends React.Component {
+export class ConfirmOrder extends React.Component {
   /**
    * Component constructor
    * @param {object} props
@@ -69,7 +69,7 @@ class ConfirmOrder extends React.Component {
     if (!ids) {
       history.push('/menus');
     } else {
-      this.props.getAMealAction(ids[0]);
+      this.props.getAMealAction(parseInt(ids[0], 10));
     }
   }
 
@@ -220,11 +220,12 @@ ConfirmOrder.propTypes = {
   orderState: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   mealState: state.mealReducer,
   orderState: state.orderReducer
 });
 
+/* istanbul ignore next */
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ getAMealAction, makeOrderAction }, dispatch);
 

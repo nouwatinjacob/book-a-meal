@@ -14,7 +14,7 @@ import { getAllCatererOrderAction } from '../../actions/orderAction';
  *
  * @extends {React.Component}
  */
-class Orders extends React.Component {
+export class Orders extends React.Component {
   /**
    * Component constructor
    * @param {object} props
@@ -197,10 +197,11 @@ Orders.propTypes = {
   orderState: PropTypes.object
 };
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   orderState: state.orderReducer
 });
 
+/* istanbul ignore next */
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ getAllCatererOrderAction }, dispatch);
 
