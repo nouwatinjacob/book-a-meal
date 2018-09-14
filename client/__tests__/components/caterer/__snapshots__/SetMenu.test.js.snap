@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SetMenu component should render SetMenu component correctly 1`] = `
+<div
+  className="container"
+>
+  <ToastContainer
+    autoClose={5000}
+    bodyClassName={null}
+    className={null}
+    closeButton={
+      <CloseButton
+        ariaLabel="close"
+      />
+    }
+    closeOnClick={true}
+    draggable={true}
+    draggablePercent={80}
+    hideProgressBar={false}
+    newestOnTop={false}
+    pauseOnHover={true}
+    pauseOnVisibilityChange={true}
+    position="top-right"
+    progressClassName={null}
+    rtl={false}
+    style={null}
+    toastClassName={null}
+    transition={[Function]}
+  />
+  <CatererHeader />
+  <div
+    className="wrapper"
+  >
+    <div
+      className="login"
+    >
+      <div
+        className="login-form"
+      >
+        <h3>
+          Add New Menu
+        </h3>
+        <form
+          onSubmit={[Function]}
+        >
+          <input
+            id="my-input"
+            min="2018-09-14"
+            name="date"
+            onChange={[Function]}
+            type="date"
+          />
+          <br />
+          <h6>
+            Pick meals to be added to your Menu
+          </h6>
+          <button
+            className="button warning"
+            id="long-button"
+          >
+            Save
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -20,9 +20,9 @@
     "heroku-postbuild": "webpack --config webpack.prod.js --mode production",
     "migrate": "sequelize db:migrate:undo:all && sequelize db:migrate",
     "build:server": "npx babel server/ --out-dir dist/ --ignore server/test",
-    "test:endpoint": "sequelize db:migrate:undo:all && sequelize db:migrate && nyc --reporter=html mocha --require babel-core/register server/test/*.test.js --exit",
+    "test:endpoint": "sequelize db:migrate:undo:all && sequelize db:migrate && nyc --reporter=html --reporter=lcov mocha --require babel-core/register server/test/*.test.js --exit",
     "test": "cross-env-shell NODE_ENV=test yarn test:endpoint && nyc report",
-    "client:test": "jest /client",
+    "client:test": "jest -u /client",
     "db:migrate": "node_modules/.bin/sequelize db:migrate",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "build:web": "webpack"
@@ -40,7 +40,7 @@
       "<rootDir>client/__tests__/setup.js"
     ],
     "moduleNameMapper": {
-      "\\.(css|less|scss)$": "<rootDir>/__tests__/__mockData__/style.js"
+      "\\.(css|less|scss)$": "<rootDir>/client/__tests__/__mockData__/style.js"
     },
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
@@ -53,9 +53,13 @@
       "<rootDir>/client/src/__tests__",
       "<rootDir>/client/src/index.js",
       "<rootDir>/client/src/store.js",
-      "<rootDir>/client/src/component/App.jsx",
+      "<rootDir>/client/src/components/App.jsx",
+      "<rootDir>/client/src/components/partials",
+      "<rootDir>/client/src/assets/js/main.js",
       "<rootDir>/client/src/route-type",
-      "<rootDir>/client/src/reducers/index.js"
+      "<rootDir>/client/src/reducers/index.js",
+      "<rootDir>/client/src/utils/axiosInterceptor.js",
+      "<rootDir>/client/src/utils/menuValidation.js"
     ],
     "setupTestFrameworkScriptFile": "<rootDir>client/__tests__/setup.js"
   },

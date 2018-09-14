@@ -22,7 +22,7 @@ import { decodeToken } from "../../utils/helper";
  *
  * @extends {React.Component}
  */
-class UserOrder extends React.Component {
+export class UserOrder extends React.Component {
   /**
    * Component constructor
    * @param {object} props
@@ -86,7 +86,7 @@ class UserOrder extends React.Component {
   handleCancelOrder = (orderId, event) => {
     this.props.cancelOrderAction(orderId).then(() => {
       if (this.props.orderState.success) {
-        swal("Order successfully Cancelled!", {
+        swal("Order successfully Deleted!", {
           icon: "success"
         });
       }
@@ -172,7 +172,7 @@ class UserOrder extends React.Component {
                               this.handleCancelOrder(order.id, event)
                             }
                           >
-                            Cancel
+                            Delete
                           </button>
                         </td>
                       ) : (
@@ -221,11 +221,12 @@ UserOrder.propTypes = {
   isSuccessful: PropTypes.bool
 };
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   orderState: state.orderReducer,
   isSuccessful: state.orderReducer.success
 });
 
+/* istanbul ignore next */
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ getUserOrderAction, cancelOrderAction }, dispatch);
 

@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footer component should render Footer component correctly 1`] = `
+<footer>
+  <div
+    className="copyright"
+  >
+    <p>
+      © 2018 Book-A-Meal 
+      <i>
+        designed by
+      </i>
+       Jacob Nouwatin
+    </p>
+  </div>
+</footer>
+`;

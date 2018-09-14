@@ -17,7 +17,7 @@ import { decodeToken } from "../../utils/helper";
  *
  * @extends {React.Component}
  */
-class MenuMeal extends React.Component {
+export class MenuMeal extends React.Component {
   /**
    * Component constructor
    * @param {object} props
@@ -299,10 +299,11 @@ MenuMeal.propTypes = {
   getMenuAction: PropTypes.func.isRequired,
   menuState: PropTypes.object.isRequired
 };
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   menuState: state.menuReducer
 });
 
+/* istanbul ignore next */
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ getMenuAction }, dispatch);
 

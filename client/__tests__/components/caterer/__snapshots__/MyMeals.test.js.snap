@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MyMeals component should render MyMeals component correctly 1`] = `
+<div>
+  <div>
+    <CatererHeader />
+    <h3
+      className="text-center"
+    >
+      No Meals to display 
+    </h3>
+  </div>
+</div>
+`;

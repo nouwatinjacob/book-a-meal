@@ -4,6 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/nouwatinjacob/book-a-meal/badge.svg?branch=develop)](https://coveralls.io/github/nouwatinjacob/book-a-meal?branch=develop)
 [![Maintainability](https://api.codeclimate.com/v1/badges/71169e218528ed943a7a/maintainability)](https://codeclimate.com/github/nouwatinjacob/book-a-meal/maintainability)
 [![Continuous Integration](https://camo.githubusercontent.com/23ee7a697b291798079e258bbc25434c4fac4f8b/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f50726f7465637465645f62792d486f756e642d6138373364312e737667)](https://houndci.com)
+[![codecov](https://codecov.io/gh/nouwatinjacob/book-a-meal/branch/develop/graph/badge.svg)](https://codecov.io/gh/nouwatinjacob/book-a-meal)
 
 
 ## Application Features

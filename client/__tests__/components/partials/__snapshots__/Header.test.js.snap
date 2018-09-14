@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header component -loggedin is false should render Header component
+   correctly when loggedin is false 1`] = `
+<div
+  className="header"
+>
+  <div
+    className="wrapper"
+  >
+    <Link
+      replace={false}
+      to="/"
+    >
+      <img
+        alt="Logo"
+        src="https://res.cloudinary.com/sansaristic/image/upload/v1533140463/BookMeal/Default%20images/bookameal-logo.png"
+      />
+    </Link>
+    <div
+      className="header-right"
+      id="myTopnav"
+    >
+      <Link
+        className="logo"
+        replace={false}
+        to="/login"
+      >
+        SIGN IN
+      </Link>
+      <button
+        className="button"
+        id="header_button"
+      >
+        <Link
+          replace={false}
+          to="/signup"
+        >
+          CREATE ACCOUNT
+        </Link>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Header component -loggedin is true should render Header component correctly 1`] = `
+<div
+  className="header"
+>
+  <div
+    className="wrapper"
+  >
+    <Link
+      replace={false}
+      to="/"
+    >
+      <img
+        alt="Logo"
+        src="https://res.cloudinary.com/sansaristic/image/upload/v1533140463/BookMeal/Default%20images/bookameal-logo.png"
+      />
+    </Link>
+    <div
+      className="header-right"
+      id="myTopnav"
+    >
+      <Link
+        className="logo"
+        replace={false}
+        to=""
+      >
+        WELCOME  
+      </Link>
+      <Link
+        className="button logout"
+        onClick={[Function]}
+        replace={false}
+        to="#"
+      >
+        logout
+      </Link>
+    </div>
+  </div>
+</div>
+`;

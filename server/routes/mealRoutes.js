@@ -31,7 +31,6 @@ const mealRoutes = (router) => {
     .post(
       AuthMiddleware.verifyToken,
       AuthMiddleware.isCaterer,
-      checkImage,
       cloudinaryUpload.single('image'),
       MealsController.addMeal
     );

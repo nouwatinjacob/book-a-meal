@@ -15,7 +15,7 @@ import CatererHeader from '../partials/CatererHeader.jsx';
  *
  * @extends {React.Component}
  */
-class EditMeal extends React.Component {
+export class EditMeal extends React.Component {
   state = {
     mealData: {
       name: '',
@@ -178,7 +178,8 @@ const mapStateToProps = state => ({
   mealState: state.mealReducer,
   isLoading: state.mealReducer.loading
 });
-const mapDispatchToProps = dispatch =>
+
+export const mapDispatchToProps = dispatch =>
   bindActionCreators({ getAMealAction, editMealAction }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditMeal);

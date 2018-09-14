@@ -24,7 +24,8 @@ describe('POST api/v1/users/signup', () => {
         ))
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
-          expect(res.body.message.firstName[0]).to.deep.equal('The firstName field is required.');
+          expect(res.body.message.firstName[0])
+            .to.deep.equal('The firstName field is required.');
           done();
         });
     });
@@ -53,7 +54,8 @@ describe('POST api/v1/users/signup', () => {
         ))
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
-          expect(res.body.message.lastName[0]).to.deep.equal('The lastName field is required.');
+          expect(res.body.message.lastName[0])
+            .to.deep.equal('The lastName field is required.');
           done();
         });
     });
@@ -67,7 +69,8 @@ describe('POST api/v1/users/signup', () => {
         ))
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
-          expect(res.body.message.email[0]).to.deep.equal('The email field is required.');
+          expect(res.body.message.email[0])
+            .to.deep.equal('The email field is required.');
           done();
         });
     });
@@ -81,12 +84,14 @@ describe('POST api/v1/users/signup', () => {
         ))
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
-          expect(res.body.message.password[0]).to.deep.equal('The password field is required.');
+          expect(res.body.message.password[0])
+            .to.deep.equal('The password field is required.');
           done();
         });
     });
     it(
-      'should return status code 201 and a message when user registered successfully',
+      `should return status code 201 and a 
+      message when user registered successfully`,
       (done) => {
         request(app)
           .post('/api/v1/auth/signup')
@@ -115,7 +120,8 @@ describe('POST api/v1/users/signup', () => {
         ))
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
-          expect(res.body.message.email[0]).to.deep.equal('The email field is required.');
+          expect(res.body.message.email[0])
+            .to.deep.equal('The email field is required.');
           done();
         });
     });
@@ -129,7 +135,8 @@ describe('POST api/v1/users/signup', () => {
         ))
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
-          expect(res.body.message.password[0]).to.deep.equal('The password field is required.');
+          expect(res.body.message.password[0])
+            .to.deep.equal('The password field is required.');
           done();
         });
     });
@@ -228,7 +235,8 @@ describe('POST api/v1/users/signup', () => {
           done();
         });
     });
-    it('should return status code 409 and a message when email already exist', (done) => {
+    it(`should return status code 409 and a
+    message when email already exist`, (done) => {
       request(app)
         .post('/api/v1/auth/signup')
         .send(seeder.setCatererData(

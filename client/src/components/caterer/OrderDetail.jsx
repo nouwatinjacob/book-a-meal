@@ -13,7 +13,7 @@ import { getAnOrderAction } from '../../actions/orderAction';
  *
  * @extends {React.Component}
  */
-class OrderDetail extends React.Component {
+export class OrderDetail extends React.Component {
   /**
    *
    * @returns {XML} XML/JSX
@@ -83,10 +83,11 @@ OrderDetail.propTypes = {
   orderState: PropTypes.object
 };
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   orderState: state.orderReducer
 });
 
+/* istanbul ignore next */
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ getAnOrderAction }, dispatch);
 

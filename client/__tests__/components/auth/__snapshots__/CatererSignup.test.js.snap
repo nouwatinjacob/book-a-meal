@@ -1,0 +1,111 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CatererSignup component should render CatererSignup component correctly 1`] = `
+<div
+  className="container"
+>
+  <ToastContainer
+    autoClose={5000}
+    bodyClassName={null}
+    className={null}
+    closeButton={
+      <CloseButton
+        ariaLabel="close"
+      />
+    }
+    closeOnClick={true}
+    draggable={true}
+    draggablePercent={80}
+    hideProgressBar={false}
+    newestOnTop={false}
+    pauseOnHover={true}
+    pauseOnVisibilityChange={true}
+    position="top-right"
+    progressClassName={null}
+    rtl={false}
+    style={null}
+    toastClassName={null}
+    transition={[Function]}
+  />
+  <div
+    className="wrapper"
+  >
+    <div
+      className="login"
+    >
+      <div
+        className="login-form"
+      >
+        <Loader
+          color="#ff9600"
+          height="50"
+          margin="2px"
+          type="Rings"
+          visible={true}
+          width="100"
+        />
+        <h3>
+          Caterer Registration
+        </h3>
+        <form
+          onSubmit={[Function]}
+        >
+          <input
+            name="businessName"
+            onChange={[Function]}
+            placeholder="Business Name"
+            type="text"
+            value=""
+          />
+          <br />
+          <input
+            name="ownerName"
+            onChange={[Function]}
+            placeholder="Owner's Name"
+            type="text"
+            value=""
+          />
+          <br />
+          <input
+            name="businessAddress"
+            onChange={[Function]}
+            placeholder="Business Address"
+            type="text"
+            value=""
+          />
+          <br />
+          <input
+            name="email"
+            onChange={[Function]}
+            placeholder="Email"
+            type="email"
+            value=""
+          />
+          <br />
+          <input
+            name="password"
+            onChange={[Function]}
+            placeholder="Password"
+            type="password"
+            value=""
+          />
+          <br />
+          <input
+            name="password_confirmation"
+            onChange={[Function]}
+            placeholder="Confirm Password"
+            type="password"
+            value=""
+          />
+          <br />
+          <button
+            className="button warning"
+          >
+            Signup
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+`;

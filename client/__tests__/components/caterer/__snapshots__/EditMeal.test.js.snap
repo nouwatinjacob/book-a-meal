@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditMeal component should render EditMeal component correctly 1`] = `
+<div
+  className="container"
+>
+  <CatererHeader />
+  <ToastContainer
+    autoClose={5000}
+    bodyClassName={null}
+    className={null}
+    closeButton={
+      <CloseButton
+        ariaLabel="close"
+      />
+    }
+    closeOnClick={true}
+    draggable={true}
+    draggablePercent={80}
+    hideProgressBar={false}
+    newestOnTop={false}
+    pauseOnHover={true}
+    pauseOnVisibilityChange={true}
+    position="top-right"
+    progressClassName={null}
+    rtl={false}
+    style={null}
+    toastClassName={null}
+    transition={[Function]}
+  />
+  <div
+    className="wrapper"
+  >
+    <div
+      className="login"
+    >
+      <div
+        className="login-form"
+      >
+        <h3>
+          Edit Meal Details
+        </h3>
+        <Loader
+          color="#ff9600"
+          height="50"
+          margin="2px"
+          type="Rings"
+          visible={true}
+          width="100"
+        />
+        <form
+          encType="multipart/form-data"
+          onSubmit={[Function]}
+        >
+          <input
+            name="name"
+            onChange={[Function]}
+            placeholder=""
+            type="text"
+          />
+          <br />
+          <input
+            name="price"
+            onChange={[Function]}
+            placeholder=""
+            type="text"
+          />
+          <br />
+          <input
+            name="image"
+            onChange={[Function]}
+            placeholder="Meal Image"
+            type="file"
+          />
+          <br />
+          <button
+            className="button warning"
+          >
+            Modify Meal
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+`;

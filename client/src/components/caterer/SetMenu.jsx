@@ -19,7 +19,7 @@ import Errors from '../partials/ValidationErrors.jsx';
  *
  * @extends {React.Component}
  */
-class SetMenu extends React.Component {
+export class SetMenu extends React.Component {
   /**
    * Component constructor
    * @param {object} props
@@ -129,6 +129,7 @@ class SetMenu extends React.Component {
        }
      });
    } else {
+     /* istanbul ignore next */
      this.setState(state => ({ errors: validation.errors }));
    }
  }
@@ -176,12 +177,14 @@ class SetMenu extends React.Component {
                   />
                   <br/>
                   {
+                    /* istanbul ignore next */
                     this.state.errors.menuDate ?
                     <span>Pick a date for your menu</span>
                     : ''
                   }
                   <h6>Pick meals to be added to your Menu</h6>
                   {
+                    /* istanbul ignore next */
                     this.state.errors.mealId ?
                     <span>Pick meals to be added to the menu</span>
                     : ''
@@ -238,10 +241,12 @@ SetMenu.propTypes = {
   setMenuAction: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   menuState: state.menuReducer,
   mealState: state.mealReducer
 });
+
+/* istanbul ignore next */
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ getMeals, setMenuAction }, dispatch);
 

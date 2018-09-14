@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Orders component should render Orders component correctly 1`] = `
+<div
+  className="container"
+>
+  <CatererHeader />
+  <div
+    className="wrapper"
+  >
+    <div
+      className="row"
+    >
+      <div
+        className="c-medium-6 c-small-12"
+        id="pd-0"
+      >
+        <h5>
+          Sort By Date:
+          <input
+            onChange={[Function]}
+            style={
+              Object {
+                "width": "150px",
+              }
+            }
+            type="date"
+          />
+        </h5>
+      </div>
+      <div
+        className="c-medium-6 c-small-12 revenue"
+        id="pd-0"
+      >
+        <h5>
+          Today's Revenue: 
+          <strong>
+            ₦
+            0
+          </strong>
+        </h5>
+      </div>
+    </div>
+  </div>
+  <div
+    className="wrapper"
+  >
+    <h3
+      className="text-center"
+    >
+      No Order Found for this date
+    </h3>
+  </div>
+  <br />
+  <br />
+</div>
+`;

@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CustomerSignup component should render CustomerSignup component correctly 1`] = `
+<div
+  className="container"
+>
+  <ToastContainer
+    autoClose={5000}
+    bodyClassName={null}
+    className={null}
+    closeButton={
+      <CloseButton
+        ariaLabel="close"
+      />
+    }
+    closeOnClick={true}
+    draggable={true}
+    draggablePercent={80}
+    hideProgressBar={false}
+    newestOnTop={false}
+    pauseOnHover={true}
+    pauseOnVisibilityChange={true}
+    position="top-right"
+    progressClassName={null}
+    rtl={false}
+    style={null}
+    toastClassName={null}
+    transition={[Function]}
+  />
+  <div
+    className="wrapper"
+  >
+    <div
+      className="login"
+    >
+      <div
+        className="login-form"
+      >
+        <Loader
+          color="#ff9600"
+          height="50"
+          margin="2px"
+          type="Rings"
+          visible={true}
+          width="100"
+        />
+        <h3>
+          User Registration
+        </h3>
+        <form
+          onSubmit={[Function]}
+        >
+          <input
+            name="firstName"
+            onChange={[Function]}
+            placeholder="First Name"
+            type="text"
+            value=""
+          />
+          <br />
+          <input
+            name="lastName"
+            onChange={[Function]}
+            placeholder="Last Name"
+            type="text"
+            value=""
+          />
+          <br />
+          <input
+            name="email"
+            onChange={[Function]}
+            placeholder="Email"
+            type="email"
+            value=""
+          />
+          <br />
+          <input
+            name="password"
+            onChange={[Function]}
+            placeholder="Password"
+            type="password"
+            value=""
+          />
+          <br />
+          <input
+            name="password_confirmation"
+            onChange={[Function]}
+            placeholder="Confirm Password"
+            type="password"
+            value=""
+          />
+          <br />
+          <button
+            className="button warning"
+          >
+            Signup
+          </button>
+          <p>
+            Do you want to be part of our Caterers?  
+            <Link
+              replace={false}
+              to="/caterer-signup"
+            >
+              Signup  here
+            </Link>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+`;

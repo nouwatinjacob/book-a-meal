@@ -10,7 +10,7 @@ import swal from 'sweetalert';
  *
  * @extends {React.Component}
  */
-class Meals extends React.Component {
+export class Meals extends React.Component {
   /**
    * Handles meal deletion
    *

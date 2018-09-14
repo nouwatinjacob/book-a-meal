@@ -1,0 +1,145 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ModifyOrder component with success set as false should render ModifyOrder component correctly 1`] = `
+<div
+  className="container"
+>
+  <CatererHeader />
+  <div
+    className="wrapper"
+  >
+    <ToastContainer
+      autoClose={5000}
+      bodyClassName={null}
+      className={null}
+      closeButton={
+        <CloseButton
+          ariaLabel="close"
+        />
+      }
+      closeOnClick={true}
+      draggable={true}
+      draggablePercent={80}
+      hideProgressBar={false}
+      newestOnTop={false}
+      pauseOnHover={true}
+      pauseOnVisibilityChange={true}
+      position="top-right"
+      progressClassName={null}
+      rtl={false}
+      style={null}
+      toastClassName={null}
+      transition={[Function]}
+    />
+    <div
+      className="reduced-container"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="c-medium-6 c-small-12 c-xsmall-12"
+          id="pd-0"
+        >
+          <h3>
+            Edit your Order
+          </h3>
+        </div>
+      </div>
+      <br />
+      <br />
+      <div
+        className="row"
+      >
+        <div
+          className="c-medium-6 c-small-12 c-xsmall-12"
+          id="pd-0"
+        />
+        <div
+          className="c-medium-6 c-small-12 c-xsmall-12 amount"
+          id="pd-0"
+        >
+          <button
+            className="button warning"
+            onClick={[Function]}
+          >
+            Modify Order
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ModifyOrder component with success set as true should render ModifyOrder component correctly 1`] = `
+<div
+  className="container"
+>
+  <CatererHeader />
+  <div
+    className="wrapper"
+  >
+    <ToastContainer
+      autoClose={5000}
+      bodyClassName={null}
+      className={null}
+      closeButton={
+        <CloseButton
+          ariaLabel="close"
+        />
+      }
+      closeOnClick={true}
+      draggable={true}
+      draggablePercent={80}
+      hideProgressBar={false}
+      newestOnTop={false}
+      pauseOnHover={true}
+      pauseOnVisibilityChange={true}
+      position="top-right"
+      progressClassName={null}
+      rtl={false}
+      style={null}
+      toastClassName={null}
+      transition={[Function]}
+    />
+    <div
+      className="reduced-container"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="c-medium-6 c-small-12 c-xsmall-12"
+          id="pd-0"
+        >
+          <h3>
+            Edit your Order
+          </h3>
+        </div>
+      </div>
+      <br />
+      <br />
+      <div
+        className="row"
+      >
+        <div
+          className="c-medium-6 c-small-12 c-xsmall-12"
+          id="pd-0"
+        />
+        <div
+          className="c-medium-6 c-small-12 c-xsmall-12 amount"
+          id="pd-0"
+        >
+          <button
+            className="button warning"
+            onClick={[Function]}
+          >
+            Modify Order
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
